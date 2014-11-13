@@ -1,0 +1,11 @@
+main: com.minegusta.mgapocalypse.com.minegusta.mgapocalypse.Main
+author: janie177
+name: MGApocalypse
+version ${project.version}
+commands:
+   mga:
+      description: Base command for setting spawns and such.
+      usage: /MGA <arguments>
+      aliases: [minegustaapocalypse, mgw, minegustawasteland]
+      default: false
+      permission-message: This command is for owners only.
