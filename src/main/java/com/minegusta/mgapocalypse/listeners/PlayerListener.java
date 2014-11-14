@@ -328,6 +328,8 @@ public class PlayerListener implements Listener
         BleedingManager.bandage(p, false);
 
         Zombie z = (Zombie) p.getWorld().spawnEntity(p.getLocation(), EntityType.ZOMBIE);
+        z.setCustomNameVisible(true);
+        z.setCustomName(p.getName());
         z.getEquipment().setHelmet(new ItemStack(Material.SKULL_ITEM, 1) {
             {
                 SkullMeta meta = (SkullMeta) getItemMeta();
