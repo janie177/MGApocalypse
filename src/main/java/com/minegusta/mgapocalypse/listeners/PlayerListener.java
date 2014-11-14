@@ -7,10 +7,7 @@ import com.minegusta.mgapocalypse.dotmanagers.DiseaseManager;
 import com.minegusta.mgapocalypse.items.LootItem;
 import com.minegusta.mgapocalypse.lootblocks.Loot;
 import com.minegusta.mgapocalypse.util.*;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -40,7 +37,7 @@ public class PlayerListener implements Listener
     private final static int diseaseChance = 3; //In %
 
     //All the allowed commands, lower case only.
-    private final static List<String> allowedCMDS = Lists.newArrayList("pop", "break");
+    private final static List<String> allowedCMDS = Lists.newArrayList("/pop", "/break", "/hub", "/pause", "/logout", "/log-out", "/leave", "/abort", "/exit");
 
     //All food types that heal you
     private final static List<Material> food = Lists.newArrayList(Material.MELON, Material.RAW_FISH, Material.RAW_CHICKEN, Material.RAW_BEEF, Material.BREAD, Material.COOKIE, Material.POTATO_ITEM, Material.CARROT_ITEM, Material.APPLE, Material.MUSHROOM_SOUP, Material.PORK, Material.GRILLED_PORK, Material.COOKED_FISH, Material.BAKED_POTATO, Material.COOKED_CHICKEN);
@@ -114,6 +111,11 @@ public class PlayerListener implements Listener
 
         Player p = e.getPlayer();
         Material hand = e.getPlayer().getItemInHand().getType();
+
+        //TODO REMOVE
+        Bukkit.broadcastMessage("Block " + e.getClickedBlock());
+        Bukkit.broadcastMessage("Material " + p.getItemInHand().getType().toString());
+        Bukkit.broadcastMessage("Type " + e.getAction().toString());
 
         //Check for bandaging
         if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction() == Action.RIGHT_CLICK_BLOCK)
@@ -356,6 +358,8 @@ public class PlayerListener implements Listener
 
         //For non ops, block all commands except the allowed ones:
         String[] command = e.getMessage().toLowerCase().split(" ");
+
+
         if(!allowedCMDS.contains(command[0].toLowerCase()))
         {
             e.setCancelled(true);

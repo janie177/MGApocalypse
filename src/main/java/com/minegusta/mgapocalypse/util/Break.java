@@ -44,7 +44,7 @@ public class Break
             public void run()
             {
                 Bukkit.getScheduler().cancelTask(TASK2);
-                if(Math.abs(health - p.getHealth()) > 2 || Math.abs(x - p.getLocation().getX()) > 2.0 || Math.abs(y - p.getLocation().getY()) > 2.0 || Math.abs(z - p.getLocation().getZ()) > 2.0)
+                if(Math.abs(health - p.getHealth()) > 2.0 || Math.abs(x - p.getLocation().getX()) > 2.0 || Math.abs(y - p.getLocation().getY()) > 2.0 || Math.abs(z - p.getLocation().getZ()) > 2.0)
                 {
                     SavedLocationsManager.setLocation(p.getUniqueId(), p.getLocation());
                     p.sendMessage(ChatColor.DARK_GREEN + "- - - - - - - - - - - - - - - -");
@@ -56,6 +56,18 @@ public class Break
                 }
                 else
                 {
+                    //TODO REMOVE
+                    Bukkit.broadcastMessage("x:" + x);
+                    Bukkit.broadcastMessage(" " + Math.abs(x - p.getLocation().getX()));
+                    Bukkit.broadcastMessage("y:" + y);
+                    Bukkit.broadcastMessage(" " + Math.abs(y - p.getLocation().getY()));
+                    Bukkit.broadcastMessage("z:" + z);
+                    Bukkit.broadcastMessage(" " + Math.abs(z - p.getLocation().getZ()));
+                    Bukkit.broadcastMessage("health:" + health);
+                    Bukkit.broadcastMessage(" " + Math.abs(health - p.getHealth()));
+                    //TODO REMOVE
+
+
                     p.sendMessage(ChatColor.DARK_GREEN + "- - - - - - - - - - - - - - - -");
                     p.sendMessage(ChatColor.GREEN + "You either moved or changed health.");
                     p.sendMessage(ChatColor.GREEN + "Your location has not been saved.");
