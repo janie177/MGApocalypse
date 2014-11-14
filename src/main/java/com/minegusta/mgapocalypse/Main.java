@@ -6,6 +6,7 @@ import com.minegusta.mgapocalypse.commands.BreakCommand;
 import com.minegusta.mgapocalypse.commands.MGACommand;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.config.SavedLocationsManager;
+import com.minegusta.mgapocalypse.listeners.JoinListener;
 import com.minegusta.mgapocalypse.listeners.PlayerListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -31,6 +32,7 @@ public class Main extends JavaPlugin
 
         //Listeners components
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+        Bukkit.getPluginManager().registerEvents(new JoinListener(), this);
 
         //Commands
         getCommand("mga").setExecutor(new MGACommand());

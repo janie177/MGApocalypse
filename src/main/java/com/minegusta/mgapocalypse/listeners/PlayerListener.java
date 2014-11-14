@@ -82,6 +82,7 @@ public class PlayerListener implements Listener
 
             if(hand.equals(Material.PAPER))
             {
+                healer.sendMessage(ChatColor.GREEN + "You bandaged " + p.getName() + ".");
                 p.sendMessage(ChatColor.GREEN + healer.getName() + " bandaged your wounds.");
                 healer.getInventory().remove(new ItemStack(Material.PAPER, 1));
                 BleedingManager.bandage(p);
