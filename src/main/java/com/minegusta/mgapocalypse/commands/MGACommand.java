@@ -15,7 +15,6 @@ public class MGACommand implements CommandExecutor{
         if(!(s instanceof Player) || !(s.isOp()))return true;
 
         Player p = (Player) s;
-        if(!WorldCheck.is(p.getWorld()))return true;
         if(args == null || args.length == 0)
         {
             sendHelp(p);
@@ -25,6 +24,11 @@ public class MGACommand implements CommandExecutor{
         {
             if(args[0].equalsIgnoreCase("addspawn"))
             {
+                if(!WorldCheck.is(p.getWorld()))
+                {
+                    p.sendMessage(ChatColor.RED + "This world is not valid!!");
+                    return true;
+                }
                 p.sendMessage(ChatColor.GREEN + "You added this position as a spawn!");
                 DefaultConfig.addSpawn(p.getLocation());
                 return true;
