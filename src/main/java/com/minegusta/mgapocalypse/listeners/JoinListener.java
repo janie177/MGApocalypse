@@ -61,7 +61,7 @@ public class JoinListener implements Listener
                 else
                 {
                     e.getPlayer().teleport(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()));
-                    SavedLocationsManager.setLocation(e.getPlayer().getUniqueId(), null);
+                    SavedLocationsManager.resetLocation(e.getPlayer().getUniqueId());
                 }
                 e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 1, false));
                 e.getPlayer().sendMessage(ChatColor.GRAY + "You wake up in an apocalyptic world...");

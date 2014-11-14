@@ -12,7 +12,7 @@ public class ItemUtil
         {
             for(ItemStack i : p.getInventory())
             {
-                if(i.getType() == m)
+                if(i != null && i.getType() == m)
                 {
                     if(i.getAmount() > 1)
                     {
@@ -22,6 +22,7 @@ public class ItemUtil
                     {
                         i.setType(Material.AIR);
                     }
+                    break;
                 }
             }
         }
