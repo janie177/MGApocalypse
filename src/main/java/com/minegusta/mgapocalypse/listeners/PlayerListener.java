@@ -143,7 +143,7 @@ public class PlayerListener implements Listener
             ItemUtil.removeOne(p, Material.SLIME_BALL);
         }
 
-        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getRelative(e.getBlockFace().getOppositeFace()).getType() == Material.STATIONARY_WATER && hand == Material.GLASS_BOTTLE)
+        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getRelative(e.getBlockFace()).getType() == Material.STATIONARY_WATER && hand == Material.GLASS_BOTTLE)
         {
             e.setCancelled(true);
             ItemUtil.removeOne(p, Material.GLASS_BOTTLE);
