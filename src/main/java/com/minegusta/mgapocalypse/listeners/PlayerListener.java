@@ -8,6 +8,7 @@ import com.minegusta.mgapocalypse.items.LootItem;
 import com.minegusta.mgapocalypse.lootblocks.Loot;
 import com.minegusta.mgapocalypse.util.*;
 import org.bukkit.*;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -112,11 +113,6 @@ public class PlayerListener implements Listener
         Player p = e.getPlayer();
         Material hand = e.getPlayer().getItemInHand().getType();
 
-        //TODO REMOVE
-        Bukkit.broadcastMessage("Block " + e.getClickedBlock());
-        Bukkit.broadcastMessage("Material " + p.getItemInHand().getType().toString());
-        Bukkit.broadcastMessage("Type " + e.getAction().toString());
-
         //Check for bandaging
         if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
@@ -147,7 +143,7 @@ public class PlayerListener implements Listener
             ItemUtil.removeOne(p, Material.SLIME_BALL);
         }
 
-        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.STATIONARY_WATER && hand == Material.GLASS_BOTTLE)
+        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getRelative(BlockFace.UP).getType() == Material.STATIONARY_WATER && hand == Material.GLASS_BOTTLE)
         {
             e.setCancelled(true);
             ItemUtil.removeOne(p, Material.GLASS_BOTTLE);

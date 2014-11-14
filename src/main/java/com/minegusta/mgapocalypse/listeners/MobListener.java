@@ -5,6 +5,8 @@ import com.minegusta.mgapocalypse.items.LootItem;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
@@ -22,10 +24,14 @@ import java.util.List;
 
 public class MobListener implements Listener
 {
-    final static int nightChance = 2; //Percentage to spawn a zombie group
-    final static int dayChance = 4; //Percentage to spawn a zombie group
+    private final static int nightChance = 5; //Promillage to spawn a zombie group
+    private final static int dayChance = 10; //promillage to spawn a zombie group
 
-    final static List<CreatureSpawnEvent.SpawnReason> allowedReasons = Lists.newArrayList(CreatureSpawnEvent.SpawnReason.SPAWNER, CreatureSpawnEvent.SpawnReason.CUSTOM);
+    private final static List<Material> highspawnchance = Lists.newArrayList(Material.SMOOTH_BRICK,Material.STONE,Material.WOOD, Material.DOUBLE_STEP);
+
+    private final static List<CreatureSpawnEvent.SpawnReason> allowedReasons = Lists.newArrayList(CreatureSpawnEvent.SpawnReason.SPAWNER, CreatureSpawnEvent.SpawnReason.CUSTOM);
+
+
     //Block spawning of nooby mobs
     @EventHandler(priority = EventPriority.LOWEST)
     public void onSpawn(CreatureSpawnEvent e)
@@ -42,18 +48,24 @@ public class MobListener implements Listener
             Location loc = e.getLocation();
             e.setCancelled(true);
 
-            //Check if spawn
+            int chance = 0;
+
+            //Check time settings
             long time = loc.getWorld().getTime();
+
             boolean day = false;
-            if (time < 12300 || time > 23850) day = true;
+            if (time < 12300 || time > 23850) chance = dayChance;
+            else chance = nightChance;
+
+            if(highspawnchance.contains(loc.getBlock().getRelative(BlockFace.DOWN).getType()))
+            {
+                chance = chance * 2;
+            }
+
+            int amount = RandomNumber.get(1000);
 
             //Return if chance is false
-            if (day) {
-                if (!(RandomNumber.get(100) <= dayChance)) return;
-            } else
-            {
-                if (!(RandomNumber.get(100) <= nightChance)) return;
-            }
+            if (!(amount <= chance)) return;
 
             //Spawn a zombie
             Zombie zombie = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
