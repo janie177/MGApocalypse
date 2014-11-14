@@ -63,13 +63,14 @@ public class PlayerListener implements Listener
             if(e.getItem().getDurability() == 0) {
                 p.setLevel(20);
                 p.sendMessage(ChatColor.GREEN + "You feel refreshed.");
-                ItemUtil.removeOne(p, Material.GLASS_BOTTLE);
+                e.setCancelled(true);
+                ItemUtil.removeOne(p, Material.POTION);
                 p.getInventory().addItem(LootItem.EMPTYBOTTLE.build());
                 p.updateInventory();
             }
             else
             {
-                ItemUtil.removeOne(p, Material.GLASS_BOTTLE);
+                new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
             }
         }
 
@@ -77,7 +78,8 @@ public class PlayerListener implements Listener
         //Cure diseases
         if(m == Material.MILK_BUCKET)
         {
-            ItemUtil.removeOne(p, Material.BUCKET);
+            e.setCancelled(true);
+            ItemUtil.removeOne(p, Material.MILK_BUCKET);
             DiseaseManager.cure(p);
         }
     }
@@ -175,7 +177,6 @@ public class PlayerListener implements Listener
         if(p.isOp() || p.hasPermission("minegusta.builder"))return;
 
         Material material = e.getBlock().getType();
-        Material hand = p.getItemInHand().getType();
         Location l = e.getBlock().getLocation();
 
         if(material.equals(Material.STONE_BUTTON))
@@ -205,6 +206,7 @@ public class PlayerListener implements Listener
 
         if(type == Material.STONE_BUTTON)
         {
+            e.setCancelled(true);
             e.getBlock().setType(Material.AIR);
         }
 

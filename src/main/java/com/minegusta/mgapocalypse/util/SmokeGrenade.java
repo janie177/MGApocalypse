@@ -24,7 +24,7 @@ public class SmokeGrenade
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
                     @Override
                     public void run() {
-                        l.getWorld().spigot().playEffect(l, Effect.PARTICLE_SMOKE, 0, 0, 3, 2, 3, 1, 50, 30);
+                        l.getWorld().spigot().playEffect(l, Effect.SMOKE, 0, 0, 3, 2, 3, 1, 50, 30);
                     }
                 }, i);
             }
