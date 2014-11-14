@@ -6,6 +6,7 @@ import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -34,7 +35,7 @@ public class MobListener implements Listener
             return;
         }
 
-        if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.DEFAULT) {
+        if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.DEFAULT) {
 
             Location loc = e.getLocation();
             e.setCancelled(true);
@@ -46,8 +47,10 @@ public class MobListener implements Listener
                 //Spawn a zombie
                 Zombie zombie = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
 
-                for (int i = 0; i < RandomNumber.get(6); i++) {
-                    Zombie zombie2 = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
+                for (int i = 0; i < RandomNumber.get(6); i++)
+                {
+                    Location random = zombie.getLocation().add(RandomNumber.get(1),0,0);
+                    Zombie zombie2 = (Zombie) loc.getWorld().spawnEntity(random, EntityType.ZOMBIE);
                     if (RandomNumber.get(25) == 1) {
                         zombie2.setBaby(true);
                     }
@@ -58,18 +61,24 @@ public class MobListener implements Listener
 
 
 
-    //Make mobs faster and stronger on target
+    //Make mobs faster and stronger on target, also block target from far on crouching players.
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDeath(EntityTargetLivingEntityEvent e)
     {
         if(!WorldCheck.is(e.getEntity().getWorld()))return;
 
-        if(e.getEntity().getType() == EntityType.ZOMBIE)
+        if(e.getEntity().getType() == EntityType.ZOMBIE && e.getTarget() instanceof Player)
         {
-            //Adults only
-            if(!((Zombie)e.getEntity()).isBaby())
+            //Sneaking hides you from zombies.
+            Player p = (Player) e.getTarget();
+            Zombie zombie = (Zombie) e.getEntity();
+            if(p.isSneaking() && zombie.getLocation().distance(p.getLocation()) > 9)
             {
-                Zombie zombie = (Zombie) e.getEntity();
+                e.setCancelled(true);
+            }
+            //Adults only
+            else if(!((Zombie)e.getEntity()).isBaby())
+            {
                 zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 600, 1));
             }
         }

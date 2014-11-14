@@ -40,7 +40,7 @@ public class PlayerListener implements Listener
     private static final List<Material> blockedBlocks = Lists.newArrayList(Material.ENCHANTMENT_TABLE, Material.ANVIL, Material.BED, Material.MINECART, Material.STORAGE_MINECART);
 
     //Chances for bleeding. Also for diseases.
-    private final static int bleedChance = 5; //In %
+    private final static int bleedChance = 12; //In %
     private final static int diseaseChance = 3; //In %
 
     //All the allowed commands, lower case only.

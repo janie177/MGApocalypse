@@ -26,14 +26,14 @@ public class DOTTask
                     if(p.isOnline() && WorldCheck.is(p.getWorld()))
                     {
                         p.getWorld().spigot().playEffect(p.getLocation(), Effect.PARTICLE_SMOKE);
-                        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 5, 0));
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 6, 0));
                         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 2, 0));
-                        p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * 6, 0));
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * 12, 0));
                         p.sendMessage(ChatColor.RED + "You feel sick. Some milk would help.");
                     }
                 }
             }
-        }, 20 * 10, 20 * 20);
+        }, 20 * 10, 20 * 40);
     }
 
     public static int bleedingTask()

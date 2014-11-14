@@ -26,4 +26,9 @@ public class RandomNumber
     {
         return random.nextInt(max) + 1;
     }
+
+    public static double getDouble(int max)
+    {
+        return ((double) random.nextInt(max) + 1);
+    }
 }

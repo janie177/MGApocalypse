@@ -44,7 +44,7 @@ public class JoinListener implements Listener
     @EventHandler(priority = EventPriority.LOWEST)
     public void onSignClick(PlayerInteractEvent e)
     {
-        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.WALL_SIGN || e.getClickedBlock().getType() == Material.SIGN_POST)
+        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && (e.getClickedBlock().getType() == Material.WALL_SIGN || e.getClickedBlock().getType() == Material.SIGN_POST))
         {
             if (!(e.getClickedBlock().getState() instanceof Sign)) return;
             Sign sign = (Sign) e.getClickedBlock().getState();

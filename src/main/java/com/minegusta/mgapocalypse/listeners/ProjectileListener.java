@@ -1,6 +1,7 @@
 package com.minegusta.mgapocalypse.listeners;
 
 
+import com.minegusta.mgapocalypse.util.RemoveEntity;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
@@ -37,7 +38,7 @@ public class ProjectileListener implements Listener
                 ((Creature)ent).setTarget(temp);
             }
         }
-        temp.remove();
+        new RemoveEntity(temp, 5);
     }
 
     //Block enderpearl teleportation.
