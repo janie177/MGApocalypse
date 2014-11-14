@@ -53,7 +53,9 @@ public class DefaultConfig
      */
     public static void addSpawn(Location l)
     {
-        getConfig().set("spawns", getSpawns().add(StringLocConverter.locationToString(l)));
+        List<String> add = getConfig().getStringList("spawns");
+        add.add(StringLocConverter.locationToString(l));
+        getConfig().set("spawns", add);
         saveConfig();
     }
 
