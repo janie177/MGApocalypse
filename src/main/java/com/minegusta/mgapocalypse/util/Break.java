@@ -44,7 +44,7 @@ public class Break
             public void run()
             {
                 Bukkit.getScheduler().cancelTask(TASK2);
-                if(Math.abs(health - p.getHealth()) > 1 || Math.abs(x - p.getLocation().getX()) > 2 || Math.abs(y - p.getLocation().getY()) > 2 || Math.abs(z - p.getLocation().getZ()) > 2)
+                if(Math.abs(health - p.getHealth()) > 2 || Math.abs(x - p.getLocation().getX()) > 2.0 || Math.abs(y - p.getLocation().getY()) > 2.0 || Math.abs(z - p.getLocation().getZ()) > 2.0)
                 {
                     SavedLocationsManager.setLocation(p.getUniqueId(), p.getLocation());
                     p.sendMessage(ChatColor.DARK_GREEN + "- - - - - - - - - - - - - - - -");
