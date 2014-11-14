@@ -22,7 +22,7 @@ import java.util.List;
 
 public class MobListener implements Listener
 {
-    final static int chance = 4; //Percentage to spawn a zombie group
+    final static int chance = 1; //Percentage to spawn a zombie group
     final static List<CreatureSpawnEvent.SpawnReason> allowedReasons = Lists.newArrayList(CreatureSpawnEvent.SpawnReason.SPAWNER, CreatureSpawnEvent.SpawnReason.CUSTOM);
     //Block spawning of nooby mobs
     @EventHandler(priority = EventPriority.LOWEST)
