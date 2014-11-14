@@ -63,13 +63,13 @@ public class PlayerListener implements Listener
             if(e.getItem().getDurability() == 0) {
                 p.setLevel(20);
                 p.sendMessage(ChatColor.GREEN + "You feel refreshed.");
-                ItemUtil.removeOne(p, Material.POTION);
+                ItemUtil.removeOne(p, Material.GLASS_BOTTLE);
                 p.getInventory().addItem(LootItem.EMPTYBOTTLE.build());
                 p.updateInventory();
             }
             else
             {
-                p.setItemInHand(new ItemStack(Material.AIR));
+                ItemUtil.removeOne(p, Material.GLASS_BOTTLE);
             }
         }
 
@@ -130,7 +130,7 @@ public class PlayerListener implements Listener
             ButtonManager.despawnButon(e.getClickedBlock().getLocation());
         }
 
-        //Block nuckets
+        //Block buckets
         if(hand == Material.BUCKET || hand == Material.WATER_BUCKET)
         {
             e.setCancelled(true);
@@ -145,6 +145,7 @@ public class PlayerListener implements Listener
 
         if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.STATIONARY_WATER && hand == Material.GLASS_BOTTLE)
         {
+            e.setCancelled(true);
             ItemUtil.removeOne(p, Material.GLASS_BOTTLE);
             p.getInventory().addItem(LootItem.WATERBOTTLE.build());
             p.updateInventory();
@@ -159,6 +160,7 @@ public class PlayerListener implements Listener
             }
         }
 
+        //No bonemeal
         if(e.hasBlock() && e.getClickedBlock().getType() == Material.GRASS && hand == Material.INK_SACK)
         {
             e.setCancelled(true);

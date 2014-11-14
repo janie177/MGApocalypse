@@ -19,12 +19,12 @@ public class SmokeGrenade
     {
         for(int i = 0; i <= 20 * 10; i++)
         {
-            if(i % 10 == 0)
+            if(i % 5 == 0)
             {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
                     @Override
                     public void run() {
-                        l.getWorld().spigot().playEffect(l, Effect.LARGE_SMOKE, 0, 0, 3, 2, 3, 1, 70, 30);
+                        l.getWorld().spigot().playEffect(l, Effect.PARTICLE_SMOKE, 0, 0, 3, 2, 3, 1, 50, 30);
                     }
                 }, i);
             }
