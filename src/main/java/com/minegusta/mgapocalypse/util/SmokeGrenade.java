@@ -1,5 +1,6 @@
 package com.minegusta.mgapocalypse.util;
 
+import com.minegusta.mgapocalypse.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -20,7 +21,12 @@ public class SmokeGrenade
         {
             if(i % 10 == 0)
             {
-                l.getWorld().spigot().playEffect(l, Effect.LARGE_SMOKE, 0, 0, 3, 2, 3, 1, 30, 30);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
+                    @Override
+                    public void run() {
+                        l.getWorld().spigot().playEffect(l, Effect.LARGE_SMOKE, 0, 0, 3, 2, 3, 1, 70, 30);
+                    }
+                }, i);
             }
         }
     }

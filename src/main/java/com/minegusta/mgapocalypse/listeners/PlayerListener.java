@@ -7,10 +7,7 @@ import com.minegusta.mgapocalypse.dotmanagers.BleedingManager;
 import com.minegusta.mgapocalypse.dotmanagers.DiseaseManager;
 import com.minegusta.mgapocalypse.items.LootItem;
 import com.minegusta.mgapocalypse.lootblocks.Loot;
-import com.minegusta.mgapocalypse.util.RandomNumber;
-import com.minegusta.mgapocalypse.util.SmokeGrenade;
-import com.minegusta.mgapocalypse.util.TempData;
-import com.minegusta.mgapocalypse.util.WorldCheck;
+import com.minegusta.mgapocalypse.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -66,8 +63,9 @@ public class PlayerListener implements Listener
         {
             if(e.getItem().getDurability() == 0) {
                 p.setLevel(20);
-                p.sendMessage(ChatColor.GRAY + "You feel refreshed.");
-                p.setItemInHand(LootItem.EMPTYBOTTLE.build());
+                p.sendMessage(ChatColor.GREEN + "You feel refreshed.");
+                ItemUtil.removeOne(p, Material.POTION);
+                p.getInventory().addItem(LootItem.EMPTYBOTTLE.build());
                 p.updateInventory();
             }
             else
@@ -80,8 +78,7 @@ public class PlayerListener implements Listener
         //Cure diseases
         if(m == Material.MILK_BUCKET)
         {
-            p.setItemInHand(new ItemStack(Material.AIR));
-            p.updateInventory();
+            ItemUtil.removeOne(p, Material.BUCKET);
             DiseaseManager.cure(p);
         }
     }
@@ -103,9 +100,8 @@ public class PlayerListener implements Listener
             {
                 healer.sendMessage(ChatColor.GREEN + "You bandaged " + p.getName() + ".");
                 p.sendMessage(ChatColor.GREEN + healer.getName() + " bandaged your wounds.");
-                healer.getInventory().remove(new ItemStack(Material.PAPER, 1));
+                ItemUtil.removeOne(healer, Material.PAPER);
                 BleedingManager.bandage(p, true);
-                healer.updateInventory();
             }
         }
     }
@@ -124,9 +120,8 @@ public class PlayerListener implements Listener
             if(hand.equals(Material.PAPER))
             {
                 p.sendMessage(ChatColor.GREEN + "You bandaged your wounds.");
-                p.getInventory().remove(new ItemStack(Material.PAPER, 1));
+                ItemUtil.removeOne(p, Material.PAPER);
                 BleedingManager.bandage(p, true);
-                p.updateInventory();
             }
         }
 
@@ -146,12 +141,12 @@ public class PlayerListener implements Listener
         if(e.hasBlock() && hand == Material.SLIME_BALL)
         {
             new SmokeGrenade(e.getClickedBlock().getLocation());
-            e.getPlayer().getInventory().remove(new ItemStack(Material.SNOW_BALL, 1));
+            ItemUtil.removeOne(p, Material.SLIME_BALL);
         }
 
-        if(hand == Material.GLASS_BOTTLE)
+        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.STATIONARY_WATER && hand == Material.GLASS_BOTTLE)
         {
-            p.getInventory().remove(new ItemStack(Material.GLASS_BOTTLE, 1));
+            ItemUtil.removeOne(p, Material.GLASS_BOTTLE);
             p.getInventory().addItem(LootItem.WATERBOTTLE.build());
             p.updateInventory();
         }
@@ -330,7 +325,7 @@ public class PlayerListener implements Listener
         Zombie z = (Zombie) p.getWorld().spawnEntity(p.getLocation(), EntityType.ZOMBIE);
         z.setCustomNameVisible(true);
         z.setCustomName(p.getName());
-        z.getEquipment().setHelmet(new ItemStack(Material.SKULL_ITEM, 1) {
+        z.getEquipment().setHelmet(new ItemStack(Material.SKULL_ITEM, 1, (short) 3) {
             {
                 SkullMeta meta = (SkullMeta) getItemMeta();
                 meta.setOwner(p.getName());

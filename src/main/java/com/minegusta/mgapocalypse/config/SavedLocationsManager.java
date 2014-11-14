@@ -24,7 +24,8 @@ public class SavedLocationsManager {
 
             file = new File(p.getDataFolder(), "playerlocations.yml");
 
-            if (!file.exists()) {
+            if (!file.exists())
+            {
                 p.saveResource("playerlocations.yml", false);
                 Bukkit.getLogger().info("Successfully created " + file.getName() + ".");
             }
