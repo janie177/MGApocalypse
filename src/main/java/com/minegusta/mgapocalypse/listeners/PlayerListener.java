@@ -324,8 +324,11 @@ public class PlayerListener implements Listener
         e.setDroppedExp(0);
         final Player p = e.getEntity();
 
+        DiseaseManager.cure(p);
+        BleedingManager.bandage(p, false);
+
         Zombie z = (Zombie) p.getWorld().spawnEntity(p.getLocation(), EntityType.ZOMBIE);
-        z.getEquipment().setHelmet(new ItemStack(Material.SKULL, 1) {
+        z.getEquipment().setHelmet(new ItemStack(Material.SKULL_ITEM, 1) {
             {
                 SkullMeta meta = (SkullMeta) getItemMeta();
                 meta.setOwner(p.getName());
