@@ -3,15 +3,13 @@ author: janie177
 name: MGApocalypse
 version ${project.version}
 commands:
-   mga:
-      description: Base command for setting spawns and such.
-      usage: /MGA <arguments>
-      aliases: [minegustaapocalypse, mgw, minegustawasteland]
-      default: false
-      permission-message: This command is for owners only.
-   break:
-      description: Save your location and return to the hub.
-      usage: /Break
-      aliases: [break, pause, hub, abort]
-      default: true
-      permission-message: You cannot use that here.
+  mga:
+    usage: /mga <parameters>
+    description: Manage the wasteland world.
+    aliases: [minegustaapocalypse, mgw]
+    default: op
+  break:
+    usage: /break
+    description: Pause playing wasteland.
+    aliases: [hub, pause, logout, log-out, leave, abort, exit]
+    default: true
