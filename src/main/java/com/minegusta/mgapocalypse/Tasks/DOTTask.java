@@ -6,6 +6,7 @@ import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -22,9 +23,10 @@ public class DOTTask
             {
                 for(String uuid : TempData.diseaseMap.keySet())
                 {
-                    Player p = Bukkit.getPlayer(UUID.fromString(uuid));
-                    if(p.isOnline() && WorldCheck.is(p.getWorld()))
+                    OfflinePlayer pl = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+                    if(pl.isOnline() && WorldCheck.is((((Player)pl).getWorld())))
                     {
+                        Player p = pl.getPlayer();
                         p.getWorld().spigot().playEffect(p.getLocation(), Effect.PARTICLE_SMOKE);
                         p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 6, 0));
                         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 2, 0));
@@ -44,9 +46,10 @@ public class DOTTask
             {
                 for(String uuid : TempData.bleedingMap.keySet())
                 {
-                    Player p = Bukkit.getPlayer(UUID.fromString(uuid));
-                    if(p.isOnline() && WorldCheck.is(p.getWorld()))
+                    OfflinePlayer pl = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+                    if(pl.isOnline() && WorldCheck.is((((Player)pl).getWorld())))
                     {
+                        Player p = pl.getPlayer();
                         p.damage(1.0);
                         p.getWorld().spigot().playEffect(p.getLocation(), Effect.CRIT);
                         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 2, 2));
