@@ -22,7 +22,7 @@ import java.util.List;
 
 public class MobListener implements Listener
 {
-    final static int chance = 1; //Percentage to spawn a zombie group
+    final static int chance = 2; //Percentage to spawn a zombie group
     final static List<CreatureSpawnEvent.SpawnReason> allowedReasons = Lists.newArrayList(CreatureSpawnEvent.SpawnReason.SPAWNER, CreatureSpawnEvent.SpawnReason.CUSTOM);
     //Block spawning of nooby mobs
     @EventHandler(priority = EventPriority.LOWEST)
@@ -49,7 +49,7 @@ public class MobListener implements Listener
 
                 for (int i = 0; i < RandomNumber.get(6); i++)
                 {
-                    Location random = zombie.getLocation().add(RandomNumber.get(1),0,0);
+                    Location random = zombie.getLocation().add(RandomNumber.getDouble(10) - 5,0,RandomNumber.getDouble(10) - 5);
                     Zombie zombie2 = (Zombie) loc.getWorld().spawnEntity(random, EntityType.ZOMBIE);
                     if (RandomNumber.get(25) == 1) {
                         zombie2.setBaby(true);
