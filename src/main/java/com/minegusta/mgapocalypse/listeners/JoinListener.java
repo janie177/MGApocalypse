@@ -1,6 +1,7 @@
 package com.minegusta.mgapocalypse.listeners;
 
 import com.minegusta.mgapocalypse.config.DefaultConfig;
+import com.minegusta.mgapocalypse.config.SavedLocationsManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
@@ -52,9 +53,17 @@ public class JoinListener implements Listener
             if(sign.getLine(1).equals(ChatColor.AQUA + "Wasteland"))
             {
                 //Spawn the player
-                e.getPlayer().teleport(DefaultConfig.getRandomSpawn());
+                if(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()) == null)
+                {
+                    e.getPlayer().teleport(DefaultConfig.getRandomSpawn());
+                    e.getPlayer().setLevel(20);
+                }
+                else
+                {
+                    e.getPlayer().teleport(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()));
+                    SavedLocationsManager.setLocation(e.getPlayer().getUniqueId(), null);
+                }
                 e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 1, false));
-                e.getPlayer().setLevel(20);
                 e.getPlayer().sendMessage(ChatColor.GRAY + "You wake up in an apocalyptic world...");
             }
         }
