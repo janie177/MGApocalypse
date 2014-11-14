@@ -49,8 +49,8 @@ public class Break
                     SavedLocationsManager.setLocation(p.getUniqueId(), p.getLocation());
                     p.sendMessage(ChatColor.DARK_GREEN + "- - - - - - - - - - - - - - - -");
                     p.sendMessage(ChatColor.GREEN + "You have returned to the spawn.");
-                    p.sendMessage(ChatColor.GREEN + "Your location will be saved.");
-                    p.sendMessage(ChatColor.GREEN + "Please do not move or fight.");
+                    p.sendMessage(ChatColor.GREEN + "Your progress has been saved.");
+                    p.sendMessage(ChatColor.GREEN + "To continue playing just join the world again.");
                     p.sendMessage(ChatColor.DARK_GREEN + "- - - - - - - - - - - - - - - -");
                     p.teleport(DefaultConfig.getMainSpawn());
                 }
