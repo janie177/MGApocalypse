@@ -1,7 +1,7 @@
 main: com.minegusta.mgapocalypse.Main
 author: janie177
 name: MGApocalypse
-version ${project.version}
+version: ${project.version}
 commands:
   mga:
     usage: /mga <parameters>
