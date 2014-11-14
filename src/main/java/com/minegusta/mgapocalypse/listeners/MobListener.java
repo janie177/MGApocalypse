@@ -22,7 +22,9 @@ import java.util.List;
 
 public class MobListener implements Listener
 {
-    final static int chance = 2; //Percentage to spawn a zombie group
+    final static int nightChance = 2; //Percentage to spawn a zombie group
+    final static int dayChance = 4; //Percentage to spawn a zombie group
+
     final static List<CreatureSpawnEvent.SpawnReason> allowedReasons = Lists.newArrayList(CreatureSpawnEvent.SpawnReason.SPAWNER, CreatureSpawnEvent.SpawnReason.CUSTOM);
     //Block spawning of nooby mobs
     @EventHandler(priority = EventPriority.LOWEST)
@@ -41,19 +43,27 @@ public class MobListener implements Listener
             e.setCancelled(true);
 
             //Check if spawn
+            long time = loc.getWorld().getTime();
+            boolean day = false;
+            if (time < 12300 || time > 23850) day = true;
 
-            if (RandomNumber.get(100) <= chance) {
+            //Return if chance is false
+            if (day) {
+                if (!(RandomNumber.get(100) <= dayChance)) return;
+            } else
+            {
+                if (!(RandomNumber.get(100) <= nightChance)) return;
+            }
 
-                //Spawn a zombie
-                Zombie zombie = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
+            //Spawn a zombie
+            Zombie zombie = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
 
-                for (int i = 0; i < RandomNumber.get(6); i++)
-                {
-                    Location random = zombie.getLocation().add(RandomNumber.getDouble(10) - 5,0,RandomNumber.getDouble(10) - 5);
-                    Zombie zombie2 = (Zombie) loc.getWorld().spawnEntity(random, EntityType.ZOMBIE);
-                    if (RandomNumber.get(25) == 1) {
-                        zombie2.setBaby(true);
-                    }
+            for (int i = 0; i < RandomNumber.get(6); i++)
+            {
+                Location random = zombie.getLocation().add(RandomNumber.getDouble(10) - 5,0,RandomNumber.getDouble(10) - 5);
+                Zombie zombie2 = (Zombie) loc.getWorld().spawnEntity(random, EntityType.ZOMBIE);
+                if (RandomNumber.get(25) == 1) {
+                    zombie2.setBaby(true);
                 }
             }
         }
