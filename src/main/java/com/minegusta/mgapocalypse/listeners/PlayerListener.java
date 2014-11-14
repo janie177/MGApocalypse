@@ -5,11 +5,13 @@ import com.minegusta.mgapocalypse.buttons.ButtonManager;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.dotmanagers.BleedingManager;
 import com.minegusta.mgapocalypse.dotmanagers.DiseaseManager;
+import com.minegusta.mgapocalypse.lootblocks.Loot;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Chicken;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
@@ -21,10 +23,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -37,12 +36,36 @@ public class PlayerListener implements Listener
     private static final List<Material> blockedBlocks = Lists.newArrayList(Material.ENCHANTMENT_TABLE, Material.ANVIL, Material.BED, Material.MINECART, Material.STORAGE_MINECART);
 
     //Chances for bleeding. Also for diseases.
-    final static int bleedChance = 5; //In %
-    final static int diseaseChance = 3; //In %
+    private final static int bleedChance = 5; //In %
+    private final static int diseaseChance = 3; //In %
 
     //All the allowed commands, lower case only.
-    final static List<String> allowedCMDS = Lists.newArrayList("pop", "break");
+    private final static List<String> allowedCMDS = Lists.newArrayList("pop", "break");
 
+    //All food types that heal you
+    private final static List<Material> food = Lists.newArrayList(Material.MELON, Material.RAW_FISH, Material.RAW_CHICKEN, Material.RAW_BEEF, Material.BREAD, Material.COOKIE, Material.POTATO_ITEM, Material.CARROT_ITEM, Material.APPLE, Material.MUSHROOM_SOUP, Material.PORK, Material.GRILLED_PORK, Material.COOKED_FISH, Material.BAKED_POTATO, Material.COOKED_CHICKEN);
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onEvent(PlayerItemConsumeEvent e)
+    {
+        if(!WorldCheck.is(e.getPlayer().getWorld()))return;
+
+        Player p = e.getPlayer();
+        Material m = e.getItem().getType();
+
+        if(food.contains(m))
+        {
+            if(p.getMaxHealth() != p.getHealth())p.setHealth(p.getHealth() + 1.0);
+        }
+
+        //Cure diseases
+        if(m == Material.MILK_BUCKET)
+        {
+            p.setItemInHand(new ItemStack(Material.AIR));
+            p.updateInventory();
+            DiseaseManager.cure(p);
+        }
+    }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEvent(PlayerInteractEntityEvent e)
@@ -104,6 +127,11 @@ public class PlayerListener implements Listener
             }
         }
 
+        if(e.hasBlock() && e.getClickedBlock().getType() == Material.GRASS && hand == Material.INK_SACK)
+        {
+            e.setCancelled(true);
+        }
+
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -161,14 +189,14 @@ public class PlayerListener implements Listener
 
         if(type == Material.SOUL_SAND && hand == Material.WOOD_SPADE)
         {
-            l.getWorld().dropItemNaturally(l, new ItemStack(Material.COOKIE, 2));
+            l.getWorld().dropItemNaturally(l, Loot.getGrave().build());
             tool.setDurability((short) (tool.getDurability() + 15));
         }
 
-        if(type == Material.IRON_ORE && hand == Material.WOOD_PICKAXE)
+        if((type == Material.IRON_ORE || type == Material.DIAMOND_ORE || type == Material.COAL_ORE)&& hand == Material.WOOD_PICKAXE)
         {
-            l.getWorld().dropItemNaturally(l, new ItemStack(Material.IRON_INGOT, 1));
-            tool.setDurability((short) (tool.getDurability() + 25));
+            l.getWorld().dropItemNaturally(l, Loot.getOre().build());
+            tool.setDurability((short) (tool.getDurability() + 20));
         }
 
         e.setCancelled(true);

@@ -2,12 +2,14 @@ package com.minegusta.mgapocalypse.dotmanagers;
 
 
 import com.minegusta.mgapocalypse.util.TempData;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class BleedingManager
 {
     public static void bleed(Player p)
     {
+        p.sendMessage(ChatColor.RED + "Ouch! You're bleeding!");
         TempData.bleedingMap.put(p.getUniqueId().toString(), System.currentTimeMillis());
     }
 
