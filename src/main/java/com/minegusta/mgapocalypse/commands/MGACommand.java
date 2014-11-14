@@ -46,6 +46,8 @@ public class MGACommand implements CommandExecutor{
             else if(args[0].equalsIgnoreCase("setmainspawn"))
             {
                 DefaultConfig.setMainSpawn(p.getLocation());
+                p.sendMessage(ChatColor.GREEN + "Main spawn location set!");
+                return true;
             }
         }
         else if(args.length == 2)
