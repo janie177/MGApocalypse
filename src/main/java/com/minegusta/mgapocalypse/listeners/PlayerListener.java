@@ -24,6 +24,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.awt.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -265,7 +266,8 @@ public class PlayerListener implements Listener
                 {
                     if(TempData.healMap.containsKey(p.getUniqueId().toString()) && TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - TempData.healMap.get(p.getUniqueId().toString())) < 15)
                     {
-                        long wait = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - TempData.healCoolDownMap.get(p.getUniqueId().toString()));
+                        long wait = 0;
+                        if(TempData.healCoolDownMap.containsKey(p.getUniqueId().toString())) wait = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - TempData.healCoolDownMap.get(p.getUniqueId().toString()));
                         if(TempData.healCoolDownMap.containsKey(p.getUniqueId().toString()) && wait < 180)
                         {
                             damager.sendMessage(ChatColor.RED + "This player cannot be healed for another " + Long.toString(180 - wait) + " Seconds.");
