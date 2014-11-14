@@ -1,4 +1,4 @@
-main: com.minegusta.mgapocalypse.com.minegusta.mgapocalypse.Main
+main: com.minegusta.mgapocalypse.Main
 author: janie177
 name: MGApocalypse
 version ${project.version}
