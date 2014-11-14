@@ -5,18 +5,17 @@ import com.minegusta.mgapocalypse.buttons.ButtonManager;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.dotmanagers.BleedingManager;
 import com.minegusta.mgapocalypse.dotmanagers.DiseaseManager;
+import com.minegusta.mgapocalypse.items.LootItem;
 import com.minegusta.mgapocalypse.lootblocks.Loot;
 import com.minegusta.mgapocalypse.util.RandomNumber;
+import com.minegusta.mgapocalypse.util.SmokeGrenade;
 import com.minegusta.mgapocalypse.util.TempData;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Chicken;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -62,6 +61,21 @@ public class PlayerListener implements Listener
         {
             if(p.getMaxHealth() != p.getHealth())p.setHealth(p.getHealth() + 1.0);
         }
+
+        if(m == Material.POTION)
+        {
+            if(e.getItem().getDurability() == 0) {
+                p.setLevel(20);
+                p.sendMessage(ChatColor.GRAY + "You feel refreshed.");
+                p.setItemInHand(LootItem.EMPTYBOTTLE.build());
+                p.updateInventory();
+            }
+            else
+            {
+                p.setItemInHand(new ItemStack(Material.AIR));
+            }
+        }
+
 
         //Cure diseases
         if(m == Material.MILK_BUCKET)
@@ -122,7 +136,25 @@ public class PlayerListener implements Listener
             ButtonManager.despawnButon(e.getClickedBlock().getLocation());
         }
 
+        //Block nuckets
+        if(hand == Material.BUCKET || hand == Material.WATER_BUCKET)
+        {
+            e.setCancelled(true);
+        }
 
+        //Smoke grenades
+        if(e.hasBlock() && hand == Material.SLIME_BALL)
+        {
+            new SmokeGrenade(e.getClickedBlock().getLocation());
+            e.getPlayer().getInventory().remove(new ItemStack(Material.SNOW_BALL, 1));
+        }
+
+        if(hand == Material.GLASS_BOTTLE)
+        {
+            p.getInventory().remove(new ItemStack(Material.GLASS_BOTTLE, 1));
+            p.getInventory().addItem(LootItem.WATERBOTTLE.build());
+            p.updateInventory();
+        }
 
         //Block interacting with certain blocks
         if(e.getAction() == Action.RIGHT_CLICK_BLOCK)
@@ -137,7 +169,6 @@ public class PlayerListener implements Listener
         {
             e.setCancelled(true);
         }
-
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -196,6 +227,7 @@ public class PlayerListener implements Listener
         if(type == Material.SOUL_SAND && hand == Material.WOOD_SPADE)
         {
             l.getWorld().dropItemNaturally(l, Loot.getGrave().build());
+            if(RandomNumber.get(3) == 1)l.getWorld().spawnEntity(l, EntityType.SKELETON);
             tool.setDurability((short) (tool.getDurability() + 15));
         }
 
@@ -327,6 +359,21 @@ public class PlayerListener implements Listener
             e.getPlayer().sendMessage(ChatColor.RED + "Commands are blocked here!");
             e.getPlayer().sendMessage(ChatColor.RED + "To get back to the hub, use:");
             e.getPlayer().sendMessage(ChatColor.GRAY + "/break");
+        }
+    }
+
+    //Sprinting lures zombies.
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onEvent(PlayerToggleSprintEvent e)
+    {
+        if(!WorldCheck.is(e.getPlayer().getWorld()))return;
+
+        for(Entity ent : e.getPlayer().getNearbyEntities(20, 12, 20))
+        {
+            if(ent instanceof Zombie)
+            {
+                ((Creature)ent).setTarget(e.getPlayer());
+            }
         }
     }
 }

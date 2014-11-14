@@ -1,6 +1,7 @@
 package com.minegusta.mgapocalypse;
 
 import com.minegusta.mgapocalypse.Tasks.DOTTask;
+import com.minegusta.mgapocalypse.Tasks.DrinkTask;
 import com.minegusta.mgapocalypse.Tasks.SaveTask;
 import com.minegusta.mgapocalypse.commands.BreakCommand;
 import com.minegusta.mgapocalypse.commands.MGACommand;
@@ -18,7 +19,7 @@ public class Main extends JavaPlugin
 {
 
     public static Plugin PLUGIN;
-    public static int SAVETASK, BLEEDTASK, DISEASETASK;
+    public static int SAVETASK, BLEEDTASK, DISEASETASK, DRINKTASK;
 
     @Override
     public void onEnable()
@@ -47,6 +48,7 @@ public class Main extends JavaPlugin
         SAVETASK = SaveTask.start();
         BLEEDTASK = DOTTask.bleedingTask();
         DISEASETASK = DOTTask.diseaseTask();
+        DRINKTASK = DrinkTask.start();
 
 
     }
@@ -59,5 +61,6 @@ public class Main extends JavaPlugin
         Bukkit.getScheduler().cancelTask(SAVETASK);
         Bukkit.getScheduler().cancelTask(BLEEDTASK);
         Bukkit.getScheduler().cancelTask(DISEASETASK);
+        Bukkit.getScheduler().cancelTask(DRINKTASK);
     }
 }

@@ -54,6 +54,7 @@ public class JoinListener implements Listener
                 //Spawn the player
                 e.getPlayer().teleport(DefaultConfig.getRandomSpawn());
                 e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 1, false));
+                e.getPlayer().setLevel(20);
                 e.getPlayer().sendMessage(ChatColor.GRAY + "You wake up in an apocalyptic world...");
             }
         }
