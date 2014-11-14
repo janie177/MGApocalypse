@@ -2,7 +2,6 @@ package com.minegusta.mgapocalypse.listeners;
 
 import com.google.common.collect.Lists;
 import com.minegusta.mgapocalypse.buttons.ButtonManager;
-import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.dotmanagers.BleedingManager;
 import com.minegusta.mgapocalypse.dotmanagers.DiseaseManager;
 import com.minegusta.mgapocalypse.items.LootItem;
@@ -341,7 +340,7 @@ public class PlayerListener implements Listener
         if(!WorldCheck.is(e.getPlayer().getWorld()))return;
 
         //Set the respawn position to be the main spawn.
-        e.setRespawnLocation(DefaultConfig.getMainSpawn());
+        new RespawnLater(e.getPlayer());
     }
 
     //Block all commands
