@@ -1,6 +1,9 @@
 package com.minegusta.mgapocalypse.listeners;
 
-public class MobListener
+import org.bukkit.event.Listener;
+
+public class MobListener implements Listener
 {
-    //Listener class that listens for mob spawning. Change mobs here.
+
+
 }

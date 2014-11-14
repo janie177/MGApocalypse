@@ -25,6 +25,7 @@ public enum LootItem
     SNOWBALL(Material.SNOW_BALL, 1, (short) 0, "Maybe you should throw this away." , "Ball Of Rubbish", false),
     COAL(Material.COAL, 1, (short) 0, "Good for cooking food." , "Coal", false),
     BONE(Material.BONE, 1, (short) 0, "A dusty old bone." , "Bone", false),
+    SHEARS(Material.SHEARS, 1, (short) 0, "Good for cutting off bandage.", "Shears", false),
     SKULL(Material.SKULL_ITEM, 1, (short) 0, "I should wear this." , "Skull", false),
     SMOKEGRENADE(Material.SLIME_BALL, 1, (short) 0, "Throw this to cause a distraction for players." , "Smoke Grenade", false),
     BANDAGE(Material.PAPER, 1, (short) 0, "Right click to heal yourself or others." , "Bandage", false),
