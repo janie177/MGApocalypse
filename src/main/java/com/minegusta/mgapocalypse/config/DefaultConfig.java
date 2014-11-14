@@ -54,6 +54,7 @@ public class DefaultConfig
     public static void addSpawn(Location l)
     {
         getConfig().set("spawns", getSpawns().add(StringLocConverter.locationToString(l)));
+        saveConfig();
     }
 
     /**
@@ -83,5 +84,6 @@ public class DefaultConfig
     public static void setMainSpawn(Location l)
     {
         getConfig().set("main_spawn", StringLocConverter.locationToString(l));
+        saveConfig();
     }
 }
