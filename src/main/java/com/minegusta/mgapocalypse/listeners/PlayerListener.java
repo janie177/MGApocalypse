@@ -7,8 +7,10 @@ import com.minegusta.mgapocalypse.dotmanagers.BleedingManager;
 import com.minegusta.mgapocalypse.dotmanagers.DiseaseManager;
 import com.minegusta.mgapocalypse.lootblocks.Loot;
 import com.minegusta.mgapocalypse.util.RandomNumber;
+import com.minegusta.mgapocalypse.util.TempData;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Chicken;
@@ -26,8 +28,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class PlayerListener implements Listener
 {
@@ -85,7 +90,7 @@ public class PlayerListener implements Listener
                 healer.sendMessage(ChatColor.GREEN + "You bandaged " + p.getName() + ".");
                 p.sendMessage(ChatColor.GREEN + healer.getName() + " bandaged your wounds.");
                 healer.getInventory().remove(new ItemStack(Material.PAPER, 1));
-                BleedingManager.bandage(p);
+                BleedingManager.bandage(p, true);
                 healer.updateInventory();
             }
         }
@@ -106,7 +111,7 @@ public class PlayerListener implements Listener
             {
                 p.sendMessage(ChatColor.GREEN + "You bandaged your wounds.");
                 p.getInventory().remove(new ItemStack(Material.PAPER, 1));
-                BleedingManager.bandage(p);
+                BleedingManager.bandage(p, true);
                 p.updateInventory();
             }
         }
@@ -210,10 +215,48 @@ public class PlayerListener implements Listener
     {
         if(!WorldCheck.is(e.getEntity().getWorld()))return;
 
-        //Bleeding and diseases.
         if(e.getEntity() instanceof Player)
         {
             Player p = (Player) e.getEntity();
+
+            //Healing check
+            if(e.getDamager() instanceof Player)
+            {
+                Player damager = (Player) e.getDamager();
+                ItemStack hand = damager.getItemInHand();
+                if(hand.getType() == Material.PAPER)
+                {
+                    TempData.healMap.put(p.getUniqueId().toString(), System.currentTimeMillis());
+                    BleedingManager.bandage(p, false);
+                    p.sendMessage(ChatColor.GRAY + damager.getName() + " began bandaging you...");
+                    damager.sendMessage(ChatColor.GRAY + "You begin bandaging " + p.getName() + ".");
+                    e.setCancelled(true);
+                }
+
+                else if(hand.getType() == Material.SHEARS)
+                {
+                    if(TempData.healMap.containsKey(p.getUniqueId().toString()) && TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - TempData.healMap.get(p.getUniqueId().toString())) < 15)
+                    {
+                        long wait = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - TempData.healCoolDownMap.get(p.getUniqueId().toString()));
+                        if(TempData.healCoolDownMap.containsKey(p.getUniqueId().toString()) && wait < 180)
+                        {
+                            damager.sendMessage(ChatColor.RED + "This player cannot be healed for another " + Long.toString(180 - wait) + " Seconds.");
+                        }
+                        else
+                        {
+                            TempData.healCoolDownMap.put(p.getUniqueId().toString(), System.currentTimeMillis());
+                            healPlayer(p, damager);
+                        }
+                    }
+                    else
+                    {
+                        damager.sendMessage(ChatColor.RED + "Hit players with bandage first before healing them!");
+                    }
+                    e.setCancelled(true);
+                }
+            }
+
+            //Disease checking
             if(!e.isCancelled())
             {
                 if(e.getDamager() != null && e.getDamager() instanceof Zombie)
@@ -229,6 +272,14 @@ public class PlayerListener implements Listener
                 }
             }
         }
+    }
+
+    private void healPlayer(Player p, Player healer)
+    {
+        p.sendMessage(ChatColor.LIGHT_PURPLE + "You were healed by " + healer.getName() + ".");
+        healer.sendMessage(ChatColor.LIGHT_PURPLE + "You healed " + p.getName() + ".");
+        p.getWorld().spigot().playEffect(p.getLocation(), Effect.HEART);
+        p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 5, 0));
     }
 
     //Spawn a zombie on death

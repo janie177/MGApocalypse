@@ -13,9 +13,9 @@ public class BleedingManager
         TempData.bleedingMap.put(p.getUniqueId().toString(), System.currentTimeMillis());
     }
 
-    public static void bandage(Player p)
+    public static void bandage(Player p, boolean heal)
     {
-        if(!(p.getMaxHealth() == p.getHealth()))p.setHealth(p.getHealth() + 1.0);
+        if(heal && !(p.getMaxHealth() == p.getHealth()))p.setHealth(p.getHealth() + 1.0);
         if(TempData.bleedingMap.containsKey(p.getUniqueId().toString()))
         {
             TempData.bleedingMap.remove(p.getUniqueId().toString());
