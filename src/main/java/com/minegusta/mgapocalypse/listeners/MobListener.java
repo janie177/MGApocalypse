@@ -19,6 +19,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MobListener implements Listener
 {
@@ -29,12 +30,17 @@ public class MobListener implements Listener
 
     private final static List<CreatureSpawnEvent.SpawnReason> allowedReasons = Lists.newArrayList(CreatureSpawnEvent.SpawnReason.SPAWNER, CreatureSpawnEvent.SpawnReason.CUSTOM);
 
+    private static long coolDown = System.currentTimeMillis();
 
     //Block spawning of nooby mobs
     @EventHandler(priority = EventPriority.LOWEST)
     public void onSpawn(CreatureSpawnEvent e)
     {
         if(!WorldCheck.is(e.getEntity().getWorld()))return;
+
+        if(!(TimeUnit.NANOSECONDS.toSeconds(System.currentTimeMillis() - coolDown) > 10))return;
+
+        coolDown = System.currentTimeMillis();
 
         if(allowedReasons.contains(e.getSpawnReason()))
         {
