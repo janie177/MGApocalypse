@@ -25,6 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -311,7 +312,9 @@ public class PlayerListener implements Listener
             if(e.getDamager() instanceof Player)
             {
                 Zombie zombie = (Zombie) e.getEntity();
-                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 5, 2));
+                Player p = (Player) e.getDamager();
+                zombie.setVelocity(zombie.getLocation().toVector().subtract(p.getLocation().toVector()).normalize().multiply(1.1));
+                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 5, 1));
             }
         }
     }
