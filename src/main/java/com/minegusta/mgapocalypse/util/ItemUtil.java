@@ -8,7 +8,7 @@ public class ItemUtil
 {
     public static void removeOne(Player p, Material m)
     {
-        for(ItemStack i : p.getInventory())
+        for(ItemStack i : p.getInventory().getContents())
         {
             if(i != null && i.getType() == m)
             {
@@ -20,7 +20,6 @@ public class ItemUtil
                 {
                     i.setType(Material.AIR);
                 }
-                break;
             }
         }
         p.updateInventory();
