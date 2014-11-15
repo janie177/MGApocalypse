@@ -311,7 +311,7 @@ public class PlayerListener implements Listener
             if(e.getDamager() instanceof Player)
             {
                 Zombie zombie = (Zombie) e.getEntity();
-                if(zombie.hasPotionEffect(PotionEffectType.SPEED))zombie.removePotionEffect(PotionEffectType.SPEED);
+                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 3, 1));
             }
         }
     }

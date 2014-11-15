@@ -28,17 +28,18 @@ public class ProjectileListener implements Listener
         }
 
         //Snowballs
-        Location l = e.getEntity().getLocation();
-        LivingEntity temp = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SQUID);
-        temp.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20 * 300, 0));
-        for(Entity ent : temp.getNearbyEntities(30, 10, 30))
-        {
-            if(ent instanceof Zombie)
-            {
-                ((Creature)ent).setTarget(temp);
+        if(e.getEntity() instanceof Snowball) {
+
+            Location l = e.getEntity().getLocation();
+            LivingEntity temp = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SQUID);
+            temp.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20 * 300, 0));
+            for (Entity ent : temp.getNearbyEntities(30, 10, 30)) {
+                if (ent instanceof Zombie) {
+                    ((Creature) ent).setTarget(temp);
+                }
             }
+            new RemoveEntity(temp, 5);
         }
-        new RemoveEntity(temp, 5);
     }
 
     //Block enderpearl teleportation.
