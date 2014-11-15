@@ -43,50 +43,44 @@ public class MobListener implements Listener
             return;
         }
 
-        if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.DEFAULT) {
+        Location loc = e.getLocation();
+        e.setCancelled(true);
 
-            Location loc = e.getLocation();
-            e.setCancelled(true);
+        int chance = 0;
 
-            int chance = 0;
+        //Check time settings
+        long time = loc.getWorld().getTime();
 
-            //Check time settings
-            long time = loc.getWorld().getTime();
+        boolean day = false;
+        if (time < 12300 || time > 23850) chance = dayChance;
+        else chance = nightChance;
 
-            boolean day = false;
-            if (time < 12300 || time > 23850) chance = dayChance;
-            else chance = nightChance;
-
-            if(highspawnchance.contains(loc.getBlock().getRelative(BlockFace.DOWN).getType()))
-            {
-                chance = chance * 2;
-            }
-
-            int amount = RandomNumber.get(1000);
-
-            //Return if chance is false
-            if (!(amount <= chance)) return;
-
-            if(!(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - coolDown) > 10))return;
-
-            coolDown = System.currentTimeMillis();
-
-            //Spawn a zombie
-            Zombie zombie = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
-
-            for (int i = 0; i < RandomNumber.get(6); i++)
-            {
-                Location random = zombie.getLocation().add(RandomNumber.getDouble(10) - 5,0,RandomNumber.getDouble(10) - 5);
-                Zombie zombie2 = (Zombie) loc.getWorld().spawnEntity(random, EntityType.ZOMBIE);
-                if (RandomNumber.get(25) == 1) {
-                    zombie2.setBaby(true);
-                }
-            }
-        }
-        else
+        if(highspawnchance.contains(loc.getBlock().getRelative(BlockFace.DOWN).getType()))
         {
-            e.setCancelled(true);
+            chance = chance * 2;
         }
+
+        int amount = RandomNumber.get(1000);
+
+        //Return if chance is false
+        if (!(amount <= chance)) return;
+
+        if(!(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - coolDown) > 8))return;
+
+        coolDown = System.currentTimeMillis();
+
+        //Spawn a zombie
+        Zombie zombie = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
+
+        for (int i = 0; i < RandomNumber.get(6); i++)
+        {
+            Location random = zombie.getLocation().add(RandomNumber.getDouble(10) - 5,0,RandomNumber.getDouble(10) - 5);
+            Zombie zombie2 = (Zombie) loc.getWorld().spawnEntity(random, EntityType.ZOMBIE);
+            if (RandomNumber.get(25) == 1) {
+                zombie2.setBaby(true);
+            }
+        }
+
     }
 
 
