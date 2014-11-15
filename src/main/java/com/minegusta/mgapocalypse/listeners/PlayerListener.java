@@ -214,14 +214,14 @@ public class PlayerListener implements Listener
         {
             l.getWorld().dropItemNaturally(l, new ItemStack(Material.WHEAT, 1));
             tool.setDurability((short) (tool.getDurability() + 5));
-            if(tool.getDurability() >= hand.getMaxDurability())tool.setType(Material.AIR);
+            if(tool.getDurability() >= hand.getMaxDurability())new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
         }
 
         if(type == Material.MELON_BLOCK && hand == Material.WOOD_HOE)
         {
-            l.getWorld().dropItemNaturally(l, new ItemStack(Material.MELON, 2));
+            l.getWorld().dropItemNaturally(l, new ItemStack(Material.MELON, 1));
             tool.setDurability((short) (tool.getDurability() + 15));
-            if(tool.getDurability() >= hand.getMaxDurability())tool.setType(Material.AIR);
+            if(tool.getDurability() >= hand.getMaxDurability())new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
         }
 
         if(type == Material.SOUL_SAND && hand == Material.WOOD_SPADE)
@@ -229,14 +229,14 @@ public class PlayerListener implements Listener
             l.getWorld().dropItemNaturally(l, Loot.getGrave().build());
             if(RandomNumber.get(3) == 1)l.getWorld().spawnEntity(l, EntityType.SKELETON);
             tool.setDurability((short) (tool.getDurability() + 15));
-            if(tool.getDurability() >= hand.getMaxDurability())tool.setType(Material.AIR);
+            if(tool.getDurability() >= hand.getMaxDurability())new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
         }
 
         if((type == Material.IRON_ORE || type == Material.DIAMOND_ORE || type == Material.COAL_ORE)&& hand == Material.WOOD_PICKAXE)
         {
             l.getWorld().dropItemNaturally(l, Loot.getOre().build());
             tool.setDurability((short) (tool.getDurability() + 20));
-            if(tool.getDurability() >= hand.getMaxDurability())tool.setType(Material.AIR);
+            if(tool.getDurability() >= hand.getMaxDurability())new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
         }
 
         e.setCancelled(true);
