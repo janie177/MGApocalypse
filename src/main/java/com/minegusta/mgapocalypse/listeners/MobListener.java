@@ -105,9 +105,13 @@ public class MobListener implements Listener
                 e.setCancelled(true);
             }
             //Adults only
-            else if(!((Zombie)e.getEntity()).isBaby())
+            else if(!zombie.isBaby())
             {
-                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 600, 1));
+                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 180, 1));
+            }
+            else
+            {
+                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 40, 0));
             }
         }
     }

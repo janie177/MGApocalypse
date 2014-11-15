@@ -306,6 +306,14 @@ public class PlayerListener implements Listener
                 }
             }
         }
+        else if(e.getEntity() instanceof Zombie)
+        {
+            if(e.getDamager() instanceof Player)
+            {
+                Zombie zombie = (Zombie) e.getEntity();
+                if(zombie.hasPotionEffect(PotionEffectType.SPEED))zombie.removePotionEffect(PotionEffectType.SPEED);
+            }
+        }
     }
 
     private void healPlayer(Player p, Player healer)
