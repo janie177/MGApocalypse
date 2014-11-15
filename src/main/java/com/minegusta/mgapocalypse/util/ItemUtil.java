@@ -18,7 +18,7 @@ public class ItemUtil
                 }
                 else
                 {
-                    p.getInventory().remove(i);
+                    i.setType(null);
                 }
                 break;
             }
