@@ -24,7 +24,7 @@ public class ProjectileListener implements Listener
         if(e.getEntity() instanceof EnderPearl)
         {
             Location loc = e.getEntity().getLocation();
-            loc.getWorld().createExplosion(loc.getX(), loc.getY(), loc.getZ(), 6, false, false);
+            loc.getWorld().createExplosion(loc.getX(), loc.getY(), loc.getZ(), 5, false, false);
         }
 
         //Snowballs
