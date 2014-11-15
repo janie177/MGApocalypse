@@ -67,7 +67,7 @@ public class MobListener implements Listener
             //Return if chance is false
             if (!(amount <= chance)) return;
 
-            if(!(TimeUnit.NANOSECONDS.toSeconds(System.currentTimeMillis() - coolDown) > 10))return;
+            if(!(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - coolDown) > 10))return;
 
             coolDown = System.currentTimeMillis();
 
