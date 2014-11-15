@@ -347,7 +347,6 @@ public class PlayerListener implements Listener
         z.setCustomNameVisible(true);
         z.setCustomName(p.getName());
         z.setCanPickupItems(false);
-        e.getDrops().clear();
 
         z.getEquipment().setHelmet(new ItemStack(Material.SKULL_ITEM, 1, (short) 3) {
             {

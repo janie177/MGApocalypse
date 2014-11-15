@@ -145,7 +145,6 @@ public class MobListener implements Listener
         if(e.getEntityType() == EntityType.ZOMBIE) {
 
             e.getDrops().clear();
-            String uuid = e.getEntity().getUniqueId().toString();
 
             if (RandomNumber.get(6) == 1) e.getDrops().add(LootItem.ZOMBIEMEAT.build());
             if (e.getEntity().getLastDamageCause() != null) {
