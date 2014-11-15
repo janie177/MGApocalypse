@@ -18,7 +18,7 @@ public class ItemUtil
                 }
                 else
                 {
-                    i.setType(Material.AIR);
+                    p.getInventory().remove(i);
                 }
             }
         }
