@@ -72,11 +72,13 @@ public class MobListener implements Listener
 
         //Spawn a zombie
         Zombie zombie = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
+        zombie.setCanPickupItems(false);
 
         for (int i = 0; i < RandomNumber.get(6); i++)
         {
             Location random = zombie.getLocation().add(RandomNumber.getDouble(10) - 5,0,RandomNumber.getDouble(10) - 5);
             Zombie zombie2 = (Zombie) loc.getWorld().spawnEntity(random, EntityType.ZOMBIE);
+            zombie2.setCanPickupItems(false);
             if (RandomNumber.get(25) == 1) {
                 zombie2.setBaby(true);
             }
@@ -150,6 +152,5 @@ public class MobListener implements Listener
                 }
             }
         }
-
     }
 }

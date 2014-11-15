@@ -345,6 +345,7 @@ public class PlayerListener implements Listener
         z.setVillager(false);
         z.setCustomNameVisible(true);
         z.setCustomName(p.getName());
+        z.setCanPickupItems(false);
         z.getEquipment().setHelmet(new ItemStack(Material.SKULL_ITEM, 1, (short) 3) {
             {
                 SkullMeta meta = (SkullMeta) getItemMeta();
