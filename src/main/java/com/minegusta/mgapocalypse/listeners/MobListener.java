@@ -146,14 +146,6 @@ public class MobListener implements Listener
 
             e.getDrops().clear();
             String uuid = e.getEntity().getUniqueId().toString();
-            if(TempData.deathMap.containsKey(uuid))
-            {
-                for(ItemStack i : TempData.deathMap.get(uuid))
-                {
-                    e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), i);
-                }
-                TempData.deathMap.remove(uuid);
-            }
 
             if (RandomNumber.get(6) == 1) e.getDrops().add(LootItem.ZOMBIEMEAT.build());
             if (e.getEntity().getLastDamageCause() != null) {

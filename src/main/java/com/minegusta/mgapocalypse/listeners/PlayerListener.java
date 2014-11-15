@@ -346,9 +346,8 @@ public class PlayerListener implements Listener
         z.setVillager(false);
         z.setCustomNameVisible(true);
         z.setCustomName(p.getName());
-        z.setCanPickupItems(true);
-        TempData.deathMap.put(z.getUniqueId().toString(), e.getDrops());
-        new ClearPZombie(z.getUniqueId().toString());
+        z.setCanPickupItems(false);
+        e.getDrops().clear();
 
         z.getEquipment().setHelmet(new ItemStack(Material.SKULL_ITEM, 1, (short) 3) {
             {
