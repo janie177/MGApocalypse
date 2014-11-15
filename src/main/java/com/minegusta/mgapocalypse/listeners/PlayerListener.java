@@ -204,6 +204,7 @@ public class PlayerListener implements Listener
         ItemStack tool = p.getItemInHand();
         Material hand = tool.getType();
 
+        if(type == Material.CROPS)e.setCancelled(true);
         if(type == Material.STONE_BUTTON)
         {
             e.setCancelled(true);
