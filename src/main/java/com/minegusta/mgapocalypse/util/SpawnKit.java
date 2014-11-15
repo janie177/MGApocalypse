@@ -21,7 +21,7 @@ public class SpawnKit
             @Override
             public void run() {
                 p.getInventory().addItem(LootItem.WATERBOTTLE.build(), LootItem.WOODSWORD.build(), LootItem.BANDAGE.build(), LootItem.LEATHERCHEST.build());
-
+                p.updateInventory();
             }
         }, 35);
     }
