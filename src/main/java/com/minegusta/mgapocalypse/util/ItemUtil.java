@@ -20,6 +20,7 @@ public class ItemUtil
                 {
                     p.getInventory().remove(i);
                 }
+                break;
             }
         }
         p.updateInventory();
