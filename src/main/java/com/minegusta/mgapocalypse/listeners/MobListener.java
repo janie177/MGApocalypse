@@ -141,10 +141,10 @@ public class MobListener implements Listener
         if(!WorldCheck.is(e.getEntity().getWorld()))return;
 
         e.setDroppedExp(0);
-        e.getDrops().clear();
 
         if(e.getEntityType() == EntityType.ZOMBIE) {
 
+            e.getDrops().clear();
             String uuid = e.getEntity().getUniqueId().toString();
             if(TempData.deathMap.containsKey(uuid))
             {
