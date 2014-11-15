@@ -240,8 +240,6 @@ public class PlayerListener implements Listener
         }
 
         e.setCancelled(true);
-
-
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -314,7 +312,7 @@ public class PlayerListener implements Listener
         p.sendMessage(ChatColor.LIGHT_PURPLE + "You were healed by " + healer.getName() + ".");
         healer.sendMessage(ChatColor.LIGHT_PURPLE + "You healed " + p.getName() + ".");
         p.getWorld().spigot().playEffect(p.getLocation(), Effect.HEART);
-        p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 5, 0));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 9, 0));
     }
 
     //Spawn a zombie on death

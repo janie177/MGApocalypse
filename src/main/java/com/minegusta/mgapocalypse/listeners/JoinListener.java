@@ -2,6 +2,7 @@ package com.minegusta.mgapocalypse.listeners;
 
 import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.config.SavedLocationsManager;
+import com.minegusta.mgapocalypse.items.LootItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
@@ -57,6 +58,7 @@ public class JoinListener implements Listener
                 {
                     e.getPlayer().teleport(DefaultConfig.getRandomSpawn());
                     e.getPlayer().setLevel(20);
+                    e.getPlayer().getInventory().addItem(LootItem.WATERBOTTLE.build(), LootItem.WOODSWORD.build(), LootItem.BANDAGE.build(), LootItem.LEATHERCHEST.build());
                 }
                 else
                 {

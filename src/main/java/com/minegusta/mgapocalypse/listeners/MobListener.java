@@ -22,8 +22,8 @@ import java.util.List;
 
 public class MobListener implements Listener
 {
-    private final static int nightChance = 4; //Promillage to spawn a zombie group
-    private final static int dayChance = 22; //promillage to spawn a zombie group
+    private final static int nightChance = 2; //Promillage to spawn a zombie group
+    private final static int dayChance = 100; //promillage to spawn a zombie group
 
     private final static List<Material> highspawnchance = Lists.newArrayList(Material.SMOOTH_BRICK,Material.STONE,Material.WOOD, Material.DOUBLE_STEP);
 
