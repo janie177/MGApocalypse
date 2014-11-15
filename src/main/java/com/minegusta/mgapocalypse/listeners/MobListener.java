@@ -96,7 +96,7 @@ public class MobListener implements Listener
             //Sneaking hides you from zombies.
             Player p = (Player) e.getTarget();
             Zombie zombie = (Zombie) e.getEntity();
-            if(zombie.getLocation().distance(p.getLocation()) > 17 && !p.isSprinting())
+            if(zombie.getLocation().distance(p.getLocation()) > 21 && !p.isSprinting())
             {
                 e.setCancelled(true);
             }

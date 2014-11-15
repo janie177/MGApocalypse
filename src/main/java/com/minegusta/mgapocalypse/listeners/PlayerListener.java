@@ -387,7 +387,7 @@ public class PlayerListener implements Listener
     {
         if(!WorldCheck.is(e.getPlayer().getWorld()))return;
 
-        for(Entity ent : e.getPlayer().getNearbyEntities(24, 12, 24))
+        for(Entity ent : e.getPlayer().getNearbyEntities(30, 12, 30))
         {
             if(ent instanceof Zombie)
             {
