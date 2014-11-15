@@ -8,27 +8,20 @@ public class ItemUtil
 {
     public static void removeOne(Player p, Material m)
     {
-        if(p.getInventory().containsAtLeast(new ItemStack(m), 2))
+        for(ItemStack i : p.getInventory())
         {
-            for(ItemStack i : p.getInventory())
+            if(i != null && i.getType() == m)
             {
-                if(i != null && i.getType() == m)
+                if(i.getAmount() > 1)
                 {
-                    if(i.getAmount() > 1)
-                    {
-                        i.setAmount(i.getAmount() - 1);
-                    }
-                    else
-                    {
-                        i.setType(Material.AIR);
-                    }
-                    break;
+                    i.setAmount(i.getAmount() - 1);
                 }
+                else
+                {
+                    i.setType(Material.AIR);
+                }
+                break;
             }
-        }
-        else
-        {
-            p.getInventory().remove(m);
         }
         p.updateInventory();
     }
