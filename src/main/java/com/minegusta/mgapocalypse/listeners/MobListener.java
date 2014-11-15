@@ -38,10 +38,6 @@ public class MobListener implements Listener
     {
         if(!WorldCheck.is(e.getEntity().getWorld()))return;
 
-        if(!(TimeUnit.NANOSECONDS.toSeconds(System.currentTimeMillis() - coolDown) > 10))return;
-
-        coolDown = System.currentTimeMillis();
-
         if(allowedReasons.contains(e.getSpawnReason()))
         {
             return;
@@ -70,6 +66,10 @@ public class MobListener implements Listener
 
             //Return if chance is false
             if (!(amount <= chance)) return;
+
+            if(!(TimeUnit.NANOSECONDS.toSeconds(System.currentTimeMillis() - coolDown) > 10))return;
+
+            coolDown = System.currentTimeMillis();
 
             //Spawn a zombie
             Zombie zombie = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
