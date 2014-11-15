@@ -334,6 +334,7 @@ public class PlayerListener implements Listener
         if(!WorldCheck.is(e.getEntity().getWorld()))return;
 
         //Do stuff here
+
         e.setDroppedExp(0);
         final Player p = e.getEntity();
 
@@ -345,7 +346,10 @@ public class PlayerListener implements Listener
         z.setVillager(false);
         z.setCustomNameVisible(true);
         z.setCustomName(p.getName());
-        z.setCanPickupItems(false);
+        z.setCanPickupItems(true);
+        TempData.deathMap.put(z.getUniqueId().toString(), e.getDrops());
+        new ClearPZombie(z.getUniqueId().toString());
+
         z.getEquipment().setHelmet(new ItemStack(Material.SKULL_ITEM, 1, (short) 3) {
             {
                 SkullMeta meta = (SkullMeta) getItemMeta();
