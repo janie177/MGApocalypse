@@ -9,10 +9,7 @@ import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -21,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -149,9 +147,13 @@ public class MobListener implements Listener
             if (RandomNumber.get(6) == 1) e.getDrops().add(LootItem.ZOMBIEMEAT.build());
             if (e.getEntity().getLastDamageCause() != null) {
                 EntityDamageEvent cause = e.getEntity().getLastDamageCause();
-                if(cause.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK) && ((EntityDamageByEntityEvent)cause).getDamager() instanceof Player)
+                if(cause.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK))
                 {
-                    ZombieKills.add((Player)((EntityDamageByEntityEvent)cause).getDamager());
+                    if(((EntityDamageByEntityEvent)cause).getDamager() instanceof Player) ZombieKills.add((Player)((EntityDamageByEntityEvent)cause).getDamager());
+                    else if(((EntityDamageByEntityEvent)cause).getDamager() instanceof Arrow && ((Arrow) ((EntityDamageByEntityEvent)cause).getDamager()).getShooter() != null && ((Arrow) ((EntityDamageByEntityEvent)cause).getDamager()).getShooter() instanceof Player)
+                    {
+                        ZombieKills.add((Player)((EntityDamageByEntityEvent)cause).getDamager());
+                    }
                 }
             }
         }
