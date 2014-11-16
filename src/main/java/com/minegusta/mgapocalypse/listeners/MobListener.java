@@ -6,6 +6,7 @@ import com.minegusta.mgapocalypse.kills.ZombieKills;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.TempData;
 import com.minegusta.mgapocalypse.util.WorldCheck;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -150,9 +151,16 @@ public class MobListener implements Listener
                 if(cause.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK))
                 {
                     if(((EntityDamageByEntityEvent)cause).getDamager() instanceof Player) ZombieKills.add((Player)((EntityDamageByEntityEvent)cause).getDamager());
-                    else if(((EntityDamageByEntityEvent)cause).getDamager() instanceof Arrow && ((Arrow) ((EntityDamageByEntityEvent)cause).getDamager()).getShooter() != null && ((Arrow) ((EntityDamageByEntityEvent)cause).getDamager()).getShooter() instanceof Player)
+                }
+                if(cause.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE))
+                {
+                    if(((EntityDamageByEntityEvent)cause).getDamager() instanceof Arrow)
                     {
-                        ZombieKills.add((Player)((Arrow) ((EntityDamageByEntityEvent)cause).getDamager()).getShooter());
+                        Arrow arrow = (Arrow) ((EntityDamageByEntityEvent)cause).getDamager();
+                        if(arrow.getShooter() != null && arrow.getShooter() instanceof Player)
+                        {
+                            ZombieKills.add((Player) arrow.getShooter());
+                        }
                     }
                 }
             }
