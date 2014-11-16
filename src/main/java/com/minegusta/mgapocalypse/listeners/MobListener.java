@@ -152,7 +152,7 @@ public class MobListener implements Listener
                     if(((EntityDamageByEntityEvent)cause).getDamager() instanceof Player) ZombieKills.add((Player)((EntityDamageByEntityEvent)cause).getDamager());
                     else if(((EntityDamageByEntityEvent)cause).getDamager() instanceof Arrow && ((Arrow) ((EntityDamageByEntityEvent)cause).getDamager()).getShooter() != null && ((Arrow) ((EntityDamageByEntityEvent)cause).getDamager()).getShooter() instanceof Player)
                     {
-                        ZombieKills.add((Player)((EntityDamageByEntityEvent)cause).getDamager());
+                        ZombieKills.add((Player)((Arrow) ((EntityDamageByEntityEvent)cause).getDamager()).getShooter());
                     }
                 }
             }
