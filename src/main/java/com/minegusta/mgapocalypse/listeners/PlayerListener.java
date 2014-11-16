@@ -321,7 +321,7 @@ public class PlayerListener implements Listener
                 if(((Arrow) e.getDamager()).getShooter() != null && ((Arrow) e.getDamager()).getShooter() instanceof Player)
                 {
                     Zombie zombie = (Zombie) e.getEntity();
-                    Player p = (Player) e.getDamager();
+                    Player p = (Player)((Arrow) e.getDamager()).getShooter();
                     zombie.setVelocity(zombie.getLocation().toVector().subtract(p.getLocation().toVector()).normalize().multiply(1.1));
                     zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 5, 1));
                 }
