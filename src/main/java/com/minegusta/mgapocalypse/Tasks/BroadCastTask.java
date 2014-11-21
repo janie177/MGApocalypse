@@ -25,7 +25,7 @@ public class BroadCastTask
                     }
                 }
             }
-        },20 * 30, 20 * 120);
+        },20 * 30, 20 * 300);
     }
 }
 

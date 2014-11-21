@@ -19,6 +19,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
@@ -41,7 +42,7 @@ public class PlayerListener implements Listener
     private final static int diseaseChance = 3; //In %
 
     //All the allowed commands, lower case only.
-    private final static List<String> allowedCMDS = Lists.newArrayList("/pop", "/break", "/hub", "/pause", "/logout", "/log-out", "/leave", "/abort", "/exit");
+    private final static List<String> allowedCMDS = Lists.newArrayList("/pop", "/break", "/hub", "/pause", "/logout", "/log-out", "/leave", "/abort", "/exit", "/msg", "/r", "/pm", "/message", "/me");
 
     //All food types that heal you
     private final static List<Material> food = Lists.newArrayList(Material.MELON, Material.RAW_FISH, Material.RAW_CHICKEN, Material.RAW_BEEF, Material.BREAD, Material.COOKIE, Material.POTATO_ITEM, Material.CARROT_ITEM, Material.APPLE, Material.MUSHROOM_SOUP, Material.PORK, Material.GRILLED_PORK, Material.COOKED_FISH, Material.BAKED_POTATO, Material.COOKED_CHICKEN);
@@ -408,6 +409,21 @@ public class PlayerListener implements Listener
             if(ent instanceof Zombie)
             {
                 ((Creature)ent).setTarget(e.getPlayer());
+            }
+        }
+    }
+
+    //Stop health regen.
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onHeal(EntityRegainHealthEvent e)
+    {
+        if(!WorldCheck.is(e.getEntity().getWorld()))return;
+
+        if(e.getEntity() instanceof Player)
+        {
+            if(e.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED)
+            {
+                e.setCancelled(true);
             }
         }
     }
