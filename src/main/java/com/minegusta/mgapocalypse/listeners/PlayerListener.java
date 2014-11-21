@@ -421,7 +421,7 @@ public class PlayerListener implements Listener
 
         if(e.getEntity() instanceof Player)
         {
-            if(e.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED)
+            if(e.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED || e.getRegainReason() == EntityRegainHealthEvent.RegainReason.REGEN)
             {
                 e.setCancelled(true);
             }
