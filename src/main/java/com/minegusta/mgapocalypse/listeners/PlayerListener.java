@@ -42,7 +42,7 @@ public class PlayerListener implements Listener
     private final static int diseaseChance = 3; //In %
 
     //All the allowed commands, lower case only.
-    private final static List<String> allowedCMDS = Lists.newArrayList("/pop", "/break", "/hub", "/pause", "/logout", "/log-out", "/leave", "/abort", "/exit", "/msg", "/r", "/pm", "/message", "/me");
+    private final static List<String> allowedCMDS = Lists.newArrayList("/credits", "/pop", "/break", "/hub", "/pause", "/logout", "/log-out", "/leave", "/abort", "/exit", "/msg", "/r", "/pm", "/message", "/me");
 
     //All food types that heal you
     private final static List<Material> food = Lists.newArrayList(Material.MELON, Material.RAW_FISH, Material.RAW_CHICKEN, Material.RAW_BEEF, Material.BREAD, Material.COOKIE, Material.POTATO_ITEM, Material.CARROT_ITEM, Material.APPLE, Material.MUSHROOM_SOUP, Material.PORK, Material.GRILLED_PORK, Material.COOKED_FISH, Material.BAKED_POTATO, Material.COOKED_CHICKEN);
