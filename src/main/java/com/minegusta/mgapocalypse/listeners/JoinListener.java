@@ -4,6 +4,7 @@ import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.config.SavedLocationsManager;
 import com.minegusta.mgapocalypse.items.LootItem;
 import com.minegusta.mgapocalypse.util.SpawnKit;
+import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -56,7 +57,7 @@ public class JoinListener implements Listener
             if(sign.getLine(1).equals(ChatColor.AQUA + "Wasteland"))
             {
                 //Spawn the player
-                if(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()) == null)
+                if(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()) == null || !WorldCheck.is(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()).getWorld()))
                 {
                     e.getPlayer().teleport(DefaultConfig.getRandomSpawn());
                     e.getPlayer().setLevel(20);
