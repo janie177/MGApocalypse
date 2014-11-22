@@ -17,7 +17,7 @@ public class DrinkTask
             {
                 for(String w : WorldCheck.getWorlds()) {
                     for (Player p : Bukkit.getWorld(w).getPlayers()) {
-                        if (WorldCheck.is(p.getWorld())) {
+                        if (Main.WG_ENABLED && WorldCheck.is(p.getWorld())) {
                             if (p.getLevel() == 0) {
                                 if(!WGManager.canGetDamage(p))return;
                                 p.damage(1.0);

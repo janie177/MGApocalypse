@@ -55,8 +55,6 @@ public class Main extends JavaPlugin
 
         //Worldguard enabled
         if(Bukkit.getPluginManager().isPluginEnabled("WorldGuard"))WG_ENABLED = true;
-
-
     }
 
 

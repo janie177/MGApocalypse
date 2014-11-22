@@ -20,7 +20,7 @@ public class WGManager
         {
             for(ProtectedRegion r : set.getRegions())
             {
-                if(r.getFlags().containsKey(DefaultFlag.INVINCIBILITY) && r.getFlag(DefaultFlag.INVINCIBILITY) == StateFlag.State.DENY)
+                if(r.getFlags().containsKey(DefaultFlag.INVINCIBILITY) && r.getFlag(DefaultFlag.INVINCIBILITY) == StateFlag.State.ALLOW)
                 {
                     return false;
                 }
