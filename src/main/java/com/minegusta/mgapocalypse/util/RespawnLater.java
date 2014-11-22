@@ -23,10 +23,6 @@ public class RespawnLater
             @Override
             public void run() {
                 p.teleport(DefaultConfig.getMainSpawn());
-                p.sendMessage(ChatColor.GREEN + "You had " + ChatColor.DARK_PURPLE + ZombieKills.get(p) + ChatColor.GREEN + " zombie kills.");
-                int points = ZombieKills.get(p) / 2;
-                p.sendMessage(ChatColor.GOLD + "You earned a total of " + ChatColor.YELLOW + points + ChatColor.GOLD + " credits.");
-                ZombieKills.set(p, 0);
             }
         }, 20);
     }

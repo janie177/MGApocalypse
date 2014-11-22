@@ -5,6 +5,7 @@ import com.minegusta.mgapocalypse.buttons.ButtonManager;
 import com.minegusta.mgapocalypse.dotmanagers.BleedingManager;
 import com.minegusta.mgapocalypse.dotmanagers.DiseaseManager;
 import com.minegusta.mgapocalypse.items.LootItem;
+import com.minegusta.mgapocalypse.kills.ZombieKills;
 import com.minegusta.mgapocalypse.lootblocks.Loot;
 import com.minegusta.mgapocalypse.util.*;
 import org.bukkit.ChatColor;
@@ -373,9 +374,12 @@ public class PlayerListener implements Listener
     public void onEvent(PlayerRespawnEvent e)
     {
         if(!WorldCheck.is(e.getPlayer().getWorld()))return;
+        Player p = e.getPlayer();
 
-        //Set the respawn position to be the main spawn.
-        new RespawnLater(e.getPlayer());
+        p.sendMessage(ChatColor.GREEN + "You had " + ChatColor.DARK_PURPLE + ZombieKills.get(p) + ChatColor.GREEN + " zombie kills.");
+        int points = ZombieKills.get(p) / 2;
+        p.sendMessage(ChatColor.GOLD + "You earned a total of " + ChatColor.YELLOW + points + ChatColor.GOLD + " credits.");
+        ZombieKills.set(p, 0);
     }
 
     //Block all commands
