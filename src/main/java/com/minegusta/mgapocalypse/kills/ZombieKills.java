@@ -1,6 +1,7 @@
 package com.minegusta.mgapocalypse.kills;
 
 import com.google.common.collect.Maps;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -21,6 +22,8 @@ public class ZombieKills
         if(zombieMap.containsKey(p.getUniqueId().toString())) old = zombieMap.get(p.getUniqueId().toString());
         set(p, old + 1);
         p.sendMessage(ChatColor.GOLD + "You now have " + ChatColor.DARK_PURPLE + Integer.toString(get(p)) + ChatColor.GOLD + " zombie kills.");
+        if((old + 1) % 2 == 0) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + p.getName() + " " + 1);
+        p.sendMessage(ChatColor.YELLOW + "You earned " + ChatColor.LIGHT_PURPLE + "1" + ChatColor.GOLD + " credit.");
     }
 
     public static int get(Player p)
