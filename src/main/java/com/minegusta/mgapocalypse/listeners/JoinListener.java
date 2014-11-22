@@ -5,6 +5,7 @@ import com.minegusta.mgapocalypse.config.SavedLocationsManager;
 import com.minegusta.mgapocalypse.items.LootItem;
 import com.minegusta.mgapocalypse.util.SpawnKit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -59,12 +60,16 @@ public class JoinListener implements Listener
                 {
                     e.getPlayer().teleport(DefaultConfig.getRandomSpawn());
                     e.getPlayer().setLevel(20);
+                    e.getPlayer().setHealth(e.getPlayer().getMaxHealth());
+                    e.getPlayer().setFoodLevel(20);
+                    e.getPlayer().setGameMode(GameMode.ADVENTURE);
                     new SpawnKit(e.getPlayer());
                 }
                 else
                 {
                     e.getPlayer().teleport(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()));
                     SavedLocationsManager.resetLocation(e.getPlayer().getUniqueId());
+                    e.getPlayer().setGameMode(GameMode.ADVENTURE);
                 }
                 e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 1, false));
                 e.getPlayer().sendMessage(ChatColor.GRAY + "You wake up in an apocalyptic world...");

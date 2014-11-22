@@ -21,6 +21,7 @@ public class Main extends JavaPlugin
 
     public static Plugin PLUGIN;
     public static int SAVETASK, BLEEDTASK, DISEASETASK, DRINKTASK, BROADCASTTASK;
+    public static boolean WG_ENABLED = false;
 
     @Override
     public void onEnable()
@@ -51,6 +52,9 @@ public class Main extends JavaPlugin
         DISEASETASK = DOTTask.diseaseTask();
         DRINKTASK = DrinkTask.start();
         BROADCASTTASK = BroadCastTask.start();
+
+        //Worldguard enabled
+        if(Bukkit.getPluginManager().isPluginEnabled("WorldGuard"))WG_ENABLED = true;
 
 
     }

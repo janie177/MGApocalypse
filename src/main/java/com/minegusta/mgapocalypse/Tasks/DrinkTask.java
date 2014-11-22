@@ -1,6 +1,7 @@
 package com.minegusta.mgapocalypse.Tasks;
 
 import com.minegusta.mgapocalypse.Main;
+import com.minegusta.mgapocalypse.util.WGManager;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,6 +19,7 @@ public class DrinkTask
                     for (Player p : Bukkit.getWorld(w).getPlayers()) {
                         if (WorldCheck.is(p.getWorld())) {
                             if (p.getLevel() == 0) {
+                                if(!WGManager.canGetDamage(p))return;
                                 p.damage(1.0);
                                 p.sendMessage(ChatColor.RED + "You are thirsty!");
                             } else {

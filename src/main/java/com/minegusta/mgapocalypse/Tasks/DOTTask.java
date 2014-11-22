@@ -38,17 +38,13 @@ public class DOTTask
         }, 20 * 10, 20 * 40);
     }
 
-    public static int bleedingTask()
-    {
+    public static int bleedingTask() {
         return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, new Runnable() {
             @Override
-            public void run()
-            {
-                for(String uuid : TempData.bleedingMap.keySet())
-                {
+            public void run() {
+                for (String uuid : TempData.bleedingMap.keySet()) {
                     OfflinePlayer pl = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
-                    if(pl.isOnline() && WorldCheck.is((((Player)pl).getWorld())))
-                    {
+                    if (pl.isOnline() && WorldCheck.is((((Player) pl).getWorld()))) {
                         Player p = pl.getPlayer();
                         p.damage(1.0);
                         p.getWorld().spigot().playEffect(p.getLocation(), Effect.CRIT);
