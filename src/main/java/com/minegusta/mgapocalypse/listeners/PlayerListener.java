@@ -27,13 +27,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class PlayerListener implements Listener
-{
+public class PlayerListener implements Listener {
 
     //All the blocks that are disallowed to right click.
     private static final List<Material> blockedBlocks = Lists.newArrayList(Material.ENCHANTMENT_TABLE, Material.ANVIL, Material.BED, Material.MINECART, Material.STORAGE_MINECART);
@@ -49,38 +47,32 @@ public class PlayerListener implements Listener
     private final static List<Material> food = Lists.newArrayList(Material.MELON, Material.RAW_FISH, Material.RAW_CHICKEN, Material.RAW_BEEF, Material.BREAD, Material.COOKIE, Material.POTATO_ITEM, Material.CARROT_ITEM, Material.APPLE, Material.MUSHROOM_SOUP, Material.PORK, Material.GRILLED_PORK, Material.COOKED_FISH, Material.BAKED_POTATO, Material.COOKED_CHICKEN);
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent(PlayerItemConsumeEvent e)
-    {
-        if(!WorldCheck.is(e.getPlayer().getWorld()))return;
+    public void onEvent(PlayerItemConsumeEvent e) {
+        if (!WorldCheck.is(e.getPlayer().getWorld())) return;
 
         Player p = e.getPlayer();
         Material m = e.getItem().getType();
 
-        if(food.contains(m))
-        {
-            if(p.getMaxHealth() != p.getHealth())p.setHealth(p.getHealth() + 1.0);
+        if (food.contains(m)) {
+            if (p.getMaxHealth() != p.getHealth()) p.setHealth(p.getHealth() + 1.0);
         }
 
-        if(m == Material.POTION)
-        {
-            if(e.getItem().getDurability() == 0) {
+        if (m == Material.POTION) {
+            if (e.getItem().getDurability() == 0) {
                 p.setLevel(20);
                 p.sendMessage(ChatColor.GREEN + "You feel refreshed.");
                 e.setCancelled(true);
                 ItemUtil.removeOne(p, Material.POTION);
                 p.getInventory().addItem(LootItem.EMPTYBOTTLE.build());
                 p.updateInventory();
-            }
-            else
-            {
+            } else {
                 new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
             }
         }
 
 
         //Cure diseases
-        if(m == Material.MILK_BUCKET)
-        {
+        if (m == Material.MILK_BUCKET) {
             e.setCancelled(true);
             ItemUtil.removeOne(p, Material.MILK_BUCKET);
             DiseaseManager.cure(p);
@@ -88,20 +80,17 @@ public class PlayerListener implements Listener
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent(PlayerInteractEntityEvent e)
-    {
-        if(!WorldCheck.is(e.getPlayer().getWorld()))return;
+    public void onEvent(PlayerInteractEntityEvent e) {
+        if (!WorldCheck.is(e.getPlayer().getWorld())) return;
 
         Material hand = e.getPlayer().getItemInHand().getType();
 
         //Check for bandaging
-        if(e.getRightClicked() instanceof Player)
-        {
+        if (e.getRightClicked() instanceof Player) {
             Player p = (Player) e.getRightClicked();
             Player healer = e.getPlayer();
 
-            if(hand.equals(Material.PAPER))
-            {
+            if (hand.equals(Material.PAPER)) {
                 healer.sendMessage(ChatColor.GREEN + "You bandaged " + p.getName() + ".");
                 p.sendMessage(ChatColor.GREEN + healer.getName() + " bandaged your wounds.");
                 ItemUtil.removeOne(healer, Material.PAPER);
@@ -111,18 +100,15 @@ public class PlayerListener implements Listener
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent(PlayerInteractEvent e)
-    {
-        if(!WorldCheck.is(e.getPlayer().getWorld()))return;
+    public void onEvent(PlayerInteractEvent e) {
+        if (!WorldCheck.is(e.getPlayer().getWorld())) return;
 
         Player p = e.getPlayer();
         Material hand = e.getPlayer().getItemInHand().getType();
 
         //Check for bandaging
-        if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction() == Action.RIGHT_CLICK_BLOCK)
-        {
-            if(hand.equals(Material.PAPER))
-            {
+        if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (hand.equals(Material.PAPER)) {
                 p.sendMessage(ChatColor.GREEN + "You bandaged your wounds.");
                 ItemUtil.removeOne(p, Material.PAPER);
                 BleedingManager.bandage(p, true);
@@ -130,26 +116,22 @@ public class PlayerListener implements Listener
         }
 
         //Check for buttons
-        if(e.hasBlock() && e.getClickedBlock().getType().equals(Material.STONE_BUTTON))
-        {
+        if (e.hasBlock() && e.getClickedBlock().getType().equals(Material.STONE_BUTTON)) {
             ButtonManager.despawnButon(e.getClickedBlock().getLocation());
         }
 
         //Block buckets
-        if(hand == Material.BUCKET || hand == Material.WATER_BUCKET)
-        {
+        if (hand == Material.BUCKET || hand == Material.WATER_BUCKET) {
             e.setCancelled(true);
         }
 
         //Smoke grenades
-        if(e.hasBlock() && hand == Material.SLIME_BALL)
-        {
+        if (e.hasBlock() && hand == Material.SLIME_BALL) {
             new SmokeGrenade(e.getClickedBlock().getLocation());
             ItemUtil.removeOne(p, Material.SLIME_BALL);
         }
 
-        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getRelative(e.getBlockFace()).getType() == Material.STATIONARY_WATER && hand == Material.GLASS_BOTTLE)
-        {
+        if (e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getRelative(e.getBlockFace()).getType() == Material.STATIONARY_WATER && hand == Material.GLASS_BOTTLE) {
             e.setCancelled(true);
             ItemUtil.removeOne(p, Material.GLASS_BOTTLE);
             p.getInventory().addItem(LootItem.WATERBOTTLE.build());
@@ -157,49 +139,40 @@ public class PlayerListener implements Listener
         }
 
         //Block interacting with certain blocks
-        if(e.getAction() == Action.RIGHT_CLICK_BLOCK)
-        {
-            if(blockedBlocks.contains(e.getClickedBlock().getType()))
-            {
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (blockedBlocks.contains(e.getClickedBlock().getType())) {
                 e.setCancelled(true);
             }
         }
 
         //No bonemeal
-        if(e.hasBlock() && e.getClickedBlock().getType() == Material.GRASS && hand == Material.INK_SACK)
-        {
+        if (e.hasBlock() && e.getClickedBlock().getType() == Material.GRASS && hand == Material.INK_SACK) {
             e.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent(BlockPlaceEvent e)
-    {
-        if(!WorldCheck.is(e.getPlayer().getWorld()))return;
+    public void onEvent(BlockPlaceEvent e) {
+        if (!WorldCheck.is(e.getPlayer().getWorld())) return;
         Player p = e.getPlayer();
-        if(p.isOp() || p.hasPermission("minegusta.builder"))return;
+        if (p.isOp() || p.hasPermission("minegusta.builder")) return;
 
         Material material = e.getBlock().getType();
         Location l = e.getBlock().getLocation();
 
-        if(material.equals(Material.STONE_BUTTON))
-        {
+        if (material.equals(Material.STONE_BUTTON)) {
             ButtonManager.despawnButon(l);
-        }
-        else
-        {
+        } else {
             e.setCancelled(true);
         }
     }
 
 
-
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent(BlockBreakEvent e)
-    {
-        if(!WorldCheck.is(e.getPlayer().getWorld()))return;
+    public void onEvent(BlockBreakEvent e) {
+        if (!WorldCheck.is(e.getPlayer().getWorld())) return;
         Player p = e.getPlayer();
-        if(p.isOp() || p.hasPermission("minegusta.builder"))return;
+        if (p.isOp() || p.hasPermission("minegusta.builder")) return;
 
         //Check if you can break these blocks:
         Material type = e.getBlock().getType();
@@ -207,86 +180,73 @@ public class PlayerListener implements Listener
         ItemStack tool = p.getItemInHand();
         Material hand = tool.getType();
 
-        if(type == Material.CROPS)e.setCancelled(true);
-        if(type == Material.STONE_BUTTON)
-        {
+        if (type == Material.CROPS) e.setCancelled(true);
+        if (type == Material.STONE_BUTTON) {
             e.setCancelled(true);
             e.getBlock().setType(Material.AIR);
         }
 
-        if(type == Material.CROPS && hand == Material.WOOD_HOE)
-        {
+        if (type == Material.CROPS && hand == Material.WOOD_HOE) {
             l.getWorld().dropItemNaturally(l, new ItemStack(Material.WHEAT, 1));
             tool.setDurability((short) (tool.getDurability() + 5));
-            if(tool.getDurability() >= hand.getMaxDurability())new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
+            if (tool.getDurability() >= hand.getMaxDurability())
+                new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
         }
 
-        if(type == Material.MELON_BLOCK && hand == Material.WOOD_HOE)
-        {
+        if (type == Material.MELON_BLOCK && hand == Material.WOOD_HOE) {
             l.getWorld().dropItemNaturally(l, new ItemStack(Material.MELON, 1));
             tool.setDurability((short) (tool.getDurability() + 15));
-            if(tool.getDurability() >= hand.getMaxDurability())new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
+            if (tool.getDurability() >= hand.getMaxDurability())
+                new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
         }
 
-        if(type == Material.SOUL_SAND && hand == Material.WOOD_SPADE)
-        {
+        if (type == Material.SOUL_SAND && hand == Material.WOOD_SPADE) {
             l.getWorld().dropItemNaturally(l, Loot.getGrave().build());
-            if(RandomNumber.get(3) == 1)l.getWorld().spawnEntity(l, EntityType.SKELETON);
+            if (RandomNumber.get(3) == 1) l.getWorld().spawnEntity(l, EntityType.SKELETON);
             tool.setDurability((short) (tool.getDurability() + 15));
-            if(tool.getDurability() >= hand.getMaxDurability())new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
+            if (tool.getDurability() >= hand.getMaxDurability())
+                new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
         }
 
-        if((type == Material.IRON_ORE || type == Material.DIAMOND_ORE || type == Material.COAL_ORE)&& hand == Material.WOOD_PICKAXE)
-        {
+        if ((type == Material.IRON_ORE || type == Material.DIAMOND_ORE || type == Material.COAL_ORE) && hand == Material.WOOD_PICKAXE) {
             l.getWorld().dropItemNaturally(l, Loot.getOre().build());
             tool.setDurability((short) (tool.getDurability() + 20));
-            if(tool.getDurability() >= hand.getMaxDurability())new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
+            if (tool.getDurability() >= hand.getMaxDurability())
+                new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
         }
 
         e.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent(EntityDamageByEntityEvent e)
-    {
-        if(!WorldCheck.is(e.getEntity().getWorld()))return;
+    public void onEvent(EntityDamageByEntityEvent e) {
+        if (!WorldCheck.is(e.getEntity().getWorld())) return;
 
-        if(e.getEntity() instanceof Player)
-        {
+        if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
 
             //Healing check
-            if(e.getDamager() instanceof Player)
-            {
+            if (e.getDamager() instanceof Player) {
                 Player damager = (Player) e.getDamager();
                 ItemStack hand = damager.getItemInHand();
-                if(hand.getType() == Material.PAPER)
-                {
+                if (hand.getType() == Material.PAPER) {
                     TempData.healMap.put(p.getUniqueId().toString(), System.currentTimeMillis());
                     BleedingManager.bandage(p, false);
                     p.sendMessage(ChatColor.GRAY + damager.getName() + " began bandaging you...");
                     damager.sendMessage(ChatColor.GRAY + "You begin bandaging " + p.getName() + ".");
                     e.setCancelled(true);
-                }
-
-                else if(hand.getType() == Material.SHEARS)
-                {
-                    if(TempData.healMap.containsKey(p.getUniqueId().toString()) && TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - TempData.healMap.get(p.getUniqueId().toString())) < 15)
-                    {
+                } else if (hand.getType() == Material.SHEARS) {
+                    if (TempData.healMap.containsKey(p.getUniqueId().toString()) && TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - TempData.healMap.get(p.getUniqueId().toString())) < 15) {
                         long wait = 0;
-                        if(TempData.healCoolDownMap.containsKey(p.getUniqueId().toString())) wait = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - TempData.healCoolDownMap.get(p.getUniqueId().toString()));
-                        if(TempData.healCoolDownMap.containsKey(p.getUniqueId().toString()) && wait < 180)
-                        {
+                        if (TempData.healCoolDownMap.containsKey(p.getUniqueId().toString()))
+                            wait = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - TempData.healCoolDownMap.get(p.getUniqueId().toString()));
+                        if (TempData.healCoolDownMap.containsKey(p.getUniqueId().toString()) && wait < 180) {
                             damager.sendMessage(ChatColor.RED + "This player cannot be healed for another " + Long.toString(180 - wait) + " Seconds.");
-                        }
-                        else
-                        {
+                        } else {
                             TempData.healCoolDownMap.put(p.getUniqueId().toString(), System.currentTimeMillis());
                             healPlayer(p, damager);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         damager.sendMessage(ChatColor.RED + "Hit players with bandage first before healing them!");
                     }
                     e.setCancelled(true);
@@ -294,36 +254,26 @@ public class PlayerListener implements Listener
             }
 
             //Disease checking
-            if(!e.isCancelled())
-            {
-                if(e.getDamager() != null && e.getDamager() instanceof Zombie)
-                {
-                    if(RandomNumber.get(100) <= diseaseChance)
-                    {
+            if (!e.isCancelled() && WGManager.canGetDamage(p)) {
+                if (e.getDamager() != null && e.getDamager() instanceof Zombie) {
+                    if (RandomNumber.get(100) <= diseaseChance) {
                         DiseaseManager.infect(p);
                     }
                 }
-                if(RandomNumber.get(100) <= bleedChance)
-                {
+                if (RandomNumber.get(100) <= bleedChance) {
                     BleedingManager.bleed(p);
                 }
             }
-        }
-        else if(e.getEntity() instanceof Zombie)
-        {
-            if(e.getDamager() instanceof Player)
-            {
+        } else if (e.getEntity() instanceof Zombie) {
+            if (e.getDamager() instanceof Player) {
                 Zombie zombie = (Zombie) e.getEntity();
                 Player p = (Player) e.getDamager();
                 zombie.setVelocity(zombie.getLocation().toVector().subtract(p.getLocation().toVector()).normalize().multiply(1.1));
                 zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 5, 1));
-            }
-            else if(e.getDamager() instanceof Arrow)
-            {
-                if(((Arrow) e.getDamager()).getShooter() != null && ((Arrow) e.getDamager()).getShooter() instanceof Player)
-                {
+            } else if (e.getDamager() instanceof Arrow) {
+                if (((Arrow) e.getDamager()).getShooter() != null && ((Arrow) e.getDamager()).getShooter() instanceof Player) {
                     Zombie zombie = (Zombie) e.getEntity();
-                    Player p = (Player)((Arrow) e.getDamager()).getShooter();
+                    Player p = (Player) ((Arrow) e.getDamager()).getShooter();
                     zombie.setVelocity(zombie.getLocation().toVector().subtract(p.getLocation().toVector()).normalize().multiply(1.1));
                     zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 5, 1));
                 }
@@ -331,8 +281,7 @@ public class PlayerListener implements Listener
         }
     }
 
-    private void healPlayer(Player p, Player healer)
-    {
+    private void healPlayer(Player p, Player healer) {
         p.sendMessage(ChatColor.LIGHT_PURPLE + "You were healed by " + healer.getName() + ".");
         healer.sendMessage(ChatColor.LIGHT_PURPLE + "You healed " + p.getName() + ".");
         p.getWorld().spigot().playEffect(p.getLocation(), Effect.HEART);
@@ -341,9 +290,8 @@ public class PlayerListener implements Listener
 
     //Spawn a zombie on death
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent(PlayerDeathEvent e)
-    {
-        if(!WorldCheck.is(e.getEntity().getWorld()))return;
+    public void onEvent(PlayerDeathEvent e) {
+        if (!WorldCheck.is(e.getEntity().getWorld())) return;
 
         //Do stuff here
 
@@ -371,9 +319,8 @@ public class PlayerListener implements Listener
 
     //Respawn in the right spot
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent(PlayerRespawnEvent e)
-    {
-        if(!WorldCheck.is(e.getPlayer().getWorld()))return;
+    public void onEvent(PlayerRespawnEvent e) {
+        if (!WorldCheck.is(e.getPlayer().getWorld())) return;
         Player p = e.getPlayer();
 
         p.sendMessage(ChatColor.GREEN + "You had " + ChatColor.DARK_PURPLE + ZombieKills.get(p) + ChatColor.GREEN + " zombie kills.");
@@ -384,17 +331,15 @@ public class PlayerListener implements Listener
 
     //Block all commands
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent(PlayerCommandPreprocessEvent e)
-    {
-        if(!WorldCheck.is(e.getPlayer().getWorld()))return;
-        if(e.getPlayer().isOp() || e.getPlayer().hasPermission("minegusta.builder"))return;
+    public void onEvent(PlayerCommandPreprocessEvent e) {
+        if (!WorldCheck.is(e.getPlayer().getWorld())) return;
+        if (e.getPlayer().isOp() || e.getPlayer().hasPermission("minegusta.builder")) return;
 
         //For non ops, block all commands except the allowed ones:
         String[] command = e.getMessage().toLowerCase().split(" ");
 
 
-        if(!allowedCMDS.contains(command[0].toLowerCase()))
-        {
+        if (!allowedCMDS.contains(command[0].toLowerCase())) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(ChatColor.RED + "Commands are blocked here!");
             e.getPlayer().sendMessage(ChatColor.RED + "To get back to the hub, use:");
@@ -404,29 +349,23 @@ public class PlayerListener implements Listener
 
     //Sprinting lures zombies.
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent(PlayerToggleSprintEvent e)
-    {
-        if(!WorldCheck.is(e.getPlayer().getWorld()))return;
+    public void onEvent(PlayerToggleSprintEvent e) {
+        if (!WorldCheck.is(e.getPlayer().getWorld())) return;
 
-        for(Entity ent : e.getPlayer().getNearbyEntities(30, 12, 30))
-        {
-            if(ent instanceof Zombie)
-            {
-                ((Creature)ent).setTarget(e.getPlayer());
+        for (Entity ent : e.getPlayer().getNearbyEntities(30, 12, 30)) {
+            if (ent instanceof Zombie) {
+                ((Creature) ent).setTarget(e.getPlayer());
             }
         }
     }
 
     //Stop health regen.
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onHeal(EntityRegainHealthEvent e)
-    {
-        if(!WorldCheck.is(e.getEntity().getWorld()))return;
+    public void onHeal(EntityRegainHealthEvent e) {
+        if (!WorldCheck.is(e.getEntity().getWorld())) return;
 
-        if(e.getEntity() instanceof Player)
-        {
-            if(e.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED || e.getRegainReason() == EntityRegainHealthEvent.RegainReason.REGEN)
-            {
+        if (e.getEntity() instanceof Player) {
+            if (e.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED || e.getRegainReason() == EntityRegainHealthEvent.RegainReason.REGEN) {
                 e.setCancelled(true);
             }
         }
