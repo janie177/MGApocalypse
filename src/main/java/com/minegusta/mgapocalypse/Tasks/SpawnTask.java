@@ -23,10 +23,10 @@ public class SpawnTask
     private final static int interval = 10; //Interval in seconds to spawn new zombies.
     private final static int townDistance = 130; //The distance from towns that counts as a town still.
     private final static int zombieRadius = 100; //The radius in which there's a zombie limit.
-    private final static int maxZombieAmount = 20; //The maximum amount of zombies near a player.
-    private final static int townMaxZombieAmount = 40; //The maximum amount of zombies near a player in towns.
-    private final static int spawnChance = 5; //Promillage chance to spawn a zombie group.
-    private final static int townSpawnChance = 10; //Promillage chance to spawn a zombie group in towns.
+    private final static int maxZombieAmount = 14; //The maximum amount of zombies near a player.
+    private final static int townMaxZombieAmount = 30; //The maximum amount of zombies near a player in towns.
+    private final static int spawnChance = 50; //Promillage chance to spawn a zombie group.
+    private final static int townSpawnChance = 150; //Promillage chance to spawn a zombie group in towns.
     private final static int maxGroupSize = 5; //The maximum group size for zombies.
     private final static List<String> towns = DefaultConfig.getTowns(); //All towns defined.
 
@@ -63,14 +63,14 @@ public class SpawnTask
                     //Check if the player does not have too many zombies around them already.
                     int zombieAmount = 0;
 
-                    for (Entity ent : p.getNearbyEntities(zombieRadius, zombieRadius, zombieRadius)) {
+                    for (Entity ent : p.getNearbyEntities(zombieRadius, 30, zombieRadius)) {
                         if (ent instanceof Zombie) zombieAmount++;
                     }
                     if (town) {
-                        if (zombieAmount > maxZombieAmount) return;
+                        if (zombieAmount >= townMaxZombieAmount) return;
                     } else
                     {
-                        if (zombieAmount > townMaxZombieAmount) return;
+                        if (zombieAmount >= maxZombieAmount) return;
                     }
 
                     //Find the location and then spawn the mobs.
@@ -85,7 +85,12 @@ public class SpawnTask
 
                     if(spawnLoc.getBlock().getType() != Material.AIR && spawnLoc.getBlock().getRelative(BlockFace.UP).getType() != Material.AIR)
                     {
-                        Location newLoc = spawnLoc.getWorld().getHighestBlockAt(spawnLoc.getBlockX(), spawnLoc.getBlockZ()).getLocation().add(0,1,0);
+                        Location newLoc = ascend(spawnLoc);
+                        spawnZombie(newLoc);
+                    }
+                    else if(spawnLoc.getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR)
+                    {
+                        Location newLoc = descend(spawnLoc);
                         spawnZombie(newLoc);
                     }
                     else
@@ -98,6 +103,28 @@ public class SpawnTask
                 }
             }
         }, 20 * interval, 20 * interval);
+    }
+
+    private static Location descend(Location l)
+    {
+        if(l.getY() < 20)return l.getWorld().getHighestBlockAt(l.getBlockX(), l.getBlockZ()).getLocation();
+        Location newL = l.add(0,-2,0);
+        if(newL.getBlock().getType() != Material.AIR)
+        {
+            return newL.add(0,2,0);
+        }
+        else return descend(newL);
+    }
+
+    private static Location ascend(Location l)
+    {
+        if(l.getY() > 100)return l.getWorld().getHighestBlockAt(l.getBlockX(), l.getBlockZ()).getLocation();
+        Location newL = l.add(0,2,0);
+        if(newL.getBlock().getType() == Material.AIR)
+        {
+            return newL;
+        }
+        else return descend(newL);
     }
 
     public static boolean stop()
