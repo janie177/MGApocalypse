@@ -288,7 +288,7 @@ public class PlayerListener implements Listener {
 
         //Healer check
         TempData.addHeal(p);
-        TagAPI.refreshPlayer(p);
+        if(Main.TAGAPI_ENABLED)TagAPI.refreshPlayer(p);
     }
 
     //Spawn a zombie on death
@@ -304,7 +304,7 @@ public class PlayerListener implements Listener {
                 {
                     Player attacker = (Player) ((EntityDamageByEntityEvent)cause).getDamager();
                     TempData.addKill(attacker);
-                    TagAPI.refreshPlayer(attacker);
+                    if(Main.TAGAPI_ENABLED)TagAPI.refreshPlayer(attacker);
                 }
             }
             if(cause.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE))
@@ -316,7 +316,7 @@ public class PlayerListener implements Listener {
                     {
                         Player attacker = (Player) arrow.getShooter();
                         TempData.addKill(attacker);
-                        TagAPI.refreshPlayer(attacker);
+                        if(Main.TAGAPI_ENABLED)TagAPI.refreshPlayer(attacker);
                     }
                 }
             }
@@ -344,16 +344,6 @@ public class PlayerListener implements Listener {
                 setItemMeta(meta);
             }
         });
-    }
-
-    @EventHandler
-    public void onTag(AsyncPlayerReceiveNameTagEvent e)
-    {
-        if (!WorldCheck.is(e.getPlayer().getWorld()) || !Main.TAGAPI_ENABLED) return;
-        Player p = e.getNamedPlayer();
-        if(TempData.getKills(p) > 7)e.setTag(ChatColor.RED + p.getName());
-        else if(TempData.getHeals(p) > 14)e.setTag(ChatColor.GREEN + p.getName());
-
     }
 
     //Respawn in the right spot

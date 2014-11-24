@@ -8,10 +8,7 @@ import com.minegusta.mgapocalypse.commands.BreakCommand;
 import com.minegusta.mgapocalypse.commands.MGACommand;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.config.SavedLocationsManager;
-import com.minegusta.mgapocalypse.listeners.JoinListener;
-import com.minegusta.mgapocalypse.listeners.MobListener;
-import com.minegusta.mgapocalypse.listeners.PlayerListener;
-import com.minegusta.mgapocalypse.listeners.ProjectileListener;
+import com.minegusta.mgapocalypse.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -56,7 +53,11 @@ public class Main extends JavaPlugin
 
         //Worldguard enabled
         if(Bukkit.getPluginManager().isPluginEnabled("WorldGuard"))WG_ENABLED = true;
-        if(Bukkit.getPluginManager().isPluginEnabled("TagAPI"))TAGAPI_ENABLED = true;
+        if(Bukkit.getPluginManager().isPluginEnabled("TagAPI"))
+        {
+            TAGAPI_ENABLED = true;
+            Bukkit.getPluginManager().registerEvents(new TagListener(), this);
+        }
     }
 
 
