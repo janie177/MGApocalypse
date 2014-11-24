@@ -22,6 +22,7 @@ public class Main extends JavaPlugin
     public static Plugin PLUGIN;
     public static int SAVETASK, BLEEDTASK, DISEASETASK, DRINKTASK, BROADCASTTASK;
     public static boolean WG_ENABLED = false;
+    public static boolean TAGAPI_ENABLED = false;
 
     @Override
     public void onEnable()
@@ -55,6 +56,7 @@ public class Main extends JavaPlugin
 
         //Worldguard enabled
         if(Bukkit.getPluginManager().isPluginEnabled("WorldGuard"))WG_ENABLED = true;
+        if(Bukkit.getPluginManager().isPluginEnabled("TagAPI"))TAGAPI_ENABLED = true;
     }
 
 

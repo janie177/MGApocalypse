@@ -1,18 +1,15 @@
 package com.minegusta.mgapocalypse.listeners;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgapocalypse.Main;
 import com.minegusta.mgapocalypse.buttons.ButtonManager;
 import com.minegusta.mgapocalypse.dotmanagers.BleedingManager;
 import com.minegusta.mgapocalypse.dotmanagers.DiseaseManager;
 import com.minegusta.mgapocalypse.items.LootItem;
 import com.minegusta.mgapocalypse.kills.ZombieKills;
 import com.minegusta.mgapocalypse.lootblocks.Loot;
-import com.minegusta.mgapocalypse.scoreboards.StatusTags;
 import com.minegusta.mgapocalypse.util.*;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -29,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -290,17 +288,13 @@ public class PlayerListener implements Listener {
         p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 7, 0));
 
         //Healer check
-        if(TempData.addHeal(p) > 14 && TempData.getKills(p) < 8)
-        {
-            StatusTags.set(p, "Healed", ChatColor.GREEN, TempData.getHeals(p));
-        }
+        TempData.addHeal(p);
     }
 
     //Spawn a zombie on death
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEvent(PlayerDeathEvent e) {
         if (!WorldCheck.is(e.getEntity().getWorld())) return;
-
         //Check for bandits
         if (e.getEntity().getLastDamageCause() != null) {
             EntityDamageEvent cause = e.getEntity().getLastDamageCause();
@@ -309,10 +303,7 @@ public class PlayerListener implements Listener {
                 if(((EntityDamageByEntityEvent)cause).getDamager() instanceof Player)
                 {
                     Player attacker = (Player) ((EntityDamageByEntityEvent)cause).getDamager();
-                    if(TempData.addKill(attacker) > 7)
-                    {
-                        StatusTags.set(attacker, "Killed", ChatColor.DARK_RED, TempData.getKills(attacker));
-                    }
+                    TempData.addKill(attacker);
                 }
             }
             if(cause.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE))
@@ -323,10 +314,7 @@ public class PlayerListener implements Listener {
                     if(arrow.getShooter() != null && arrow.getShooter() instanceof Player)
                     {
                         Player attacker = (Player) arrow.getShooter();
-                        if(TempData.addKill(attacker) > 7)
-                        {
-                            StatusTags.set(attacker, "Killed", ChatColor.DARK_RED, TempData.getKills(attacker));
-                        }
+                        TempData.addKill(attacker);
                     }
                 }
             }
@@ -354,6 +342,17 @@ public class PlayerListener implements Listener {
                 setItemMeta(meta);
             }
         });
+    }
+
+    @EventHandler
+    public void onTag(AsyncPlayerReceiveNameTagEvent e)
+    {
+        if (!WorldCheck.is(e.getPlayer().getWorld()) || !Main.TAGAPI_ENABLED) return;
+        Player p = e.getPlayer();
+
+        if(TempData.getKills(p) > 7)e.setTag(ChatColor.DARK_RED + p.getName());
+        else if(TempData.getHeals(p) > 14)e.setTag(ChatColor.GREEN + p.getName());
+
     }
 
     //Respawn in the right spot
@@ -392,9 +391,9 @@ public class PlayerListener implements Listener {
 
     //Sprinting lures zombies.
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent(PlayerToggleSprintEvent e) {
+    public void onEvent(PlayerToggleSprintEvent e)
+    {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
-
         for (Entity ent : e.getPlayer().getNearbyEntities(30, 12, 30)) {
             if (ent instanceof Zombie) {
                 ((Creature) ent).setTarget(e.getPlayer());
