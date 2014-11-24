@@ -25,6 +25,7 @@ public class StatusTags
         if(ob == null)
         {
             ob = sb.registerNewObjective("tag", "dummy");
+            ob.setDisplayName(color + title);
         }
 
         Score score = ob.getScore(color + title);
