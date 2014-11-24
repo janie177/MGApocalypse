@@ -19,10 +19,16 @@ public class SpawnKit
     {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
             @Override
-            public void run() {
-                p.getInventory().addItem(LootItem.WATERBOTTLE.build(), LootItem.WOODSWORD.build(), LootItem.BANDAGE.build(), LootItem.LEATHERCHEST.build());
-                p.updateInventory();
+            public void run()
+            {
+                addKit(RespawnKit.DEFAULT);
             }
         }, 35);
+    }
+
+    private void addKit(RespawnKit kit)
+    {
+        p.getInventory().addItem(kit.getItems());
+        p.updateInventory();
     }
 }

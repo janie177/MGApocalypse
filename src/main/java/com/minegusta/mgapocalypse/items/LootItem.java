@@ -24,6 +24,7 @@ public enum LootItem
     LEATHERHELM(Material.LEATHER_HELMET, 1, (short) 0, "This will hide your tacky hair." , "Leather Cap", true),
     SNOWBALL(Material.SNOW_BALL, 1, (short) 0, "Maybe you should throw this away." , "Ball Of Rubbish", false),
     COAL(Material.COAL, 1, (short) 0, "Good for cooking food." , "Coal", false),
+    SADDLE(Material.SADDLE, 1, (short) 0, "An old leather saddle." , "Saddle", false),
     BONE(Material.BONE, 1, (short) 0, "A dusty old bone." , "Bone", false),
     SHEARS(Material.SHEARS, 1, (short) 0, "Good for cutting off bandage.", "Shears", false),
     SKULL(Material.SKULL_ITEM, 1, (short) 0, "I should wear this." , "Skull", false),
