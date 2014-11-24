@@ -19,9 +19,9 @@ public class TempData
     public static int addKill(Player p)
     {
         String uuid = p.getUniqueId().toString();
-        if(healerMap.containsKey(uuid))
+        if(killerMap.containsKey(uuid))
         {
-            int add = healerMap.get(uuid) + 1;
+            int add = killerMap.get(uuid) + 1;
             killerMap.put(uuid, add);
             return add;
         }
