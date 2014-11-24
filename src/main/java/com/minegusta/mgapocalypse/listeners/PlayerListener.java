@@ -26,7 +26,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
 import org.kitteh.tag.TagAPI;
 
 import java.util.List;
@@ -144,7 +143,7 @@ public class PlayerListener implements Listener {
         }
 
         //No bonemeal
-        if (e.hasBlock() && e.getClickedBlock().getType() == Material.GRASS && hand == Material.INK_SACK) {
+        if (e.hasBlock() && e.getClickedBlock().getType() == Material.GRASS && hand == Material.INK_SACK && !p.hasPermission("minegusta.builder")) {
             e.setCancelled(true);
         }
     }

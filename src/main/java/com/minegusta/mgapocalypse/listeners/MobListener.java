@@ -28,6 +28,8 @@ public class MobListener implements Listener
     private final static int nightChance = 2; //Promillage to spawn a zombie group
     private final static int dayChance = 100; //promillage to spawn a zombie group
 
+    private final List<EntityType> blockedDrops = Lists.newArrayList(EntityType.ZOMBIE, EntityType.SHEEP, EntityType.SQUID, EntityType.HORSE, EntityType.PIG_ZOMBIE);
+
     private final static List<Material> highspawnchance = Lists.newArrayList(Material.SMOOTH_BRICK,Material.STONE,Material.WOOD, Material.DOUBLE_STEP);
 
     private final static List<CreatureSpawnEvent.SpawnReason> allowedReasons = Lists.newArrayList(CreatureSpawnEvent.SpawnReason.SPAWNER, CreatureSpawnEvent.SpawnReason.CUSTOM);
@@ -143,8 +145,6 @@ public class MobListener implements Listener
 
         if(e.getEntityType() == EntityType.ZOMBIE) {
 
-            e.getDrops().clear();
-
             if (RandomNumber.get(6) == 1) e.getDrops().add(LootItem.ZOMBIEMEAT.build());
             if (e.getEntity().getLastDamageCause() != null) {
                 EntityDamageEvent cause = e.getEntity().getLastDamageCause();
@@ -164,6 +164,12 @@ public class MobListener implements Listener
                     }
                 }
             }
+        }
+
+        //Block drops
+        if(blockedDrops.contains(e.getEntityType()))
+        {
+            e.getDrops().clear();
         }
     }
 }
