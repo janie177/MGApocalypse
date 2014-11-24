@@ -4,6 +4,7 @@ import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.config.SavedLocationsManager;
 import com.minegusta.mgapocalypse.items.LootItem;
 import com.minegusta.mgapocalypse.util.SpawnKit;
+import com.minegusta.mgapocalypse.util.TempData;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -64,6 +65,7 @@ public class JoinListener implements Listener
                     e.getPlayer().setHealth(e.getPlayer().getMaxHealth());
                     e.getPlayer().setFoodLevel(20);
                     e.getPlayer().setGameMode(GameMode.ADVENTURE);
+                    TempData.cleanPlayer(e.getPlayer());
                     new SpawnKit(e.getPlayer());
                 }
                 else

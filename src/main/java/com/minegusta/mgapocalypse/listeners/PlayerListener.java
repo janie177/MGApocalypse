@@ -7,6 +7,7 @@ import com.minegusta.mgapocalypse.dotmanagers.DiseaseManager;
 import com.minegusta.mgapocalypse.items.LootItem;
 import com.minegusta.mgapocalypse.kills.ZombieKills;
 import com.minegusta.mgapocalypse.lootblocks.Loot;
+import com.minegusta.mgapocalypse.scoreboards.StatusTags;
 import com.minegusta.mgapocalypse.util.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -20,6 +21,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
@@ -281,11 +283,18 @@ public class PlayerListener implements Listener {
         }
     }
 
-    private void healPlayer(Player p, Player healer) {
+    private void healPlayer(Player p, Player healer)
+    {
         p.sendMessage(ChatColor.LIGHT_PURPLE + "You were healed by " + healer.getName() + ".");
         healer.sendMessage(ChatColor.LIGHT_PURPLE + "You healed " + p.getName() + ".");
         p.getWorld().spigot().playEffect(p.getLocation(), Effect.HEART);
         p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 7, 0));
+
+        //Healer check
+        if(TempData.addHeal(p) > 14 && TempData.getKills(p) < 8)
+        {
+            StatusTags.set(p, "Healed", ChatColor.GREEN, TempData.getHeals(p));
+        }
     }
 
     //Spawn a zombie on death
@@ -293,7 +302,38 @@ public class PlayerListener implements Listener {
     public void onEvent(PlayerDeathEvent e) {
         if (!WorldCheck.is(e.getEntity().getWorld())) return;
 
-        //Do stuff here
+        //Check for bandits
+        if (e.getEntity().getLastDamageCause() != null) {
+            EntityDamageEvent cause = e.getEntity().getLastDamageCause();
+            if(cause.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK))
+            {
+                if(((EntityDamageByEntityEvent)cause).getDamager() instanceof Player)
+                {
+                    Player attacker = (Player) ((EntityDamageByEntityEvent)cause).getDamager();
+                    if(TempData.addKill(attacker) > 7)
+                    {
+                        StatusTags.set(attacker, "Killed", ChatColor.DARK_RED, TempData.getKills(attacker));
+                    }
+                }
+            }
+            if(cause.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE))
+            {
+                if(((EntityDamageByEntityEvent)cause).getDamager() instanceof Arrow)
+                {
+                    Arrow arrow = (Arrow) ((EntityDamageByEntityEvent)cause).getDamager();
+                    if(arrow.getShooter() != null && arrow.getShooter() instanceof Player)
+                    {
+                        Player attacker = (Player) arrow.getShooter();
+                        if(TempData.addKill(attacker) > 7)
+                        {
+                            StatusTags.set(attacker, "Killed", ChatColor.DARK_RED, TempData.getKills(attacker));
+                        }
+                    }
+                }
+            }
+        }
+
+        //Spawn the zombie
 
         e.setDroppedExp(0);
         final Player p = e.getEntity();
@@ -327,6 +367,10 @@ public class PlayerListener implements Listener {
         int points = ZombieKills.get(p) / 2;
         p.sendMessage(ChatColor.GOLD + "You earned a total of " + ChatColor.YELLOW + points + ChatColor.GOLD + " credits.");
         ZombieKills.set(p, 0);
+        p.sendMessage(ChatColor.GREEN + "You had " + ChatColor.DARK_GREEN + TempData.getHeals(p) + ChatColor.GREEN + " player heals.");
+        p.sendMessage(ChatColor.RED + "You had " + ChatColor.DARK_RED + TempData.getKills(p) + ChatColor.RED + " player kills.");
+        //Clean the effects from the player.
+        TempData.cleanPlayer(p);
     }
 
     //Block all commands
