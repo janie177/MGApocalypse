@@ -346,8 +346,7 @@ public class PlayerListener implements Listener {
     public void onTag(AsyncPlayerReceiveNameTagEvent e)
     {
         if (!WorldCheck.is(e.getPlayer().getWorld()) || !Main.TAGAPI_ENABLED) return;
-        Player p = e.getPlayer();
-
+        Player p = e.getNamedPlayer();
         if(TempData.getKills(p) > 7)e.setTag(ChatColor.DARK_RED + p.getName());
         else if(TempData.getHeals(p) > 14)e.setTag(ChatColor.GREEN + p.getName());
 
