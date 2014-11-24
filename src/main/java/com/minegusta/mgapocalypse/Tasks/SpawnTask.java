@@ -21,7 +21,7 @@ public class SpawnTask
 
     //-- FINAL VARIABLES --//
     private final static int interval = 10; //Interval in seconds to spawn new zombies.
-    private final static int townDistance = 40; //The distance from towns that counts as a town still.
+    private final static int townDistance = 130; //The distance from towns that counts as a town still.
     private final static int zombieRadius = 100; //The radius in which there's a zombie limit.
     private final static int maxZombieAmount = 20; //The maximum amount of zombies near a player.
     private final static int townMaxZombieAmount = 40; //The maximum amount of zombies near a player in towns.
