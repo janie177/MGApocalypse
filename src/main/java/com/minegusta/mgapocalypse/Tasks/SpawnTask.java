@@ -132,7 +132,7 @@ public class SpawnTask
             if(ent instanceof Player)
             {
                 temp.remove();
-                return spawnLoc.add(-(ent.getLocation().getX() - spawnLoc.getX()), 0, -(ent.getLocation().getZ() - spawnLoc.getZ()));
+                return noPlayersNear(spawnLoc.add(-(ent.getLocation().getX() - spawnLoc.getX()), 0, -(ent.getLocation().getZ() - spawnLoc.getZ())));
             }
         }
         temp.remove();
