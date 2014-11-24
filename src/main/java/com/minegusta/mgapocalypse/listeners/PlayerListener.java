@@ -27,6 +27,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
+import org.kitteh.tag.TagAPI;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -287,6 +288,7 @@ public class PlayerListener implements Listener {
 
         //Healer check
         TempData.addHeal(p);
+        TagAPI.refreshPlayer(p);
     }
 
     //Spawn a zombie on death
@@ -302,6 +304,7 @@ public class PlayerListener implements Listener {
                 {
                     Player attacker = (Player) ((EntityDamageByEntityEvent)cause).getDamager();
                     TempData.addKill(attacker);
+                    TagAPI.refreshPlayer(attacker);
                 }
             }
             if(cause.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE))
@@ -313,6 +316,7 @@ public class PlayerListener implements Listener {
                     {
                         Player attacker = (Player) arrow.getShooter();
                         TempData.addKill(attacker);
+                        TagAPI.refreshPlayer(attacker);
                     }
                 }
             }
@@ -347,7 +351,7 @@ public class PlayerListener implements Listener {
     {
         if (!WorldCheck.is(e.getPlayer().getWorld()) || !Main.TAGAPI_ENABLED) return;
         Player p = e.getNamedPlayer();
-        if(TempData.getKills(p) > 7)e.setTag(ChatColor.DARK_RED + p.getName());
+        if(TempData.getKills(p) > 7)e.setTag(ChatColor.RED + p.getName());
         else if(TempData.getHeals(p) > 14)e.setTag(ChatColor.GREEN + p.getName());
 
     }
