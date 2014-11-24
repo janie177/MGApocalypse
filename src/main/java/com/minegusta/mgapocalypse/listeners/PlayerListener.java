@@ -104,7 +104,6 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEvent(PlayerInteractEvent e) {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
-
         Player p = e.getPlayer();
         Material hand = e.getPlayer().getItemInHand().getType();
 
