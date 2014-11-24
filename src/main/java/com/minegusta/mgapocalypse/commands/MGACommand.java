@@ -43,6 +43,27 @@ public class MGACommand implements CommandExecutor{
                 }
                 return true;
             }
+            if(args[0].equalsIgnoreCase("addtown"))
+            {
+                if(!WorldCheck.is(p.getWorld()))
+                {
+                    p.sendMessage(ChatColor.RED + "This world is not valid!!");
+                    return true;
+                }
+                p.sendMessage(ChatColor.GREEN + "You added this position as a town!");
+                DefaultConfig.addTown(p.getLocation());
+                return true;
+            }
+            else if(args[0].equalsIgnoreCase("listtowns"))
+            {
+                int index = 1;
+                for(String town : DefaultConfig.getTowns())
+                {
+                    p.sendMessage(ChatColor.YELLOW + Integer.toString(index) + ". " + ChatColor.GREEN + town);
+                    index++;
+                }
+                return true;
+            }
             else if(args[0].equalsIgnoreCase("setmainspawn"))
             {
                 DefaultConfig.setMainSpawn(p.getLocation());
@@ -71,6 +92,25 @@ public class MGACommand implements CommandExecutor{
                 }
                 return true;
             }
+            if(args[0].equalsIgnoreCase("deletetown"))
+            {
+                int index = -1;
+                try
+                {
+                    index = Integer.parseInt(args[1]) - 1;
+                } catch (Exception ignored){}
+                if(index < 0 || index > DefaultConfig.getTowns().size())
+                {
+                    p.sendMessage(ChatColor.RED + "That is not a valid index!");
+                    return true;
+                }
+                else
+                {
+                    p.sendMessage(ChatColor.GREEN + "You removed a town from the list!");
+                    DefaultConfig.removeTown(index);
+                }
+                return true;
+            }
         }
         sendHelp(p);
         return true;
@@ -82,6 +122,9 @@ public class MGACommand implements CommandExecutor{
         p.sendMessage(ChatColor.GREEN + " - /mga addspawn");
         p.sendMessage(ChatColor.GREEN + " - /mga listspawns");
         p.sendMessage(ChatColor.GREEN + " - /mga deletespawn <index>");
+        p.sendMessage(ChatColor.GREEN + " - /mga addtown");
+        p.sendMessage(ChatColor.GREEN + " - /mga listtowns");
+        p.sendMessage(ChatColor.GREEN + " - /mga deletetown <index>");
         p.sendMessage(ChatColor.GREEN + " - /mga setmainspawn");
     }
 }

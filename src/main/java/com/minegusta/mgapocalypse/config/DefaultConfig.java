@@ -88,4 +88,37 @@ public class DefaultConfig
         getConfig().set("main_spawn", StringLocConverter.locationToString(l));
         saveConfig();
     }
+
+    // -- TOWNS -- //
+
+    /**
+     * Get all the spawn locations as a list of strings.
+     * @return A list of spawn locations (strings).
+     */
+    public static List<String> getTowns()
+    {
+        return getConfig().getStringList("towns");
+    }
+
+    /**
+     * Add a spawn to the file.
+     * @param l The location to add.
+     */
+    public static void addTown(Location l)
+    {
+        List<String> add = getConfig().getStringList("towns");
+        add.add(StringLocConverter.locationToString(l));
+        getConfig().set("towns", add);
+        saveConfig();
+    }
+
+    /**
+     * Remove a spawn from the file.
+     * @param index The # to remove.
+     */
+    public static void removeTown(int index)
+    {
+        getConfig().set("towns", getSpawns().remove(index));
+    }
+
 }

@@ -2,3 +2,4 @@ enabled_worlds:
   - 'wasteland'
 main_spawn:
 spawns:
+towns:
