@@ -1,7 +1,6 @@
 package com.minegusta.mgapocalypse.util;
 
 import com.google.common.collect.Maps;
-import com.minegusta.mgapocalypse.scoreboards.StatusTags;
 import org.bukkit.entity.Player;
 
 import java.util.concurrent.ConcurrentMap;
@@ -63,6 +62,5 @@ public class TempData
         if(killerMap.containsKey(uuid))killerMap.remove(uuid);
         if(diseaseMap.containsKey(uuid))diseaseMap.remove(uuid);
         if(bleedingMap.containsKey(uuid))bleedingMap.remove(uuid);
-        StatusTags.clear(p);
     }
 }

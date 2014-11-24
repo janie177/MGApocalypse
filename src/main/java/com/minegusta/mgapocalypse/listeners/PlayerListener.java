@@ -69,8 +69,6 @@ public class PlayerListener implements Listener {
                 new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
             }
         }
-
-
         //Cure diseases
         if (m == Material.MILK_BUCKET) {
             e.setCancelled(true);
