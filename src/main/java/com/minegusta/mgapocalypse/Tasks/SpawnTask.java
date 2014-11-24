@@ -75,12 +75,14 @@ public class SpawnTask
 
                     //Find the location and then spawn the mobs.
 
-                    int x = 70;
-                    int z = 70;
+                    int x = RandomNumber.get(48,70);
+                    int z = RandomNumber.get(48,70);
                     if(RandomNumber.getBoolean())x = -x;
                     if(RandomNumber.getBoolean())z = -z;
 
-                    Location spawnLoc = l.add(x,0,z);
+                    //Check if there is no players near the new spawn point.
+                    Location spawnLoc = noPlayersNear(l.add(x,0,z));
+
                     if(spawnLoc.getBlock().getType() != Material.AIR && spawnLoc.getBlock().getRelative(BlockFace.UP).getType() != Material.AIR)
                     {
                         Location newLoc = spawnLoc.getWorld().getHighestBlockAt(spawnLoc.getBlockX(), spawnLoc.getBlockZ()).getLocation().add(0,1,0);
@@ -120,6 +122,21 @@ public class SpawnTask
                 zombie2.setBaby(true);
             }
         }
+    }
+
+    private static Location noPlayersNear(Location spawnLoc)
+    {
+        Entity temp = spawnLoc.getWorld().spawnEntity(spawnLoc, EntityType.EXPERIENCE_ORB);
+        for(Entity ent : temp.getNearbyEntities(20,10,20))
+        {
+            if(ent instanceof Player)
+            {
+                temp.remove();
+                return spawnLoc.add(-(ent.getLocation().getX() - spawnLoc.getX()), 0, -(ent.getLocation().getZ() - spawnLoc.getZ()));
+            }
+        }
+        temp.remove();
+        return spawnLoc;
     }
 
 }
