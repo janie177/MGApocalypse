@@ -46,7 +46,10 @@ public class MobListener implements Listener
         {
             return;
         }
+        e.setCancelled(true);
 
+        //Leave this out, custom task for now.
+        /**
         Location loc = e.getLocation();
         e.setCancelled(true);
 
@@ -87,6 +90,7 @@ public class MobListener implements Listener
             }
         }
 
+         **/
     }
 
 

@@ -27,8 +27,23 @@ public class RandomNumber
         return random.nextInt(max) + 1;
     }
 
+    /**
+     * Return a random double.
+     * @param max The maximum value.
+     * @return A random double.
+     */
     public static double getDouble(int max)
     {
         return ((double) random.nextInt(max) + 1);
     }
+
+    /**
+     * It could both be true or false untill it is returned.
+     * @return true or false.
+     */
+    public static boolean getBoolean()
+    {
+        return random.nextBoolean();
+    }
+
 }

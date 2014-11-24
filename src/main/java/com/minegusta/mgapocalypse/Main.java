@@ -1,9 +1,6 @@
 package com.minegusta.mgapocalypse;
 
-import com.minegusta.mgapocalypse.Tasks.BroadCastTask;
-import com.minegusta.mgapocalypse.Tasks.DOTTask;
-import com.minegusta.mgapocalypse.Tasks.DrinkTask;
-import com.minegusta.mgapocalypse.Tasks.SaveTask;
+import com.minegusta.mgapocalypse.Tasks.*;
 import com.minegusta.mgapocalypse.commands.BreakCommand;
 import com.minegusta.mgapocalypse.commands.MGACommand;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
@@ -50,6 +47,7 @@ public class Main extends JavaPlugin
         DISEASETASK = DOTTask.diseaseTask();
         DRINKTASK = DrinkTask.start();
         BROADCASTTASK = BroadCastTask.start();
+        SpawnTask.start();
 
         //Worldguard enabled
         if(Bukkit.getPluginManager().isPluginEnabled("WorldGuard"))WG_ENABLED = true;
@@ -70,5 +68,6 @@ public class Main extends JavaPlugin
         Bukkit.getScheduler().cancelTask(DISEASETASK);
         Bukkit.getScheduler().cancelTask(DRINKTASK);
         Bukkit.getScheduler().cancelTask(BROADCASTTASK);
+        SpawnTask.stop();
     }
 }

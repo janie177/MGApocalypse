@@ -54,7 +54,7 @@ public class PlayerListener implements Listener {
         Material m = e.getItem().getType();
 
         if (food.contains(m)) {
-            if (p.getMaxHealth() != p.getHealth()) p.setHealth(p.getHealth() + 1.0);
+            if (p.getHealth() <= 19.0) p.setHealth(p.getHealth() + 1.0);
         }
 
         if (m == Material.POTION) {
