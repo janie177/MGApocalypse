@@ -287,7 +287,7 @@ public class PlayerListener implements Listener {
 
         //Healer check
         TempData.addHeal(p);
-        if(Main.TAGAPI_ENABLED)TagAPI.refreshPlayer(p);
+        if(Main.TAGAPI_ENABLED && TempData.getHeals(p) > 14)TagAPI.refreshPlayer(p);
     }
 
     //Spawn a zombie on death
@@ -303,7 +303,7 @@ public class PlayerListener implements Listener {
                 {
                     Player attacker = (Player) ((EntityDamageByEntityEvent)cause).getDamager();
                     TempData.addKill(attacker);
-                    if(Main.TAGAPI_ENABLED)TagAPI.refreshPlayer(attacker);
+                    if(Main.TAGAPI_ENABLED && TempData.getKills(attacker) > 7)TagAPI.refreshPlayer(attacker);
                 }
             }
             if(cause.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE))
@@ -315,7 +315,7 @@ public class PlayerListener implements Listener {
                     {
                         Player attacker = (Player) arrow.getShooter();
                         TempData.addKill(attacker);
-                        if(Main.TAGAPI_ENABLED)TagAPI.refreshPlayer(attacker);
+                        if(Main.TAGAPI_ENABLED && TempData.getKills((Player) arrow.getShooter()) > 7)TagAPI.refreshPlayer(attacker);
                     }
                 }
             }
