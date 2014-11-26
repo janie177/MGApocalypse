@@ -25,8 +25,8 @@ public class SpawnTask
     private final static int zombieRadius = 100; //The radius in which there's a zombie limit.
     private final static int maxZombieAmount = 16; //The maximum amount of zombies near a player.
     private final static int townMaxZombieAmount = 35; //The maximum amount of zombies near a player in towns.
-    private final static int spawnChance = 130; //Promillage chance to spawn a zombie group.
-    private final static int townSpawnChance = 500; //Promillage chance to spawn a zombie group in towns.
+    private final static int spawnChance = 200; //Promillage chance to spawn a zombie group.
+    private final static int townSpawnChance = 700; //Promillage chance to spawn a zombie group in towns.
     private final static int maxGroupSize = 6; //The maximum group size for zombies.
     private final static List<String> towns = DefaultConfig.getTowns(); //All towns defined.
 
@@ -40,7 +40,8 @@ public class SpawnTask
             @Override
             public void run()
             {
-                for(Player p : Bukkit.getOnlinePlayers()) {
+                for(Player p : Bukkit.getOnlinePlayers())
+                {
                     int chance = RandomNumber.get(1000);
                     if (!(chance <= townSpawnChance)) return;
 
@@ -83,7 +84,7 @@ public class SpawnTask
                     //Check if there is no players near the new spawn point.
                     Location spawnLoc = noPlayersNear(l.add(x,0,z));
 
-                    if(spawnLoc.getBlock().getType() != Material.AIR && spawnLoc.getBlock().getRelative(BlockFace.UP).getType() != Material.AIR)
+                    if(spawnLoc.getBlock().getType() != Material.AIR)
                     {
                         Location newLoc = ascend(spawnLoc);
                         spawnZombie(newLoc);
@@ -97,9 +98,6 @@ public class SpawnTask
                     {
                         spawnZombie(spawnLoc);
                     }
-
-
-
                 }
             }
         }, 20 * interval, 20 * interval);
