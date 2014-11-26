@@ -23,11 +23,11 @@ public class SpawnTask
     private final static int interval = 10; //Interval in seconds to spawn new zombies.
     private final static int townDistance = 130; //The distance from towns that counts as a town still.
     private final static int zombieRadius = 100; //The radius in which there's a zombie limit.
-    private final static int maxZombieAmount = 14; //The maximum amount of zombies near a player.
-    private final static int townMaxZombieAmount = 30; //The maximum amount of zombies near a player in towns.
-    private final static int spawnChance = 50; //Promillage chance to spawn a zombie group.
-    private final static int townSpawnChance = 150; //Promillage chance to spawn a zombie group in towns.
-    private final static int maxGroupSize = 5; //The maximum group size for zombies.
+    private final static int maxZombieAmount = 16; //The maximum amount of zombies near a player.
+    private final static int townMaxZombieAmount = 35; //The maximum amount of zombies near a player in towns.
+    private final static int spawnChance = 130; //Promillage chance to spawn a zombie group.
+    private final static int townSpawnChance = 500; //Promillage chance to spawn a zombie group in towns.
+    private final static int maxGroupSize = 6; //The maximum group size for zombies.
     private final static List<String> towns = DefaultConfig.getTowns(); //All towns defined.
 
 
