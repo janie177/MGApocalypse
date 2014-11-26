@@ -76,8 +76,16 @@ public class SpawnTask
 
                     //Find the location and then spawn the mobs.
 
-                    int x = RandomNumber.get(48,70);
-                    int z = RandomNumber.get(48,70);
+                    int min = 48;
+                    int max = 70;
+                    if(town)
+                    {
+                        min = 28;
+                        max = 50;
+                    }
+
+                    int x = RandomNumber.get(min,max);
+                    int z = RandomNumber.get(min,max);
                     if(RandomNumber.getBoolean())x = -x;
                     if(RandomNumber.getBoolean())z = -z;
 
