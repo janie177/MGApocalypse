@@ -384,7 +384,7 @@ public class PlayerListener implements Listener {
     public void onEvent(PlayerToggleSprintEvent e)
     {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
-        for (Entity ent : e.getPlayer().getNearbyEntities(30, 12, 30)) {
+        for (Entity ent : e.getPlayer().getNearbyEntities(47, 12, 47)) {
             if (ent instanceof Zombie) {
                 ((Creature) ent).setTarget(e.getPlayer());
             }
