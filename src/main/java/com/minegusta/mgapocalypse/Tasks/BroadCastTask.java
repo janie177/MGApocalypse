@@ -6,8 +6,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class BroadCastTask
-{
+public class BroadCastTask {
+    private static final String[] messages =
+            {
+              "Need a world map? " + ChatColor.DARK_BLUE + "http://www.minegusta.com/map.php",
+              "You are playing Wasteland! To return to the hub, use: " + ChatColor.YELLOW + "/Hub",
+              "Want cool donor perks? " + ChatColor.YELLOW + "http://store.minegusta.com"
+            };
+    private static int index = 0;
+
     public static int start()
     {
         return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, new Runnable() {
@@ -19,13 +26,14 @@ public class BroadCastTask
                     for(Player p : Bukkit.getWorld(w).getPlayers())
                     {
                         p.sendMessage(ChatColor.RED +"- - - " + ChatColor.GOLD + "WasteLand" + ChatColor.RED + " - - -");
-                        p.sendMessage(ChatColor.GRAY + "You are playing Wasteland! To return to the hub, use:");
-                        p.sendMessage(ChatColor.YELLOW + "/Hub");
+                        p.sendMessage(messages[index]);
                         p.sendMessage(ChatColor.RED + "- - - - - - - - -");
+                        index++;
+                        if(index + 1 > messages.length)index = 0;
                     }
                 }
             }
-        },20 * 30, 20 * 300);
+        },20 * 30, 20 * 180);
     }
 }
 

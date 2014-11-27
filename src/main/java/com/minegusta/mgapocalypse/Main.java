@@ -4,8 +4,10 @@ import com.minegusta.mgapocalypse.Tasks.*;
 import com.minegusta.mgapocalypse.commands.BreakCommand;
 import com.minegusta.mgapocalypse.commands.MGACommand;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
+import com.minegusta.mgapocalypse.config.LogoutManager;
 import com.minegusta.mgapocalypse.config.SavedLocationsManager;
 import com.minegusta.mgapocalypse.listeners.*;
+import com.minegusta.pvplog.PvpLogListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,6 +30,7 @@ public class Main extends JavaPlugin
         //Config files
         SavedLocationsManager.createOrLoadLocationsFile(PLUGIN);
         DefaultConfig.loadConfig();
+        LogoutManager.createFile(PLUGIN);
 
 
         //Listeners components
@@ -35,6 +38,7 @@ public class Main extends JavaPlugin
         Bukkit.getPluginManager().registerEvents(new JoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new MobListener(), this);
         Bukkit.getPluginManager().registerEvents(new ProjectileListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PvpLogListener(), this);
 
         //Commands
         getCommand("mga").setExecutor(new MGACommand());
