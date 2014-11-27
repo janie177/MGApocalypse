@@ -4,6 +4,7 @@ import com.minegusta.mgapocalypse.config.LogoutManager;
 import com.minegusta.mgapocalypse.util.WGManager;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,7 +12,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public class PvpLogListener implements Listener {
 
@@ -46,6 +50,18 @@ public class PvpLogListener implements Listener {
             }
             e.getPlayer().setHealth(0);
             LogoutManager.reset(e.getPlayer().getUniqueId());
+        }
+    }
+
+    //Check for unloading chunks;
+    @EventHandler
+    public void onChunkUnload(ChunkUnloadEvent e)
+    {
+        if(!WorldCheck.is(e.getWorld()))return;
+
+        for(List<Chunk> chunks : LogData.chunkMap.values())
+        {
+            if(chunks.contains(e.getChunk()))e.setCancelled(true);
         }
     }
 }

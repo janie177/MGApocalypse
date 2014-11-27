@@ -1,17 +1,16 @@
 package com.minegusta.mgapocalypse.pvplog;
 
+import com.google.common.collect.Lists;
 import com.minegusta.mgapocalypse.Main;
 import com.minegusta.mgapocalypse.config.LogoutManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.List;
 import java.util.UUID;
 
 public class PvpBot {
@@ -22,12 +21,22 @@ public class PvpBot {
     private Villager v;
     private Inventory inv;
     private int seconds = 0;
+    private List<Chunk> chunks = Lists.newArrayList();
 
     public PvpBot(Player p) {
         this.uuid = p.getUniqueId();
         this.loc = p.getLocation();
         this.name = p.getName();
         this.inv = p.getInventory();
+        //Getting 9 chunks around the location.
+        for(int x = loc.getChunk().getX() - 1; x <=loc.getChunk().getX() + 1; x++) {
+            for (int z = loc.getChunk().getZ() - 1; z <= loc.getChunk().getZ() + 1; z++)
+            {
+                chunks.add(loc.getWorld().getChunkAt(x, z));
+            }
+        }
+
+        LogData.chunkMap.put(uuid.toString(), chunks);
 
         this.v = spawnBot();
         TASK = start();
@@ -48,6 +57,7 @@ public class PvpBot {
             Bukkit.getScheduler().cancelTask(TASK);
         }
         LogData.remove(uuid);
+        LogData.chunkMap.remove(uuid.toString());
     }
 
     private void loopTask()

@@ -1,13 +1,17 @@
 package com.minegusta.mgapocalypse.pvplog;
 
 import com.google.common.collect.Maps;
+import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
 
 public class LogData {
     public static ConcurrentMap<String, PvpBot> logMap = Maps.newConcurrentMap();
+    public static ConcurrentMap<String, List<Chunk>> chunkMap = Maps.newConcurrentMap();
+
 
     public static void add(Player p, PvpBot bot) {
         logMap.put(p.getUniqueId().toString(), bot);
