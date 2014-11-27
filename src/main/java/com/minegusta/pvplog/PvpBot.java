@@ -5,6 +5,7 @@ import com.minegusta.mgapocalypse.config.LogoutManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -39,9 +40,10 @@ public class PvpBot
         return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, new Runnable() {
             @Override
             public void run() {
-                if (v == null || v.isDead()) {
+                if (v == null || v.isDead())
+                {
                     for (ItemStack i : inv) {
-                        loc.getWorld().dropItemNaturally(loc, i);
+                        if(i != null && i.getType() != Material.AIR)loc.getWorld().dropItemNaturally(loc, i);
                     }
                     LogoutManager.set(uuid, true);
                     stop();
@@ -51,7 +53,6 @@ public class PvpBot
                 seconds++;
 
                 if (seconds > 10) {
-
                     stop();
                 }
             }
@@ -64,7 +65,10 @@ public class PvpBot
         {
             Bukkit.getScheduler().cancelTask(TASK);
         }
-        v.remove();
+        if(v != null && !v.isDead())
+        {
+            v.setHealth(0);
+        }
         LogData.remove(uuid);
     }
 

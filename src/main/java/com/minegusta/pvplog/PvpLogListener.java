@@ -32,7 +32,7 @@ public class PvpLogListener implements Listener{
         {
             int remaining = LogData.remainingTime(e.getPlayer());
             if(remaining == 0)LogData.get(e.getPlayer()).stop();
-            else e.getPlayer().kickPlayer("You combat logged! Please wait " + LogData.remainingTime(e.getPlayer()) + " seconds.");
+            else e.disallow(PlayerLoginEvent.Result.KICK_OTHER, "You combat logged! Please wait " + LogData.remainingTime(e.getPlayer()) + " seconds.");
         }
     }
 
