@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -19,7 +20,7 @@ public class PvpBot
     private Location loc;
     private String name;
     private int TASK = -1;
-    private Villager v;
+    private Zombie v;
     private ItemStack[] inv;
     private ItemStack[] armour;
     private int seconds = 0;
@@ -78,14 +79,23 @@ public class PvpBot
         LogData.remove(uuid);
     }
 
-    private Villager spawnBot()
+    private Zombie spawnBot()
     {
         Bukkit.broadcastMessage(ChatColor.DARK_RED + name +  ChatColor.RED +" just combat logged! Their NPC has been spawned.");
-        Villager v = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
-        v.setAdult();
+        Zombie v = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
+        v.setBaby(false);
         v.setCustomNameVisible(true);
         v.setCustomName(name);
-        v.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 15, 10));
+        v.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 100, 10));
+        v.setCanPickupItems(false);
+
+        v.getEquipment().setHelmet(new ItemStack(Material.SKULL_ITEM, 1, (short) 3) {
+            {
+                SkullMeta meta = (SkullMeta) getItemMeta();
+                meta.setOwner(name);
+                setItemMeta(meta);
+            }
+        });
 
         for(Entity ent : v.getNearbyEntities(30,30,30))
         {
