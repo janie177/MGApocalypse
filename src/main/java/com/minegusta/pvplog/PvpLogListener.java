@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class PvpLogListener implements Listener{
 
@@ -44,8 +45,9 @@ public class PvpLogListener implements Listener{
         if(LogoutManager.getIfDead(e.getPlayer().getUniqueId()))
         {
             e.getPlayer().sendMessage(ChatColor.RED + "You died after you PVP logged.");
-            e.getPlayer().getInventory().clear();
-            e.getPlayer().damage(50);
+            e.getPlayer().getInventory().setContents(null);
+            e.getPlayer().getInventory().setArmorContents(null);
+            e.getPlayer().setHealth(0);
             LogoutManager.reset(e.getPlayer().getUniqueId());
         }
     }

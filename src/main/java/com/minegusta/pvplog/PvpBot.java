@@ -21,12 +21,14 @@ public class PvpBot
     private int TASK = -1;
     private Villager v;
     private ItemStack[] inv;
+    private ItemStack[] armour;
     private int seconds = 0;
 
     public PvpBot(Player p)
     {
         this.uuid = p.getUniqueId();
         this .loc = p.getLocation();
+        this.armour = p.getInventory().getArmorContents();
         this.name = p.getName();
         this.inv = p.getInventory().getContents();
 
@@ -43,6 +45,9 @@ public class PvpBot
                 if (v == null || v.isDead())
                 {
                     for (ItemStack i : inv) {
+                        if(i != null && i.getType() != Material.AIR)loc.getWorld().dropItemNaturally(loc, i);
+                    }
+                    for (ItemStack i : armour) {
                         if(i != null && i.getType() != Material.AIR)loc.getWorld().dropItemNaturally(loc, i);
                     }
                     LogoutManager.set(uuid, true);
