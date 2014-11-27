@@ -70,9 +70,10 @@ public class PvpBot
         {
             Bukkit.getScheduler().cancelTask(TASK);
         }
-        if(v != null && !v.isDead())
+        if(!v.isDead())
         {
             v.setHealth(0);
+            v.damage(100);
         }
         LogData.remove(uuid);
     }
