@@ -2,7 +2,6 @@ package com.minegusta.mgapocalypse.pvplog;
 
 import com.minegusta.mgapocalypse.Main;
 import com.minegusta.mgapocalypse.config.LogoutManager;
-import com.minegusta.mgapocalypse.util.StringLocConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -78,7 +77,6 @@ public class PvpBot
 
     public void stop()
     {
-        Bukkit.broadcastMessage("DEBUG: Stop called!");
         if(TASK != -1)
         {
             Bukkit.getScheduler().cancelTask(TASK);
