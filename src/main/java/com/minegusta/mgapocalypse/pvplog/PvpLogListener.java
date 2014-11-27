@@ -1,9 +1,10 @@
-package com.minegusta.pvplog;
+package com.minegusta.mgapocalypse.pvplog;
 
 import com.minegusta.mgapocalypse.config.LogoutManager;
 import com.minegusta.mgapocalypse.util.WGManager;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -40,12 +41,16 @@ public class PvpLogListener implements Listener{
     public void onEvent(PlayerJoinEvent e)
     {
         if(!WorldCheck.is(e.getPlayer().getWorld()))return;
-
-        if(LogoutManager.getIfDead(e.getPlayer().getUniqueId()))
+        if(!LogData.contains(e.getPlayer()) && LogoutManager.getIfDead(e.getPlayer().getUniqueId()))
         {
             e.getPlayer().sendMessage(ChatColor.RED + "You died after you PVP logged.");
-            e.getPlayer().getInventory().setContents(null);
-            e.getPlayer().getInventory().setArmorContents(null);
+
+            int slot = 0;
+            for(ItemStack i : e.getPlayer().getInventory())
+            {
+                slot++;
+                e.getPlayer().getInventory().setItem(slot, new ItemStack(Material.AIR));
+            }
             e.getPlayer().setHealth(0);
             LogoutManager.reset(e.getPlayer().getUniqueId());
         }

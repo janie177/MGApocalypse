@@ -1,4 +1,4 @@
-package com.minegusta.pvplog;
+package com.minegusta.mgapocalypse.pvplog;
 
 import com.google.common.collect.Maps;
 import org.bukkit.entity.Player;

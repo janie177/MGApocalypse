@@ -1,12 +1,14 @@
-package com.minegusta.pvplog;
+package com.minegusta.mgapocalypse.pvplog;
 
 import com.minegusta.mgapocalypse.Main;
 import com.minegusta.mgapocalypse.config.LogoutManager;
+import com.minegusta.mgapocalypse.util.StringLocConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
@@ -21,17 +23,15 @@ public class PvpBot
     private String name;
     private int TASK = -1;
     private Zombie v;
-    private ItemStack[] inv;
-    private ItemStack[] armour;
+    private Inventory inv;
     private int seconds = 0;
 
     public PvpBot(Player p)
     {
         this.uuid = p.getUniqueId();
         this .loc = p.getLocation();
-        this.armour = p.getInventory().getArmorContents();
         this.name = p.getName();
-        this.inv = p.getInventory().getContents();
+        this.inv = p.getInventory();
 
         this.v = spawnBot();
         TASK = start();
@@ -42,14 +42,22 @@ public class PvpBot
     {
         return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, new Runnable() {
             @Override
-            public void run() {
+            public void run()
+            {
+                for(Entity ent : v.getNearbyEntities(20,10,20))
+                {
+                    if(v.isDead())break;
+                    if(ent instanceof Zombie)
+                    {
+                        ((Creature)ent).setTarget(v);
+                    }
+                    if(v.getLocation().distance(ent.getLocation()) < 3)v.damage(2);
+                }
                 if (v == null || v.isDead())
                 {
-                    for (ItemStack i : inv) {
-                        if(i != null && i.getType() != Material.AIR)loc.getWorld().dropItemNaturally(loc, i);
-                    }
-                    for (ItemStack i : armour) {
-                        if(i != null && i.getType() != Material.AIR)loc.getWorld().dropItemNaturally(loc, i);
+                    for (ItemStack i : inv)
+                    {
+                        if(i!=null && i.getType() != Material.AIR) loc.getWorld().dropItemNaturally(loc, i);
                     }
                     LogoutManager.set(uuid, true);
                     stop();
@@ -59,6 +67,9 @@ public class PvpBot
                 seconds++;
 
                 if (seconds > 10) {
+                    v.setHealth(0);
+                    v.damage(100);
+                    v.remove();
                     stop();
                 }
             }
@@ -67,15 +78,12 @@ public class PvpBot
 
     public void stop()
     {
+        Bukkit.broadcastMessage("DEBUG: Stop called!");
         if(TASK != -1)
         {
             Bukkit.getScheduler().cancelTask(TASK);
         }
-        if(!v.isDead())
-        {
-            v.setHealth(0);
-            v.damage(100);
-        }
+        v = null;
         LogData.remove(uuid);
     }
 
@@ -84,6 +92,7 @@ public class PvpBot
         Bukkit.broadcastMessage(ChatColor.DARK_RED + name +  ChatColor.RED +" just combat logged! Their NPC has been spawned.");
         Zombie v = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
         v.setBaby(false);
+        v.setVillager(false);
         v.setCustomNameVisible(true);
         v.setCustomName(name);
         v.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 100, 10));

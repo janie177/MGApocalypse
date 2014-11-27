@@ -65,7 +65,11 @@ public class DefaultConfig
      */
     public static void removeSpawn(int index)
     {
-        getConfig().set("spawns", getSpawns().remove(index));
+        List<String> spawns = getSpawns();
+        if(index < 1)index = 1;
+        if(index > spawns.size()) index = spawns.size();
+        spawns.remove(index - 1);
+        getConfig().set("spawns", spawns);
     }
 
     /**
@@ -118,7 +122,11 @@ public class DefaultConfig
      */
     public static void removeTown(int index)
     {
-        getConfig().set("towns", getSpawns().remove(index));
+        if(index < 1)index = 1;
+        List<String> towns = getTowns();
+        if(index > towns.size()) index = towns.size();
+        towns.remove(index - 1);
+        getConfig().set("towns", towns);
     }
 
 }

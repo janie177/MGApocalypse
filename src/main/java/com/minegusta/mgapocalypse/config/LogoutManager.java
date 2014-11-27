@@ -50,11 +50,7 @@ public class LogoutManager {
      * @return if the player is dead.
      */
     public static boolean getIfDead(UUID p){
-        if(!conf.isSet(p.toString())) return false;
-        else
-        {
-            return conf.getBoolean(p.toString());
-        }
+        return conf.isSet(p.toString()) && conf.getBoolean(p.toString());
     }
 
     /**
@@ -72,8 +68,6 @@ public class LogoutManager {
      */
     public static void reset(UUID p)
     {
-        if(conf.isSet(p.toString())){
-            conf.set(p.toString(), false);
-        }
+        conf.set(p.toString(), false);
     }
 }
