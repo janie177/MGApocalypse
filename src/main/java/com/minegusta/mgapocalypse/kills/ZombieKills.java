@@ -21,8 +21,8 @@ public class ZombieKills
         int old = get(p);
         set(p, old + 1);
         p.sendMessage(ChatColor.GOLD + "You now have " + ChatColor.DARK_PURPLE + Integer.toString(get(p)) + ChatColor.GOLD + " zombie kills.");
-        p.sendMessage(ChatColor.YELLOW + "You earned " + ChatColor.LIGHT_PURPLE + "1" + ChatColor.GOLD + " credit.");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + p.getName() + " " + 1);
+        p.sendMessage(ChatColor.YELLOW + "You earned " + ChatColor.LIGHT_PURPLE + "3" + ChatColor.GOLD + " credits.");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + p.getName() + " " + 3);
     }
 
     public static int get(Player p)

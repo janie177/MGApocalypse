@@ -351,9 +351,9 @@ public class PlayerListener implements Listener {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
         Player p = e.getPlayer();
 
-        p.sendMessage(ChatColor.GREEN + "You had " + ChatColor.DARK_PURPLE + ZombieKills.get(p) + ChatColor.GREEN + " zombie kills.");
-        int points = ZombieKills.get(p) / 2;
-        p.sendMessage(ChatColor.GOLD + "You earned a total of " + ChatColor.YELLOW + points + ChatColor.GOLD + " credits.");
+        int points = ZombieKills.get(p);
+        p.sendMessage(ChatColor.GREEN + "You had " + ChatColor.DARK_PURPLE + points + ChatColor.GREEN + " zombie kills.");
+        p.sendMessage(ChatColor.GOLD + "You earned a total of " + ChatColor.YELLOW + (points * 3) + ChatColor.GOLD + " credits.");
         ZombieKills.set(p, 0);
         p.sendMessage(ChatColor.GREEN + "You had " + ChatColor.DARK_GREEN + TempData.getHeals(p) + ChatColor.GREEN + " player heals.");
         p.sendMessage(ChatColor.RED + "You had " + ChatColor.DARK_RED + TempData.getKills(p) + ChatColor.RED + " player kills.");
