@@ -64,7 +64,7 @@ public class JoinListener implements Listener
                     e.getPlayer().setLevel(20);
                     e.getPlayer().setHealth(e.getPlayer().getMaxHealth());
                     e.getPlayer().setFoodLevel(20);
-                    e.getPlayer().setGameMode(GameMode.ADVENTURE);
+                    e.getPlayer().setGameMode(GameMode.SURVIVAL);
                     TempData.cleanPlayer(e.getPlayer());
                     new SpawnKit(e.getPlayer());
                 }
@@ -72,7 +72,7 @@ public class JoinListener implements Listener
                 {
                     e.getPlayer().teleport(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()));
                     SavedLocationsManager.resetLocation(e.getPlayer().getUniqueId());
-                    e.getPlayer().setGameMode(GameMode.ADVENTURE);
+                    e.getPlayer().setGameMode(GameMode.SURVIVAL);
                 }
                 e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 1, false));
                 e.getPlayer().sendMessage(ChatColor.GRAY + "You wake up in an apocalyptic world...");

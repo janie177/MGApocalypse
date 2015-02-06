@@ -2,7 +2,9 @@ package com.minegusta.mgapocalypse.commands;
 
 import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.util.WorldCheck;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -73,6 +75,17 @@ public class MGACommand implements CommandExecutor{
         }
         else if(args.length == 2)
         {
+            if(args[0].equalsIgnoreCase("world"))
+            {
+                try{
+                    World w = Bukkit.getWorld(args[1]);
+                    p.teleport(w.getSpawnLocation());
+                } catch (Exception ignored)
+                {
+                    p.sendMessage(ChatColor.RED + "That is not a valid world you dork.");
+                }
+                return true;
+            }
             if(args[0].equalsIgnoreCase("deletespawn"))
             {
                 int index = -1;
@@ -126,5 +139,6 @@ public class MGACommand implements CommandExecutor{
         p.sendMessage(ChatColor.GREEN + " - /mga listtowns");
         p.sendMessage(ChatColor.GREEN + " - /mga deletetown <index>");
         p.sendMessage(ChatColor.GREEN + " - /mga setmainspawn");
+        p.sendMessage(ChatColor.GREEN + " - /mga world <world>");
     }
 }
