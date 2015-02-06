@@ -44,7 +44,7 @@ public class SpawnTask
                 for(Player p : Bukkit.getOnlinePlayers())
                 {
                     //Making sure the player is in an enabled world.
-                    if(WorldCheck.is(p.getWorld()))return;
+                    if(!WorldCheck.is(p.getWorld()))return;
 
                     int chance = RandomNumber.get(1000);
                     if (!(chance <= townSpawnChance)) return;
