@@ -104,7 +104,7 @@ public class PlayerListener implements Listener {
         Material hand = e.getPlayer().getItemInHand().getType();
 
         //Check for bandaging
-        if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        if ((e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             if (hand.equals(Material.PAPER)) {
                 p.sendMessage(ChatColor.GREEN + "You bandaged your wounds.");
                 ItemUtil.removeOne(p, Material.PAPER);
