@@ -61,11 +61,7 @@ public class SpawnTask
                     }
 
                     //Check if the player does not have too many zombies around them already.
-                    int zombieAmount = 0;
-
-                    ;
-
-                    zombieAmount = (int) p.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(p.getLocation()) <= zombieRadius).count();
+                    int zombieAmount = (int) p.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(p.getLocation()) <= zombieRadius).count();
 
                     if (town) {
                         if (zombieAmount >= townMaxZombieAmount) return;
