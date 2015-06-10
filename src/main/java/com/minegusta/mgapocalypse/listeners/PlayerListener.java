@@ -287,7 +287,6 @@ public class PlayerListener implements Listener {
 
         //Healer check
         TempData.addHeal(p);
-        if(Main.TAGAPI_ENABLED && TempData.getHeals(p) > 14)TagAPI.refreshPlayer(p);
     }
 
     //Spawn a zombie on death
@@ -303,7 +302,6 @@ public class PlayerListener implements Listener {
                 {
                     Player attacker = (Player) ((EntityDamageByEntityEvent)cause).getDamager();
                     TempData.addKill(attacker);
-                    if(Main.TAGAPI_ENABLED && TempData.getKills(attacker) > 7)TagAPI.refreshPlayer(attacker);
                 }
             }
             if(cause.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE))
@@ -315,7 +313,6 @@ public class PlayerListener implements Listener {
                     {
                         Player attacker = (Player) arrow.getShooter();
                         TempData.addKill(attacker);
-                        if(Main.TAGAPI_ENABLED && TempData.getKills((Player) arrow.getShooter()) > 7)TagAPI.refreshPlayer(attacker);
                     }
                 }
             }
@@ -384,11 +381,8 @@ public class PlayerListener implements Listener {
     public void onEvent(PlayerToggleSprintEvent e)
     {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
-        for (Entity ent : e.getPlayer().getNearbyEntities(47, 12, 47)) {
-            if (ent instanceof Zombie) {
-                ((Creature) ent).setTarget(e.getPlayer());
-            }
-        }
+
+        e.getPlayer().getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(e.getPlayer().getLocation()) < 47 && ent instanceof Zombie).forEach(zombie -> ((Creature) zombie).setTarget(e.getPlayer()));
     }
 
     //Stop health regen.

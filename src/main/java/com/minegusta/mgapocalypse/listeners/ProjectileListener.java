@@ -31,13 +31,13 @@ public class ProjectileListener implements Listener
         if(e.getEntity() instanceof Snowball) {
 
             Location l = e.getEntity().getLocation();
+
             LivingEntity temp = (LivingEntity) l.getWorld().spawnEntity(l, EntityType.SQUID);
+
             temp.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20 * 300, 0));
-            for (Entity ent : temp.getNearbyEntities(30, 10, 30)) {
-                if (ent instanceof Zombie) {
-                    ((Creature) ent).setTarget(temp);
-                }
-            }
+
+            temp.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(temp.getLocation()) < 30).forEach(ent -> ((Creature)ent).setTarget(temp));
+
             new RemoveEntity(temp, 5);
         }
     }

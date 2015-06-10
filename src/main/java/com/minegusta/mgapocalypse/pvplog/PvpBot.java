@@ -62,17 +62,15 @@ public class PvpBot {
 
     private void loopTask()
     {
-        for (Entity ent : v.getNearbyEntities(20, 10, 20))
+        v.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(v.getLocation()) <= 20).forEach(ent ->
         {
-            if (ent instanceof Zombie)
-            {
+            if (ent instanceof Zombie) {
                 ((Creature) ent).setTarget(v);
-                if (v.getLocation().distance(ent.getLocation()) < 6)
-                {
+                if (v.getLocation().distance(ent.getLocation()) < 6) {
                     v.damage(2, ent);
                 }
             }
-        }
+        });
 
         if (v.isDead())
         {
@@ -108,11 +106,7 @@ public class PvpBot {
         v.setCustomName(name);
         v.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 100, 10));
 
-        for (Entity ent : v.getNearbyEntities(30, 30, 30)) {
-            if (ent instanceof Zombie) {
-                ((Creature) ent).setTarget(v);
-            }
-        }
+        v.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(v.getLocation()) < 30).forEach(ent -> ((Creature)ent).setTarget(v));
 
         return v;
     }

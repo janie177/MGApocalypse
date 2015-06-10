@@ -9,10 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 
 import java.util.List;
 
@@ -36,10 +33,8 @@ public class SpawnTask
 
     public static void start()
     {
-        SPAWNTASK = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, new Runnable()
+        SPAWNTASK = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, ()->
         {
-            @Override
-            public void run()
             {
                 for(Player p : Bukkit.getOnlinePlayers())
                 {
@@ -68,9 +63,10 @@ public class SpawnTask
                     //Check if the player does not have too many zombies around them already.
                     int zombieAmount = 0;
 
-                    for (Entity ent : p.getNearbyEntities(zombieRadius, 30, zombieRadius)) {
-                        if (ent instanceof Zombie) zombieAmount++;
-                    }
+                    ;
+
+                    zombieAmount = (int) p.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(p.getLocation()) <= zombieRadius).count();
+
                     if (town) {
                         if (zombieAmount >= townMaxZombieAmount) return;
                     } else
@@ -163,16 +159,11 @@ public class SpawnTask
 
     private static Location noPlayersNear(Location spawnLoc)
     {
-        Entity temp = spawnLoc.getWorld().spawnEntity(spawnLoc, EntityType.EXPERIENCE_ORB);
-        for(Entity ent : temp.getNearbyEntities(20,10,20))
+        Player ent = spawnLoc.getWorld().getPlayers().stream().filter(entity -> entity.getLocation().distance(spawnLoc) <= 20).findFirst().get();
+        if(ent != null)
         {
-            if(ent instanceof Player)
-            {
-                temp.remove();
-                return noPlayersNear(spawnLoc.add(-(ent.getLocation().getX() - spawnLoc.getX()), 0, -(ent.getLocation().getZ() - spawnLoc.getZ())));
-            }
+            return noPlayersNear(spawnLoc.add(-(ent.getLocation().getX() - spawnLoc.getX()), 0, -(ent.getLocation().getZ() - spawnLoc.getZ())));
         }
-        temp.remove();
         return spawnLoc;
     }
 
