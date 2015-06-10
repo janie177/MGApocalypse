@@ -1,5 +1,6 @@
 package com.minegusta.mgapocalypse.Tasks;
 
+import com.avaje.ebean.validation.NotNull;
 import com.minegusta.mgapocalypse.Main;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.util.RandomNumber;
@@ -155,10 +156,10 @@ public class SpawnTask
 
     private static Location noPlayersNear(Location spawnLoc)
     {
-        Player ent = spawnLoc.getWorld().getPlayers().stream().filter(entity -> entity.getLocation().distance(spawnLoc) <= 20).findFirst().get();
-        if(ent != null)
+        int players = (int) spawnLoc.getWorld().getPlayers().stream().filter(entity -> entity.getLocation().distance(spawnLoc) <= 20).count();
+        if(players > 0)
         {
-            return noPlayersNear(spawnLoc.add(-(ent.getLocation().getX() - spawnLoc.getX()), 0, -(ent.getLocation().getZ() - spawnLoc.getZ())));
+            return noPlayersNear(spawnLoc.add(spawnLoc.getX() - 20, 0, spawnLoc.getZ() - 20));
         }
         return spawnLoc;
     }
