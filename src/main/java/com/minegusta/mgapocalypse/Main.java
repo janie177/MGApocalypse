@@ -43,7 +43,7 @@ public class Main extends JavaPlugin {
         //Commands
         getCommand("mga").setExecutor(new MGACommand());
         getCommand("break").setExecutor(new BreakCommand());
-        getCommand("stats").setExecutor(new InfoCommand());
+        getCommand("menu").setExecutor(new InfoCommand());
         getCommand("perk").setExecutor(new PerkCommand());
 
 

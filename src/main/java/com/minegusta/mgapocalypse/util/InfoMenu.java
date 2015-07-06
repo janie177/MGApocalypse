@@ -38,10 +38,10 @@ public class InfoMenu
 
     //--// Methods //--//
 
-    public static Inventory build(Player p)
+    public static Inventory build(MGPlayer mgp)
     {
         Inventory inv = getInv();
-        fillInventory(inv, MGApocalypse.getMGPlayer(p));
+        fillInventory(inv, mgp);
 
         return inv;
     }
@@ -88,7 +88,13 @@ public class InfoMenu
         inv.setItem(44, getItem("Most Heals", Material.PAPER, mgp.getMostHeals()));
         inv.setItem(45, getItem("Infected", Material.MILK_BUCKET, Boolean.toString(mgp.isInfected())));
         inv.setItem(46, getItem("Bleeding", Material.REDSTONE, Boolean.toString(mgp.isBleeding())));
-        inv.setItem(47, getItem("Thirst Level", Material.POTION, mgp.getPlayer().getLevel()));
+
+        if(mgp.getOfflinePlayer().isOnline())
+        {
+            inv.setItem(47, getItem("Thirst Level", Material.POTION, mgp.getPlayer().getLevel()));
+        }
+        else inv.setItem(47, getItem("Thirst Level", Material.POTION, mgp.getThirst()));
+
         inv.setItem(51, getItem("Iron Chests", Material.IRON_BLOCK, mgp.getIronChestsLooted()));
         inv.setItem(52, getItem("Low Level Chests", Material.CHEST, mgp.getChestsLooted()));
         inv.setItem(53, getItem("Deaths", Material.BONE, mgp.getDeaths()));

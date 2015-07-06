@@ -12,7 +12,7 @@ public class BroadCastTask {
             {
                     "Need a world map? " + ChatColor.DARK_BLUE + "http://www.minegusta.com/map.php",
                     "You are playing Wasteland! To return to the hub, use: " + ChatColor.YELLOW + "/Hub",
-                    "To see your stats, use : " + ChatColor.YELLOW + "/Info",
+                    "To see your stats, use : " + ChatColor.YELLOW + "/Menu",
                     "Upgrade your perks! Use: " + ChatColor.YELLOW + "/Perk",
                     "Want cool donor perks? " + ChatColor.YELLOW + "http://store.minegusta.com"
             };

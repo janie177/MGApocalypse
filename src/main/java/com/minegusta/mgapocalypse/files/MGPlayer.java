@@ -250,7 +250,8 @@ public class MGPlayer {
         return Bukkit.getOfflinePlayer(UUID.fromString(uuid));
     }
 
-    public Player getPlayer() {
+    public Player getPlayer()
+    {
         return Bukkit.getPlayer(UUID.fromString(uuid));
     }
 
