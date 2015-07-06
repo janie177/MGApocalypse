@@ -5,6 +5,9 @@ import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.files.Storage;
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
+import java.util.concurrent.ConcurrentMap;
+
 public class MGApocalypse {
     public static MGPlayer getMGPlayer(Player p) {
         return Storage.getMGPlayer(p.getUniqueId().toString());
@@ -18,7 +21,7 @@ public class MGApocalypse {
         Storage.removePlayer(p.getUniqueId().toString());
     }
 
-    public static MGPlayer[] getMGPlayers() {
-        return (MGPlayer[]) Storage.players.values().toArray();
+    public static Collection<MGPlayer> getMGPlayers() {
+        return Storage.players.values();
     }
 }
