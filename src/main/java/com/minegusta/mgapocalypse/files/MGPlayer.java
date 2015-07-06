@@ -175,12 +175,15 @@ public class MGPlayer {
 
         p.setGameMode(GameMode.SURVIVAL);
 
-
         setHealth(p.getMaxHealth());
         setHunger(20);
         setThirst(20);
         setBleeding(false);
         setInfected(false);
+
+        p.setHealth(getHealth());
+        p.setLevel(getThirst());
+        p.setFoodLevel(getHunger());
 
         if (getZombieKills() > getLongestKillStreak()) {
             setlongestKillStreak(getZombieKills());
