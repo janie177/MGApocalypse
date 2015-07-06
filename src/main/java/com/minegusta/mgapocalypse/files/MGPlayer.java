@@ -206,6 +206,7 @@ public class MGPlayer {
 
         addDeaths(1);
         setPlaying(false);
+        p.getInventory().clear();
 
         saveFile();
     }
