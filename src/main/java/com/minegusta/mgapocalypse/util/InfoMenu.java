@@ -53,7 +53,7 @@ public class InfoMenu
 
     public static String getInventoryName()
     {
-        return ChatColor.GOLD + "~~=~" + ChatColor.DARK_RED + " Wasteland " + ChatColor.RED + "Info " + ChatColor.DARK_RED + "Menu" + ChatColor.GOLD + " ~=~~";
+        return ChatColor.GOLD + "~~=~ " + ChatColor.DARK_RED + "Info Menu" + ChatColor.GOLD + " ~=~~";
     }
 
     private static void fillInventory(Inventory inv, MGPlayer mgp)
