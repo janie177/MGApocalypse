@@ -358,7 +358,7 @@ public class PlayerListener implements Listener {
         p.sendMessage(ChatColor.RED + "You had " + ChatColor.DARK_RED + mgp.getPlayerKills() + ChatColor.RED + " player kills.");
 
 
-        //Clean the effects from the player.
+        //Reset the players' data.
         mgp.killPlayer();
     }
 

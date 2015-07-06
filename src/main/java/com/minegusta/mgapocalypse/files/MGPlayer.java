@@ -124,7 +124,7 @@ public class MGPlayer {
 
     public void updateConfig()
     {
-        updatePlayerStats();
+        if(playing) updatePlayerStats();
 
         conf.set("playing", playing);
         conf.set("health", health);
