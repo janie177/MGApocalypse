@@ -13,6 +13,8 @@ public class InventoryListener implements Listener
     {
         if(!WorldCheck.is(e.getWhoClicked().getWorld())) return;
 
+        if(e.getClickedInventory() == null) return;
+
         if(e.getClickedInventory().getName().equals(InfoMenu.getInventoryName()))
         {
             e.setCancelled(true);

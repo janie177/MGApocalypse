@@ -27,8 +27,16 @@ public class InfoCommand implements CommandExecutor
         {
             try {
                 OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
+
+                if(!FileManager.fileExists(p.getUniqueId().toString()))
+                {
+                    s.sendMessage(ChatColor.RED + "That player could not be found.");
+                    return true;
+                }
+
                 MGPlayer mgp = MGPlayer.build(p.getUniqueId().toString(), FileManager.getFile(p.getUniqueId().toString()));
                 ((Player) s).openInventory(InfoMenu.build(mgp));
+                return true;
             } catch (Exception ignored){
                 s.sendMessage(ChatColor.RED + "That player could not be found.");
                 return true;

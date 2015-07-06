@@ -10,6 +10,11 @@ public class FileManager {
         return YamlUtil.getConfiguration("/players/", uuid + ".yml");
     }
 
+    public static boolean fileExists(String uuid)
+    {
+        return YamlUtil.fileExists("/players/", uuid + ".yml");
+    }
+
     public static FileConfiguration getFile(UUID uuid) {
         return getFile(uuid.toString());
     }

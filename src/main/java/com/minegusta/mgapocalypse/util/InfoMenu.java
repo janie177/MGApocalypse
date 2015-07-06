@@ -1,12 +1,10 @@
 package com.minegusta.mgapocalypse.util;
 
 import com.google.common.collect.Lists;
-import com.minegusta.mgapocalypse.MGApocalypse;
 import com.minegusta.mgapocalypse.files.MGPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,7 +18,7 @@ public class InfoMenu
     {
         {
             ItemMeta meta = getItemMeta();
-            meta.setDisplayName("");
+            meta.setDisplayName(" ");
             setItemMeta(meta);
         }
     };
@@ -28,13 +26,13 @@ public class InfoMenu
         {
             {
                 ItemMeta meta = getItemMeta();
-                meta.setDisplayName("");
+                meta.setDisplayName(" ");
                 setItemMeta(meta);
             }
         }
     };
     private static List<Integer> green = Lists.newArrayList(3,5,21,23);
-    private static List<Integer> red = Lists.newArrayList(0,1,2,6,7,8,9,11,15,17,18,19,20,24,25,26,31,32,33,39,41,48,49,50);
+    private static List<Integer> red = Lists.newArrayList(0,1,2,6,7,8,9,11,15,17,18,19,20,24,25,26,30,31,32,39,41,48,49,50);
 
     //--// Methods //--//
 
