@@ -54,6 +54,13 @@
             <systemPath>${project.basedir}/src/depends/MGLoot.jar</systemPath>
         </dependency>
 
+        <!-- Apache Lang -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>

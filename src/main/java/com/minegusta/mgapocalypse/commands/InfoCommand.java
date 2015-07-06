@@ -13,37 +13,37 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class InfoCommand implements CommandExecutor
-{
+public class InfoCommand implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender s, Command command, String label, String[] args)
-    {
-        if(!(s instanceof Player))return true;
+    public boolean onCommand(CommandSender s, Command command, String label, String[] args) {
+        if (!(s instanceof Player)) return true;
 
-        if(!WorldCheck.is(((Player)s).getWorld())) return true;
+        Player player = (Player) s;
 
-        if(args.length > 0)
-        {
+        if (!WorldCheck.is(player.getWorld())) return true;
+
+        if (args.length > 0) {
             try {
                 OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
 
-                if(!FileManager.fileExists(p.getUniqueId().toString()))
-                {
+                if (!FileManager.fileExists(p.getUniqueId().toString())) {
                     s.sendMessage(ChatColor.RED + "That player could not be found.");
                     return true;
                 }
 
                 MGPlayer mgp = MGPlayer.build(p.getUniqueId().toString(), FileManager.getFile(p.getUniqueId().toString()));
-                ((Player) s).openInventory(InfoMenu.build(mgp));
+                player.openInventory(InfoMenu.build(mgp, player));
+                s.sendMessage(ChatColor.YELLOW + "You open " + p.getName() + "'s info menu!");
                 return true;
-            } catch (Exception ignored){
+            } catch (Exception ignored) {
                 s.sendMessage(ChatColor.RED + "That player could not be found.");
                 return true;
             }
         }
 
-        ((Player) s).openInventory(InfoMenu.build(MGApocalypse.getMGPlayer((Player) s)));
+        player.openInventory(InfoMenu.build(MGApocalypse.getMGPlayer(player), player));
+        s.sendMessage(ChatColor.YELLOW + "You open your info menu!");
 
         return true;
     }

@@ -5,6 +5,8 @@ import com.minegusta.mgapocalypse.files.MGPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -36,17 +38,17 @@ public class InfoMenu
 
     //--// Methods //--//
 
-    public static Inventory build(MGPlayer mgp)
+    public static Inventory build(MGPlayer mgp, Player observer)
     {
-        Inventory inv = getInv();
+        Inventory inv = getInv(observer);
         fillInventory(inv, mgp);
 
         return inv;
     }
 
-    private static Inventory getInv()
+    private static Inventory getInv(Player p)
     {
-        return Bukkit.createInventory(null, 9 * 6, getInventoryName());
+        return Bukkit.createInventory(p, 9 * 6, getInventoryName());
     }
 
     public static String getInventoryName()
