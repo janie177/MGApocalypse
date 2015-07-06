@@ -1,10 +1,10 @@
 package com.minegusta.mgapocalypse.listeners;
 
+import com.minegusta.mgapocalypse.MGApocalypse;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.config.SavedLocationsManager;
-import com.minegusta.mgapocalypse.items.LootItem;
+import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.util.SpawnKit;
-import com.minegusta.mgapocalypse.util.TempData;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -20,16 +20,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class JoinListener implements Listener
-{
+public class JoinListener implements Listener {
     //Listen for sign creation.
     @EventHandler
     public void onSignCreate(SignChangeEvent e) {
         Player p = e.getPlayer();
 
         if (e.getLine(1).equalsIgnoreCase("wasteland")) {
-            if (!p.isOp())
-            {
+            if (!p.isOp()) {
                 e.setLine(1, "Nope.");
                 return;
             }
@@ -48,30 +46,34 @@ public class JoinListener implements Listener
 
     //Listen on interacting with the sign.
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onSignClick(PlayerInteractEvent e)
-    {
-        if(e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && (e.getClickedBlock().getType() == Material.WALL_SIGN || e.getClickedBlock().getType() == Material.SIGN_POST))
-        {
+    public void onSignClick(PlayerInteractEvent e) {
+        if (e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && (e.getClickedBlock().getType() == Material.WALL_SIGN || e.getClickedBlock().getType() == Material.SIGN_POST)) {
             if (!(e.getClickedBlock().getState() instanceof Sign)) return;
             Sign sign = (Sign) e.getClickedBlock().getState();
 
-            if(sign.getLine(1).equals(ChatColor.AQUA + "Wasteland"))
-            {
+            if (sign.getLine(1).equals(ChatColor.AQUA + "Wasteland")) {
                 //Spawn the player
-                if(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()) == null || !WorldCheck.is(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()).getWorld()))
-                {
+                if (SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()) == null || !WorldCheck.is(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()).getWorld())) {
+
+                    MGPlayer mgp = MGApocalypse.getMGPlayer(e.getPlayer());
+
+                    mgp.killPlayer();
+
                     e.getPlayer().teleport(DefaultConfig.getRandomSpawn());
-                    e.getPlayer().setLevel(20);
-                    e.getPlayer().setHealth(e.getPlayer().getMaxHealth());
-                    e.getPlayer().setFoodLevel(20);
-                    e.getPlayer().setGameMode(GameMode.SURVIVAL);
-                    TempData.cleanPlayer(e.getPlayer());
+
+                    mgp.setPlaying(true);
+
                     new SpawnKit(e.getPlayer());
-                }
-                else
-                {
+
+                } else {
+
+                    MGPlayer mgp = MGApocalypse.getMGPlayer(e.getPlayer());
+
+                    mgp.applyConfigStats();
+
                     e.getPlayer().teleport(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()));
                     SavedLocationsManager.resetLocation(e.getPlayer().getUniqueId());
+                    mgp.setPlaying(true);
                     e.getPlayer().setGameMode(GameMode.SURVIVAL);
                 }
                 e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 1, false));

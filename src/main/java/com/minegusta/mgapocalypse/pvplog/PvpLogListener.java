@@ -55,13 +55,11 @@ public class PvpLogListener implements Listener {
 
     //Check for unloading chunks;
     @EventHandler
-    public void onChunkUnload(ChunkUnloadEvent e)
-    {
-        if(!WorldCheck.is(e.getWorld()))return;
+    public void onChunkUnload(ChunkUnloadEvent e) {
+        if (!WorldCheck.is(e.getWorld())) return;
 
-        for(List<Chunk> chunks : LogData.chunkMap.values())
-        {
-            if(chunks.contains(e.getChunk()))e.setCancelled(true);
+        for (List<Chunk> chunks : LogData.chunkMap.values()) {
+            if (chunks.contains(e.getChunk())) e.setCancelled(true);
         }
     }
 }

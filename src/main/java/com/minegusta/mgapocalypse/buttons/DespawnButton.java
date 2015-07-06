@@ -5,24 +5,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
-public class DespawnButton
-{
+public class DespawnButton {
     private Location l;
     private int TASK;
 
-    public DespawnButton(Location l)
-    {
+    public DespawnButton(Location l) {
         this.l = l;
     }
 
-    public void start()
-    {
+    public void start() {
         TASK = Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 l.getWorld().getBlockAt(l).setType(Material.AIR);
-                if(ButtonManager.buttonMap.containsKey(l))ButtonManager.buttonMap.remove(l);
+                if (ButtonManager.buttonMap.containsKey(l)) ButtonManager.buttonMap.remove(l);
             }
         }, 20 * 40);
     }

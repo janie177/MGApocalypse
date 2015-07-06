@@ -1,15 +1,18 @@
 package com.minegusta.mgapocalypse.listeners;
 
 import com.google.common.collect.Lists;
-import com.minegusta.mgapocalypse.Main;
+import com.minegusta.mgapocalypse.MGApocalypse;
 import com.minegusta.mgapocalypse.buttons.ButtonManager;
 import com.minegusta.mgapocalypse.dotmanagers.BleedingManager;
 import com.minegusta.mgapocalypse.dotmanagers.DiseaseManager;
-import com.minegusta.mgapocalypse.items.LootItem;
-import com.minegusta.mgapocalypse.kills.ZombieKills;
+import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.lootblocks.Loot;
 import com.minegusta.mgapocalypse.util.*;
-import org.bukkit.*;
+import com.minegusta.mgloot.loottables.LootItem;
+import org.bukkit.ChatColor;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,7 +29,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.kitteh.tag.TagAPI;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -34,17 +36,17 @@ import java.util.concurrent.TimeUnit;
 public class PlayerListener implements Listener {
 
     //All the blocks that are disallowed to right click.
-    private static final List<Material> blockedBlocks = Lists.newArrayList(Material.ENCHANTMENT_TABLE, Material.ANVIL, Material.BED, Material.MINECART, Material.STORAGE_MINECART);
+    private static final List<Material> blockedBlocks = Lists.newArrayList(Material.ENCHANTMENT_TABLE, Material.ANVIL, Material.BED, Material.MINECART, Material.STORAGE_MINECART, Material.ITEM_FRAME);
 
     //Chances for bleeding. Also for diseases.
     private final static int bleedChance = 12; //In %
     private final static int diseaseChance = 3; //In %
 
     //All the allowed commands, lower case only.
-    private final static List<String> allowedCMDS = Lists.newArrayList("/credits", "/pop", "/break", "/hub", "/pause", "/logout", "/log-out", "/leave", "/abort", "/exit", "/msg", "/r", "/pm", "/message", "/me");
+    private final static List<String> allowedCMDS = Lists.newArrayList("/credits", "/pop", "/break", "/hub", "/pause", "/logout", "/log-out", "/leave", "/abort", "/exit", "/msg", "/r", "/pm", "/message", "/me", "ccmsg", "/perk", "/info");
 
     //All food types that heal you
-    private final static List<Material> food = Lists.newArrayList(Material.MELON, Material.RAW_FISH, Material.RAW_CHICKEN, Material.RAW_BEEF, Material.BREAD, Material.COOKIE, Material.POTATO_ITEM, Material.CARROT_ITEM, Material.APPLE, Material.MUSHROOM_SOUP, Material.PORK, Material.GRILLED_PORK, Material.COOKED_FISH, Material.BAKED_POTATO, Material.COOKED_CHICKEN);
+    private final static List<Material> food = Lists.newArrayList(Material.MELON, Material.RAW_FISH, Material.RAW_CHICKEN, Material.RAW_BEEF, Material.BREAD, Material.COOKIE, Material.POTATO_ITEM, Material.CARROT_ITEM, Material.APPLE, Material.MUSHROOM_SOUP, Material.PORK, Material.GRILLED_PORK, Material.COOKED_FISH, Material.BAKED_POTATO, Material.COOKED_CHICKEN, Material.RABBIT_STEW, Material.COOKED_RABBIT, Material.RABBIT);
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEvent(PlayerItemConsumeEvent e) {
@@ -87,7 +89,6 @@ public class PlayerListener implements Listener {
         if (e.getRightClicked() instanceof Player) {
             Player p = (Player) e.getRightClicked();
             Player healer = e.getPlayer();
-
             if (hand.equals(Material.PAPER)) {
                 healer.sendMessage(ChatColor.GREEN + "You bandaged " + p.getName() + ".");
                 p.sendMessage(ChatColor.GREEN + healer.getName() + " bandaged your wounds.");
@@ -221,26 +222,28 @@ public class PlayerListener implements Listener {
 
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
+            MGPlayer mgp = MGApocalypse.getMGPlayer(p);
 
             //Healing check
             if (e.getDamager() instanceof Player) {
                 Player damager = (Player) e.getDamager();
+                MGPlayer damagerMGP = MGApocalypse.getMGPlayer(damager);
+
                 ItemStack hand = damager.getItemInHand();
                 if (hand.getType() == Material.PAPER) {
-                    TempData.healMap.put(p.getUniqueId().toString(), System.currentTimeMillis());
+                    mgp.setLastBandaged();
                     BleedingManager.bandage(p, false);
                     p.sendMessage(ChatColor.GRAY + damager.getName() + " began bandaging you...");
                     damager.sendMessage(ChatColor.GRAY + "You begin bandaging " + p.getName() + ".");
                     e.setCancelled(true);
                 } else if (hand.getType() == Material.SHEARS) {
-                    if (TempData.healMap.containsKey(p.getUniqueId().toString()) && TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - TempData.healMap.get(p.getUniqueId().toString())) < 15) {
-                        long wait = 0;
-                        if (TempData.healCoolDownMap.containsKey(p.getUniqueId().toString()))
-                            wait = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - TempData.healCoolDownMap.get(p.getUniqueId().toString()));
-                        if (TempData.healCoolDownMap.containsKey(p.getUniqueId().toString()) && wait < 180) {
+                    if (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - mgp.getLastBandaged()) < 15) {
+                        long wait = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - mgp.getLastHealed());
+
+                        if (wait < 180) {
                             damager.sendMessage(ChatColor.RED + "This player cannot be healed for another " + Long.toString(180 - wait) + " Seconds.");
                         } else {
-                            TempData.healCoolDownMap.put(p.getUniqueId().toString(), System.currentTimeMillis());
+                            mgp.setLastHealed();
                             healPlayer(p, damager);
                         }
                     } else {
@@ -278,15 +281,14 @@ public class PlayerListener implements Listener {
         }
     }
 
-    private void healPlayer(Player p, Player healer)
-    {
+    private void healPlayer(Player p, Player healer) {
         p.sendMessage(ChatColor.LIGHT_PURPLE + "You were healed by " + healer.getName() + ".");
         healer.sendMessage(ChatColor.LIGHT_PURPLE + "You healed " + p.getName() + ".");
         p.getWorld().spigot().playEffect(p.getLocation(), Effect.HEART);
         p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 7, 0));
 
         //Healer check
-        TempData.addHeal(p);
+        MGApocalypse.getMGPlayer(p).addHeals(1);
     }
 
     //Spawn a zombie on death
@@ -296,23 +298,18 @@ public class PlayerListener implements Listener {
         //Check for bandits
         if (e.getEntity().getLastDamageCause() != null) {
             EntityDamageEvent cause = e.getEntity().getLastDamageCause();
-            if(cause.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK))
-            {
-                if(((EntityDamageByEntityEvent)cause).getDamager() instanceof Player)
-                {
-                    Player attacker = (Player) ((EntityDamageByEntityEvent)cause).getDamager();
-                    TempData.addKill(attacker);
+            if (cause.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
+                if (((EntityDamageByEntityEvent) cause).getDamager() instanceof Player) {
+                    Player attacker = (Player) ((EntityDamageByEntityEvent) cause).getDamager();
+                    MGApocalypse.getMGPlayer(attacker).addPlayerKills(1);
                 }
             }
-            if(cause.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE))
-            {
-                if(((EntityDamageByEntityEvent)cause).getDamager() instanceof Arrow)
-                {
-                    Arrow arrow = (Arrow) ((EntityDamageByEntityEvent)cause).getDamager();
-                    if(arrow.getShooter() != null && arrow.getShooter() instanceof Player)
-                    {
+            if (cause.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE)) {
+                if (((EntityDamageByEntityEvent) cause).getDamager() instanceof Arrow) {
+                    Arrow arrow = (Arrow) ((EntityDamageByEntityEvent) cause).getDamager();
+                    if (arrow.getShooter() != null && arrow.getShooter() instanceof Player) {
                         Player attacker = (Player) arrow.getShooter();
-                        TempData.addKill(attacker);
+                        MGApocalypse.getMGPlayer(attacker).addPlayerKills(1);
                     }
                 }
             }
@@ -348,14 +345,21 @@ public class PlayerListener implements Listener {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
         Player p = e.getPlayer();
 
-        int points = ZombieKills.get(p);
+        MGPlayer mgp = MGApocalypse.getMGPlayer(p);
+
+        int points = mgp.getZombieKills();
         p.sendMessage(ChatColor.GREEN + "You had " + ChatColor.DARK_PURPLE + points + ChatColor.GREEN + " zombie kills.");
+        p.sendMessage(ChatColor.GREEN + "You looted " + ChatColor.DARK_PURPLE + mgp.getChestsLooted() + ChatColor.GREEN + " chests.");
+        p.sendMessage(ChatColor.GREEN + "You killed " + ChatColor.DARK_PURPLE + mgp.getGiantKills() + ChatColor.GREEN + " giants.");
+        p.sendMessage(ChatColor.GREEN + "You were alive for " + ChatColor.DARK_PURPLE + mgp.getTimeAlive() + ChatColor.GREEN + " minutes.");
         p.sendMessage(ChatColor.GOLD + "You earned a total of " + ChatColor.YELLOW + (points * 3) + ChatColor.GOLD + " credits.");
-        ZombieKills.set(p, 0);
-        p.sendMessage(ChatColor.GREEN + "You had " + ChatColor.DARK_GREEN + TempData.getHeals(p) + ChatColor.GREEN + " player heals.");
-        p.sendMessage(ChatColor.RED + "You had " + ChatColor.DARK_RED + TempData.getKills(p) + ChatColor.RED + " player kills.");
+
+        p.sendMessage(ChatColor.GREEN + "You had " + ChatColor.DARK_GREEN + mgp.getHeals() + ChatColor.GREEN + " player heals.");
+        p.sendMessage(ChatColor.RED + "You had " + ChatColor.DARK_RED + mgp.getPlayerKills() + ChatColor.RED + " player kills.");
+
+
         //Clean the effects from the player.
-        TempData.cleanPlayer(p);
+        mgp.killPlayer();
     }
 
     //Block all commands
@@ -378,8 +382,7 @@ public class PlayerListener implements Listener {
 
     //Sprinting lures zombies.
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEvent(PlayerToggleSprintEvent e)
-    {
+    public void onEvent(PlayerToggleSprintEvent e) {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
 
         e.getPlayer().getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(e.getPlayer().getLocation()) < 47 && ent instanceof Zombie).forEach(zombie -> ((Creature) zombie).setTarget(e.getPlayer()));
@@ -395,5 +398,18 @@ public class PlayerListener implements Listener {
                 e.setCancelled(true);
             }
         }
+    }
+
+
+    //Joining and leaving
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        MGApocalypse.addMGPlayer(e.getPlayer());
+    }
+
+    @EventHandler
+    public void onLeave(PlayerQuitEvent e) {
+        MGApocalypse.removeMGPlayer(e.getPlayer());
     }
 }

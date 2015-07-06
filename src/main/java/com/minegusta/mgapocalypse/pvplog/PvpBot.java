@@ -29,9 +29,8 @@ public class PvpBot {
         this.name = p.getName();
         this.inv = p.getInventory();
         //Getting 9 chunks around the location.
-        for(int x = loc.getChunk().getX() - 1; x <=loc.getChunk().getX() + 1; x++) {
-            for (int z = loc.getChunk().getZ() - 1; z <= loc.getChunk().getZ() + 1; z++)
-            {
+        for (int x = loc.getChunk().getX() - 1; x <= loc.getChunk().getX() + 1; x++) {
+            for (int z = loc.getChunk().getZ() - 1; z <= loc.getChunk().getZ() + 1; z++) {
                 chunks.add(loc.getWorld().getChunkAt(x, z));
             }
         }
@@ -60,8 +59,7 @@ public class PvpBot {
         LogData.chunkMap.remove(uuid.toString());
     }
 
-    private void loopTask()
-    {
+    private void loopTask() {
         v.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(v.getLocation()) <= 20).forEach(ent ->
         {
             if (ent instanceof Zombie) {
@@ -72,8 +70,7 @@ public class PvpBot {
             }
         });
 
-        if (v.isDead())
-        {
+        if (v.isDead()) {
             for (ItemStack i : inv) {
                 if (i != null && i.getType() != Material.AIR) loc.getWorld().dropItemNaturally(loc, i);
             }
@@ -106,7 +103,7 @@ public class PvpBot {
         v.setCustomName(name);
         v.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 100, 10));
 
-        v.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(v.getLocation()) < 30).forEach(ent -> ((Creature)ent).setTarget(v));
+        v.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(v.getLocation()) < 30).forEach(ent -> ((Creature) ent).setTarget(v));
 
         return v;
     }

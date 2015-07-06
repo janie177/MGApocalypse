@@ -2,7 +2,8 @@ main: com.minegusta.mgapocalypse.Main
 author: janie177
 name: MGApocalypse
 version: ${project.version}
-softdepend: [WorldGuard, TagAPI]
+softdepend: [WorldGuard]
+depend: [MGLoot]
 commands:
   mga:
     usage: /mga <parameters>

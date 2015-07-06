@@ -17,15 +17,15 @@ public class SavedLocationsManager {
 
     /**
      * Create a file for saved locations.
+     *
      * @param p The plugin.
      */
-    public static void createOrLoadLocationsFile(Plugin p){
+    public static void createOrLoadLocationsFile(Plugin p) {
         try {
 
             file = new File(p.getDataFolder(), "playerlocations.yml");
 
-            if (!file.exists())
-            {
+            if (!file.exists()) {
                 p.saveResource("playerlocations.yml", false);
                 Bukkit.getLogger().info("Successfully created " + file.getName() + ".");
             }
@@ -39,43 +39,44 @@ public class SavedLocationsManager {
     /**
      * Save the file to disk. Do this in a repeating task.
      */
-    public static void save(){
-        try{
+    public static void save() {
+        try {
             conf.save(file);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
      * Get a players saved location.
+     *
      * @param p The UUID of the player to check for.
      * @return The location the player logged out from or null.
      */
-    public static Location getLocation(UUID p){
-        if(!conf.isSet(p.toString())) return null;
-        else
-        {
+    public static Location getLocation(UUID p) {
+        if (!conf.isSet(p.toString())) return null;
+        else {
             return StringLocConverter.stringToLocation(conf.getString(p.toString()));
         }
     }
 
     /**
      * Set the location when a player logs out.
+     *
      * @param p The player in question.
      * @param l The location to save.
      */
-    public static void setLocation(UUID p, Location l){
+    public static void setLocation(UUID p, Location l) {
         conf.set(p.toString(), StringLocConverter.locationToString(l));
     }
 
     /**
      * Reset a players location after the respawned.
+     *
      * @param p The player's UUID to reset the location for.
      */
-    public static void resetLocation(UUID p)
-    {
-        if(conf.isSet(p.toString())){
+    public static void resetLocation(UUID p) {
+        if (conf.isSet(p.toString())) {
             conf.set(p.toString(), null);
         }
     }

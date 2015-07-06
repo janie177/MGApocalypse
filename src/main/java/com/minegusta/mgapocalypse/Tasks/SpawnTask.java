@@ -1,6 +1,5 @@
 package com.minegusta.mgapocalypse.Tasks;
 
-import com.avaje.ebean.validation.NotNull;
 import com.minegusta.mgapocalypse.Main;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.util.RandomNumber;
@@ -10,12 +9,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 
 import java.util.List;
 
-public class SpawnTask
-{
+public class SpawnTask {
     private static int SPAWNTASK = -1;
 
     //-- FINAL VARIABLES --//
@@ -30,17 +30,13 @@ public class SpawnTask
     private final static List<String> towns = DefaultConfig.getTowns(); //All towns defined.
 
 
-
-
-    public static void start()
-    {
-        SPAWNTASK = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, ()->
+    public static void start() {
+        SPAWNTASK = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, () ->
         {
             {
-                for(Player p : Bukkit.getOnlinePlayers())
-                {
+                for (Player p : Bukkit.getOnlinePlayers()) {
                     //Making sure the player is in an enabled world.
-                    if(!WorldCheck.is(p.getWorld()))return;
+                    if (!WorldCheck.is(p.getWorld())) return;
 
                     int chance = RandomNumber.get(1000);
                     if (!(chance <= townSpawnChance)) return;
@@ -66,8 +62,7 @@ public class SpawnTask
 
                     if (town) {
                         if (zombieAmount >= townMaxZombieAmount) return;
-                    } else
-                    {
+                    } else {
                         if (zombieAmount >= maxZombieAmount) return;
                     }
 
@@ -75,32 +70,26 @@ public class SpawnTask
 
                     int min = 48;
                     int max = 70;
-                    if(town)
-                    {
+                    if (town) {
                         min = 28;
                         max = 50;
                     }
 
-                    int x = RandomNumber.get(min,max);
-                    int z = RandomNumber.get(min,max);
-                    if(RandomNumber.getBoolean())x = -x;
-                    if(RandomNumber.getBoolean())z = -z;
+                    int x = RandomNumber.get(min, max);
+                    int z = RandomNumber.get(min, max);
+                    if (RandomNumber.getBoolean()) x = -x;
+                    if (RandomNumber.getBoolean()) z = -z;
 
                     //Check if there is no players near the new spawn point.
-                    Location spawnLoc = noPlayersNear(l.add(x,0,z));
+                    Location spawnLoc = noPlayersNear(l.add(x, 0, z));
 
-                    if(spawnLoc.getBlock().getType() != Material.AIR)
-                    {
+                    if (spawnLoc.getBlock().getType() != Material.AIR) {
                         Location newLoc = ascend(spawnLoc);
                         spawnZombie(newLoc);
-                    }
-                    else if(spawnLoc.getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR)
-                    {
+                    } else if (spawnLoc.getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR) {
                         Location newLoc = descend(spawnLoc);
                         spawnZombie(newLoc);
-                    }
-                    else
-                    {
+                    } else {
                         spawnZombie(spawnLoc);
                     }
                 }
@@ -108,44 +97,35 @@ public class SpawnTask
         }, 20 * interval, 20 * interval);
     }
 
-    private static Location descend(Location l)
-    {
-        if(l.getY() < 20)return l.getWorld().getHighestBlockAt(l.getBlockX(), l.getBlockZ()).getLocation();
-        Location newL = l.add(0,-2,0);
-        if(newL.getBlock().getType() != Material.AIR)
-        {
-            return newL.add(0,2,0);
-        }
-        else return descend(newL);
+    private static Location descend(Location l) {
+        if (l.getY() < 20) return l.getWorld().getHighestBlockAt(l.getBlockX(), l.getBlockZ()).getLocation();
+        Location newL = l.add(0, -2, 0);
+        if (newL.getBlock().getType() != Material.AIR) {
+            return newL.add(0, 2, 0);
+        } else return descend(newL);
     }
 
-    private static Location ascend(Location l)
-    {
-        if(l.getY() > 100)return l.getWorld().getHighestBlockAt(l.getBlockX(), l.getBlockZ()).getLocation();
-        Location newL = l.add(0,2,0);
-        if(newL.getBlock().getType() == Material.AIR)
-        {
+    private static Location ascend(Location l) {
+        if (l.getY() > 100) return l.getWorld().getHighestBlockAt(l.getBlockX(), l.getBlockZ()).getLocation();
+        Location newL = l.add(0, 2, 0);
+        if (newL.getBlock().getType() == Material.AIR) {
             return newL;
-        }
-        else return descend(newL);
+        } else return descend(newL);
     }
 
-    public static boolean stop()
-    {
-        if(SPAWNTASK == -1)return false;
+    public static boolean stop() {
+        if (SPAWNTASK == -1) return false;
         Bukkit.getScheduler().cancelTask(SPAWNTASK);
         return true;
     }
 
-    private static void spawnZombie(Location loc)
-    {
+    private static void spawnZombie(Location loc) {
         //Spawn a zombie
         Zombie zombie = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
         zombie.setCanPickupItems(false);
 
-        for (int i = 0; i <= RandomNumber.get(maxGroupSize); i++)
-        {
-            Location random = zombie.getLocation().add(RandomNumber.getDouble(10) - 5,0,RandomNumber.getDouble(10) - 5);
+        for (int i = 0; i <= RandomNumber.get(maxGroupSize); i++) {
+            Location random = zombie.getLocation().add(RandomNumber.getDouble(10) - 5, 0, RandomNumber.getDouble(10) - 5);
             Zombie zombie2 = (Zombie) loc.getWorld().spawnEntity(random, EntityType.ZOMBIE);
             zombie2.setCanPickupItems(false);
             if (RandomNumber.get(25) == 1) {
@@ -154,11 +134,9 @@ public class SpawnTask
         }
     }
 
-    private static Location noPlayersNear(Location spawnLoc)
-    {
+    private static Location noPlayersNear(Location spawnLoc) {
         int players = (int) spawnLoc.getWorld().getPlayers().stream().filter(entity -> entity.getLocation().distance(spawnLoc) <= 20).count();
-        if(players > 0)
-        {
+        if (players > 0) {
             return noPlayersNear(spawnLoc.add(spawnLoc.getX() - 20, 0, spawnLoc.getZ() - 20));
         }
         return spawnLoc;

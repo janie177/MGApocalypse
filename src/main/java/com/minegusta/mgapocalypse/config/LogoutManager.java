@@ -14,15 +14,15 @@ public class LogoutManager {
 
     /**
      * Create a file for log out and pvp.
+     *
      * @param p The plugin.
      */
-    public static void createFile(Plugin p){
+    public static void createFile(Plugin p) {
         try {
 
             file = new File(p.getDataFolder(), "pvplogs.yml");
 
-            if (!file.exists())
-            {
+            if (!file.exists()) {
                 p.saveResource("pvplogs.yml", false);
                 Bukkit.getLogger().info("Successfully created " + file.getName() + ".");
             }
@@ -36,38 +36,40 @@ public class LogoutManager {
     /**
      * Save the file to disk. Do this in a repeating task.
      */
-    public static void save(){
-        try{
+    public static void save() {
+        try {
             conf.save(file);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
      * Get if a player was killed
+     *
      * @param p The UUID of the player to check for.
      * @return if the player is dead.
      */
-    public static boolean getIfDead(UUID p){
+    public static boolean getIfDead(UUID p) {
         return conf.isSet(p.toString()) && conf.getBoolean(p.toString());
     }
 
     /**
      * Set if a player was killed.
-     * @param p The player in question.
+     *
+     * @param p    The player in question.
      * @param dead if the player should be killed on log-in.
      */
-    public static void set(UUID p, boolean dead){
+    public static void set(UUID p, boolean dead) {
         conf.set(p.toString(), dead);
     }
 
     /**
      * Set a player to false so they wont be killed again.
+     *
      * @param p The player's UUID to reset the location for.
      */
-    public static void reset(UUID p)
-    {
+    public static void reset(UUID p) {
         conf.set(p.toString(), false);
     }
 }

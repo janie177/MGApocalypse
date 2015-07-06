@@ -47,9 +47,11 @@
         </dependency>
 
         <dependency>
-            <groupId>org.kitteh</groupId>
-            <artifactId>tagapi</artifactId>
-            <version>3.0</version>
+            <groupId>MGLoot</groupId>
+            <artifactId>com.minegusta</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/depends/MGLoot.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -112,13 +114,6 @@
                     <artifactId>junit</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-
-        <!-- Gson -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.3</version>
         </dependency>
     </dependencies>
 

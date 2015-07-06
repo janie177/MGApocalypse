@@ -1,33 +1,32 @@
 package com.minegusta.mgapocalypse.util;
 
 import com.minegusta.mgapocalypse.Main;
-import com.minegusta.mgapocalypse.items.LootItem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class SpawnKit
-{
+public class SpawnKit {
     private Player p;
 
-    public SpawnKit(Player p)
-    {
+    public SpawnKit(Player p) {
         this.p = p;
         start();
     }
 
-    private void start()
-    {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, new Runnable() {
-            @Override
-            public void run()
+    private void start() {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, ()->
+        {
+            for(RespawnKit kit : RespawnKit.values())
             {
-                addKit(RespawnKit.DEFAULT);
+                if(p.hasPermission(kit.getPermissionsNode()))
+                {
+                    addKit(kit);
+                }
             }
+
         }, 35);
     }
 
-    private void addKit(RespawnKit kit)
-    {
+    private void addKit(RespawnKit kit) {
         p.getInventory().addItem(kit.getItems());
         p.updateInventory();
     }

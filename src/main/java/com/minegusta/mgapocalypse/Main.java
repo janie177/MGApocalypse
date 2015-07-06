@@ -6,22 +6,23 @@ import com.minegusta.mgapocalypse.commands.MGACommand;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.config.LogoutManager;
 import com.minegusta.mgapocalypse.config.SavedLocationsManager;
-import com.minegusta.mgapocalypse.listeners.*;
+import com.minegusta.mgapocalypse.listeners.JoinListener;
+import com.minegusta.mgapocalypse.listeners.MobListener;
+import com.minegusta.mgapocalypse.listeners.PlayerListener;
+import com.minegusta.mgapocalypse.listeners.ProjectileListener;
 import com.minegusta.mgapocalypse.pvplog.PvpLogListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends JavaPlugin
-{
+public class Main extends JavaPlugin {
 
     public static Plugin PLUGIN;
     public static int SAVETASK, BLEEDTASK, DISEASETASK, DRINKTASK, BROADCASTTASK;
     public static boolean WG_ENABLED = false;
 
     @Override
-    public void onEnable()
-    {
+    public void onEnable() {
         //Set Plugin
         PLUGIN = this;
 
@@ -53,12 +54,11 @@ public class Main extends JavaPlugin
         SpawnTask.start();
 
         //Worldguard enabled
-        if(Bukkit.getPluginManager().isPluginEnabled("WorldGuard"))WG_ENABLED = true;
+        if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) WG_ENABLED = true;
     }
 
     @Override
-    public void onDisable()
-    {
+    public void onDisable() {
         //Cancel Tasks
         Bukkit.getScheduler().cancelTask(SAVETASK);
         Bukkit.getScheduler().cancelTask(BLEEDTASK);
