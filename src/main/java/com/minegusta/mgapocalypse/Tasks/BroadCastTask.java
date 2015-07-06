@@ -1,6 +1,7 @@
 package com.minegusta.mgapocalypse.Tasks;
 
 import com.minegusta.mgapocalypse.Main;
+import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,19 +19,16 @@ public class BroadCastTask {
     private static int index = 0;
 
     public static int start() {
-        return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, new Runnable() {
-            @Override
-            public void run() {
-                for (String w : WorldCheck.getWorlds()) {
-                    for (Player p : Bukkit.getWorld(w).getPlayers()) {
-                        p.sendMessage(ChatColor.RED + "- - - " + ChatColor.GOLD + "WasteLand" + ChatColor.RED + " - - -");
-                        p.sendMessage(messages[index]);
-                        p.sendMessage(ChatColor.RED + "- - - - - - - - -");
-                        index++;
-                        if (index + 1 > messages.length) index = 0;
-                    }
-                }
-            }
+        return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, ()-> {
+
+            Bukkit.getOnlinePlayers().forEach(p ->
+            {
+                p.sendMessage(ChatColor.RED + "- - - " + ChatColor.GOLD + "WasteLand" + ChatColor.RED + " - - -");
+                p.sendMessage(messages[index]);
+                p.sendMessage(ChatColor.RED + "- - - - - - - - -");
+                index++;
+            });
+            if (index + 1 > messages.length) index = 0;
         }, 20 * 30, 20 * 180);
     }
 }
