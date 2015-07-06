@@ -15,3 +15,13 @@ commands:
     description: Pause playing wasteland.
     aliases: [hub, pause, logout, log-out, leave, abort, exit]
     default: true
+  info:
+    usage: /info [name]
+    description: Show your stats.
+    aliases: [stats, kills, deaths, points, chests, showstats, menu, help, showinfo, infomenu, statmenu, i]
+    default: true
+  perk:
+    usage: /perk
+    description: Show the perk menu.
+    aliases: [perks, abilities, upgrades, upgrade, ability, shop, upgrademenu, perkshop]
+    default: true

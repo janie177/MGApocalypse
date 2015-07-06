@@ -207,6 +207,10 @@ public class MGPlayer {
         setPlayerKills(0);
         setTimeAlive(0);
 
+        //Clear all perks, auto saves to config.
+        conf.set("perks", null);
+        perks.clear();
+
         addDeaths(1);
         setPlaying(false);
         p.getInventory().clear();
