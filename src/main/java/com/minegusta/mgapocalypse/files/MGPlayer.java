@@ -380,8 +380,9 @@ public class MGPlayer {
         int credits = killsAdded * 3;
         this.zombieKills = zombieKills + killsAdded;
         p.sendMessage(ChatColor.GOLD + "You now have " + ChatColor.DARK_PURPLE + Integer.toString(getZombieKills()) + ChatColor.GOLD + " zombie kills.");
-        p.sendMessage(ChatColor.YELLOW + "You earned " + ChatColor.LIGHT_PURPLE + Integer.toString(credits) + ChatColor.GOLD + " credits.");
+        p.sendMessage(ChatColor.GOLD + "You earned " + ChatColor.LIGHT_PURPLE + Integer.toString(credits) + ChatColor.GOLD + " credits.");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + p.getName() + " " + credits);
+        addEarnedcredits(credits);
     }
 
     public void setTotalZombieKills(int totalKills) {
@@ -406,6 +407,13 @@ public class MGPlayer {
 
     public void addGiantKills(int killsAdded) {
         this.giantKills = giantKills + killsAdded;
+        Player p = getPlayer();
+        int credits = killsAdded * 15;
+        this.zombieKills = zombieKills + killsAdded;
+        p.sendMessage(ChatColor.GOLD + "You now have " + ChatColor.DARK_PURPLE + Integer.toString(getGiantKills()) + ChatColor.GOLD + " giant kills.");
+        p.sendMessage(ChatColor.GOLD + "You earned " + ChatColor.LIGHT_PURPLE + Integer.toString(credits) + ChatColor.GOLD + " credits.");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + p.getName() + " " + credits);
+        addEarnedcredits(credits);
     }
 
     public void setHeals(int amount) {

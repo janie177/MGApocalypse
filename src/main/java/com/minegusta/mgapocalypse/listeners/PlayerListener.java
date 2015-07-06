@@ -349,7 +349,6 @@ public class PlayerListener implements Listener {
 
         int points = mgp.getZombieKills();
         p.sendMessage(ChatColor.GREEN + "You had " + ChatColor.DARK_PURPLE + points + ChatColor.GREEN + " zombie kills.");
-        p.sendMessage(ChatColor.GREEN + "You looted " + ChatColor.DARK_PURPLE + mgp.getChestsLooted() + ChatColor.GREEN + " chests.");
         p.sendMessage(ChatColor.GREEN + "You killed " + ChatColor.DARK_PURPLE + mgp.getGiantKills() + ChatColor.GREEN + " giants.");
         p.sendMessage(ChatColor.GREEN + "You were alive for " + ChatColor.DARK_PURPLE + mgp.getTimeAlive() + ChatColor.GREEN + " minutes.");
         p.sendMessage(ChatColor.GOLD + "You earned a total of " + ChatColor.YELLOW + (points * 3) + ChatColor.GOLD + " credits.");
