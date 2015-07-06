@@ -51,6 +51,7 @@ public class Main extends JavaPlugin {
         DISEASETASK = DOTTask.diseaseTask();
         DRINKTASK = DrinkTask.start();
         BROADCASTTASK = BroadCastTask.start();
+        PlayTimeTask.start();
         SpawnTask.start();
 
         //Worldguard enabled
@@ -65,6 +66,7 @@ public class Main extends JavaPlugin {
         Bukkit.getScheduler().cancelTask(DISEASETASK);
         Bukkit.getScheduler().cancelTask(DRINKTASK);
         Bukkit.getScheduler().cancelTask(BROADCASTTASK);
+        PlayTimeTask.stop();
         SpawnTask.stop();
     }
 }

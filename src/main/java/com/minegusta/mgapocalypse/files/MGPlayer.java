@@ -31,6 +31,7 @@ public class MGPlayer {
     private int longestAlive;
     private int chestsLooted;
     private int emeraldChestsLooted;
+    private int ironChestsLooted;
     private int diamondChestsLooted;
     private long earnedcredits;
     private int hunger;
@@ -82,6 +83,7 @@ public class MGPlayer {
         this.earnedcredits = f.getInt("earnedcredits", 0);
         this.emeraldChestsLooted = f.getInt("emeraldchestslooted", 0);
         this.diamondChestsLooted = f.getInt("diamondchestslooted", 0);
+        this.ironChestsLooted = f.getInt("ironchestslooted", 0);
         this.hunger = f.getInt("hunger", 20);
         this.bleeding = f.getBoolean("bleeding", false);
         this.infected = f.getBoolean("infected", false);
@@ -142,6 +144,7 @@ public class MGPlayer {
         conf.set("earnedcredits", earnedcredits);
         conf.set("emeraldchestslooted", emeraldChestsLooted);
         conf.set("diamondchestslooted", diamondChestsLooted);
+        conf.set("ironchestslooted", ironChestsLooted);
         conf.set("hunger", hunger);
         conf.set("bleeding", bleeding);
         conf.set("infected", infected);
@@ -493,6 +496,14 @@ public class MGPlayer {
         diamondChestsLooted = diamondChestsLooted + chestsAdded;
     }
 
+    public void setIronChestsLooted(int chests) {
+        ironChestsLooted = chests;
+    }
+
+    public void addIronChestsLooted(int chestsAdded) {
+        ironChestsLooted = ironChestsLooted + chestsAdded;
+    }
+
     public void addEmeraldChestsLooted(int chestsAdded) {
         emeraldChestsLooted = emeraldChestsLooted + chestsAdded;
     }
@@ -509,7 +520,7 @@ public class MGPlayer {
         this.totalHeals = totalHeals;
     }
 
-    public void addTimeALive(int added) {
+    public void addTimeAlive(int added) {
         alive = alive + added;
     }
 
