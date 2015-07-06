@@ -26,6 +26,11 @@ public class MGPlayer {
     private int totalPlayerKills;
     private int playTime;
     private int alive;
+
+    private int mostHeals;
+    private int mostPlayerKills;
+    private int mostGiantKills;
+
     private int deaths;
     private int longestKillStreak;
     private int longestAlive;
@@ -89,6 +94,9 @@ public class MGPlayer {
         this.infected = f.getBoolean("infected", false);
         this.thirst = f.getInt("thirst", 20);
         this.playing = f.getBoolean("playing", false);
+        this.mostGiantKills = f.getInt("mostgiantkills", 0);
+        this.mostHeals = f.getInt("mostheals", 0);
+        this.mostPlayerKills = f.getInt("mostplayerkills", 0);
 
         if (f.isSet("perks")) {
 
@@ -152,6 +160,9 @@ public class MGPlayer {
         conf.set("totalheals", totalHeals);
         conf.set("alive", alive);
         conf.set("totalplayerkills", totalPlayerKills);
+        conf.set("mostgiantkills", mostGiantKills);
+        conf.set("mostheals", mostHeals);
+        conf.set("mostplayerkills", mostPlayerKills);
 
         for (Perk p : perks.keySet()) {
             conf.set("perks." + p.name(), perks.get(p));
@@ -193,6 +204,18 @@ public class MGPlayer {
         }
         if (getLongestAlive() < getTimeAlive()) {
             setlongestAlive(getTimeAlive());
+        }
+        if(getGiantKills() > getMostGiantKills())
+        {
+            setMostGiantKills(getGiantKills());
+        }
+        if(getHeals() > getMostHeals())
+        {
+            setMostHeals(getHeals());
+        }
+        if(getPlayerKills() > getMostPlayerKills())
+        {
+            setMostPlayerKills(getPlayerKills());
         }
 
         addTotalGiantKills(getGiantKills());
@@ -308,6 +331,21 @@ public class MGPlayer {
         return chestsLooted;
     }
 
+    public int getMostHeals()
+    {
+        return mostHeals;
+    }
+
+    public int getMostPlayerKills()
+    {
+        return mostPlayerKills;
+    }
+
+    public int getMostGiantKills()
+    {
+        return mostGiantKills;
+    }
+
     public long getEarnedcredits() {
         return earnedcredits;
     }
@@ -334,6 +372,10 @@ public class MGPlayer {
 
     public int getEmeraldChestsLooted() {
         return emeraldChestsLooted;
+    }
+
+    public int getIronChestsLooted() {
+        return ironChestsLooted;
     }
 
     public Perk[] getPerks() {
@@ -365,6 +407,17 @@ public class MGPlayer {
         } else {
             perks.put(p, 1);
         }
+    }
+
+    public int getPerksBought()
+    {
+        int amount = 0;
+        for(int i : perks.values())
+        {
+            amount = amount + i;
+        }
+
+        return amount;
     }
 
     //-// //-// //-// //-// -=-=-=- //-// //-// //-// //-//
@@ -559,6 +612,27 @@ public class MGPlayer {
     public void setPlaying(boolean playing)
     {
         this.playing = playing;
+    }
+
+    public void setMostHeals(int amount)
+    {
+        this.mostHeals = amount;
+        getPlayer().sendMessage(ChatColor.GREEN + "You broke your record for most heals!");
+        getPlayer().sendMessage(ChatColor.GREEN + "You healed " + ChatColor.DARK_PURPLE + getMostHeals() + ChatColor.GREEN + " players!");
+    }
+
+    public void setMostPlayerKills(int amount)
+    {
+        this.mostPlayerKills = amount;
+        getPlayer().sendMessage(ChatColor.GREEN + "You broke your record for largest player killstreak!");
+        getPlayer().sendMessage(ChatColor.GREEN + "You killed " + ChatColor.DARK_PURPLE + getLongestAlive() + ChatColor.GREEN + " players!");
+    }
+
+    public void setMostGiantKills(int amount)
+    {
+        this.mostGiantKills = amount;
+        getPlayer().sendMessage(ChatColor.GREEN + "You broke your record for largest giant killstreak!");
+        getPlayer().sendMessage(ChatColor.GREEN + "You killed " + ChatColor.DARK_PURPLE + getLongestAlive() + ChatColor.GREEN + " giants!");
     }
 
 }

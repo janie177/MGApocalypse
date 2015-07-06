@@ -2,14 +2,13 @@ package com.minegusta.mgapocalypse;
 
 import com.minegusta.mgapocalypse.Tasks.*;
 import com.minegusta.mgapocalypse.commands.BreakCommand;
+import com.minegusta.mgapocalypse.commands.InfoCommand;
 import com.minegusta.mgapocalypse.commands.MGACommand;
+import com.minegusta.mgapocalypse.commands.PerkCommand;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.config.LogoutManager;
 import com.minegusta.mgapocalypse.config.SavedLocationsManager;
-import com.minegusta.mgapocalypse.listeners.JoinListener;
-import com.minegusta.mgapocalypse.listeners.MobListener;
-import com.minegusta.mgapocalypse.listeners.PlayerListener;
-import com.minegusta.mgapocalypse.listeners.ProjectileListener;
+import com.minegusta.mgapocalypse.listeners.*;
 import com.minegusta.mgapocalypse.pvplog.PvpLogListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -39,10 +38,13 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new MobListener(), this);
         Bukkit.getPluginManager().registerEvents(new ProjectileListener(), this);
         Bukkit.getPluginManager().registerEvents(new PvpLogListener(), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
 
         //Commands
         getCommand("mga").setExecutor(new MGACommand());
         getCommand("break").setExecutor(new BreakCommand());
+        getCommand("stats").setExecutor(new InfoCommand());
+        getCommand("perk").setExecutor(new PerkCommand());
 
 
         //Tasks
