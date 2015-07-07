@@ -18,6 +18,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.List;
@@ -69,6 +71,8 @@ public class GiantListener implements Listener
 
         Giant g = (Giant) e.getEntity();
 
+        g.setTarget(p);
+        g.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 600, 0, false, false));
         attack(RandomNumber.get(7), p, g);
     }
 
@@ -84,6 +88,7 @@ public class GiantListener implements Listener
         for(int i = 0; i < 3; i++)
         {
             Zombie z = (Zombie) l.getWorld().spawnEntity(l, EntityType.ZOMBIE);
+            z.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 600, 0, false, false));
             z.setVillager(false);
             ((Creature)z).setTarget(p);
         }
@@ -92,7 +97,7 @@ public class GiantListener implements Listener
 
     private void jump(Giant g) {
         final Location center = g.getLocation();
-        g.setVelocity(new Vector(0, 2.6, 0));
+        g.setVelocity(new Vector(0, 3.6, 0));
 
         List<Location> close = Lists.newArrayList();
         List<Location> medium = Lists.newArrayList();
@@ -114,8 +119,8 @@ public class GiantListener implements Listener
         }
 
         explode(close, 2, 4);
-        explode(medium, 3, 3);
-        explode(far, 4, 2);
+        explode(medium, 4, 3);
+        explode(far, 4, 6);
     }
     
     public void explode(final List<Location> locations, int delay, float strength)
@@ -135,12 +140,12 @@ public class GiantListener implements Listener
         Location l = new Location(g.getWorld(), g.getLocation().getX(), g.getLocation().getY() + 10, g.getLocation().getZ());
 
         double x = p.getLocation().getX() - l.getX();
-        double y = p.getLocation().getY() - l.getY();
+        double y = p.getLocation().getY() + 2 - l.getY();
         double z = p.getLocation().getZ() - l.getZ();
 
         Vector v = new Vector(x, y, z);
         v.normalize();
-        v.multiply(2.7);
+        v.multiply(3.0);
 
         Arrow arrow = g.getWorld().spawnArrow(l, v, 2, 0);
         arrow.setBounce(false);
