@@ -17,16 +17,16 @@ public class ScoreboardUtil {
         objective.setDisplayName(ChatColor.RED + "Health");
 
         for (PlayerStatus status : PlayerStatus.values()) {
-            Team team = board.registerNewTeam(status.getName());
-            team.setPrefix(status.getColor() + status.getName() + " ");
-            team.setDisplayName(status.getColor() + status.getName() + " ");
+            Team team = board.registerNewTeam(status.getFullname());
+            team.setPrefix(status.getTag() + status.getColor() + " ");
+            team.setDisplayName(status.getTag() + status.getColor() + " ");
             team.setNameTagVisibility(NameTagVisibility.ALWAYS);
             team.setCanSeeFriendlyInvisibles(false);
         }
     }
 
     public static void addScoreBoard(Player p, PlayerStatus status) {
-        Team team = board.getTeam(status.getName());
+        Team team = board.getTeam(status.getFullname());
         team.addPlayer(p);
         p.setScoreboard(board);
     }

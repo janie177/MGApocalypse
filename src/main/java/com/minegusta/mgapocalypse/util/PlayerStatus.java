@@ -5,16 +5,16 @@ import org.bukkit.ChatColor;
 public enum PlayerStatus
 {
     REGULAR(" ", ChatColor.GRAY, "Regular"),
-    BANDIT("[B]", ChatColor.RED, "Bandit"),
-    HEALER("[H]", ChatColor.GREEN, "Healer");
+    BANDIT(ChatColor.DARK_RED + "[B]", ChatColor.RED, "Bandit"),
+    HEALER(ChatColor.DARK_GREEN + "[H]", ChatColor.GREEN, "Healer");
 
-    private String name;
+    private String tag;
     private ChatColor color;
     private String fullname;
 
     private PlayerStatus(String name, ChatColor color, String fullname)
     {
-        this.name = name;
+        this.tag = name;
         this.color = color;
         this.fullname = fullname;
     }
@@ -24,9 +24,9 @@ public enum PlayerStatus
         return color;
     }
 
-    public String getName()
+    public String getTag()
     {
-        return name;
+        return tag;
     }
 
     public String getFullname()

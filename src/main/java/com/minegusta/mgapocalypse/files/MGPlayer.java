@@ -660,7 +660,7 @@ public class MGPlayer {
 
     public void updateStatus()
     {
-        PlayerStatus start = PlayerStatus.valueOf(status.getName());
+        PlayerStatus start = PlayerStatus.valueOf(status.getTag());
 
         if(getPlayerKills() > 9) status = PlayerStatus.BANDIT;
         else if (getHeals() > 9) status = PlayerStatus.HEALER;
@@ -668,7 +668,7 @@ public class MGPlayer {
         if(status != start && start != PlayerStatus.REGULAR)
         {
             getPlayer().sendMessage(status.getColor() + "You are now a " + status.getFullname() + "!");
-            getPlayer().sendMessage(status.getColor() + "Other players will see the " + status.getName() + " tag near your name.");
+            getPlayer().sendMessage(status.getColor() + "Other players will see the " + status.getTag() + status.getColor() + " tag near your name.");
         }
     }
 
