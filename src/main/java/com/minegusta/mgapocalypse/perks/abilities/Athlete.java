@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 public class Athlete implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[]{"Increase movement speed.", "Next level: +" + level * 0.5 + "%"};
+        return new String[]{"Increase movement speed.", "Next level: +" + level * 0.8 + "%"};
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Athlete implements IPerk {
 
     public static void setBoost(Player p)
     {
-        double speed = 0.2 + MGApocalypse.getMGPlayer(p).getPerkLevel(Perk.ATHLETE) * 0.0005;
+        double speed = 0.2 + MGApocalypse.getMGPlayer(p).getPerkLevel(Perk.ATHLETE) * 0.0008;
         p.setWalkSpeed((float) speed);
     }
 
