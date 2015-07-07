@@ -31,12 +31,14 @@ public class MGACommand implements CommandExecutor {
                 return true;
             } else if (args[0].equalsIgnoreCase("traps"))
             {
+                p.sendMessage(ChatColor.DARK_GREEN + "- - - Trap Help - - -");
                 p.sendMessage(ChatColor.GREEN + "Place a sign. Then place a block on top.");
-                p.sendMessage(ChatColor.GREEN + "On that signs, place a pressureplate.");
-                p.sendMessage(ChatColor.GREEN + "Line 1: [Trap].");
-                p.sendMessage(ChatColor.GREEN + "Line 2: Name of the trap.");
-                p.sendMessage(ChatColor.GREEN + "Line 3: Amount of entities to spawn (if appliable).");
-                p.sendMessage(ChatColor.GREEN + "Line 4: Entity type / potion type");
+                p.sendMessage(ChatColor.GREEN + "On that signs, place a pressure plate.");
+                p.sendMessage(ChatColor.YELLOW + "Line 1: [Trap].");
+                p.sendMessage(ChatColor.YELLOW + "Line 2: Name of the trap.");
+                p.sendMessage(ChatColor.YELLOW+ "Line 3: Entity amount or duration.");
+                p.sendMessage(ChatColor.YELLOW + "Line 4: Entity type / potion type");
+                p.sendMessage(ChatColor.GREEN + "Be careful with entity types.");
                 p.sendMessage(ChatColor.GREEN + "--- Trap Names ---");
                 for(Trap trap : Trap.values())
                 {
