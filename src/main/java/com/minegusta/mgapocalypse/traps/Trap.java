@@ -1,13 +1,17 @@
 package com.minegusta.mgapocalypse.traps;
 
-import com.minegusta.mgapocalypse.traps.instances.ZombieSpawn;
+import com.minegusta.mgapocalypse.traps.instances.*;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 public enum Trap {
 
-    ZOMBIE(new ZombieSpawn());
+    PROJECTILE(new ProjectileTrap()),
+    EXPLODE(new ExplodeTrap()),
+    FIRE(new FireTrap()),
+    POTION(new PotionTrap()),
+    MOBTRAP(new MobTrap());
 
     private ITrap trap;
 
