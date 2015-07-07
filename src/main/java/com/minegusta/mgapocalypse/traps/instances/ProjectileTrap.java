@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -38,6 +39,12 @@ public class ProjectileTrap implements ITrap {
             v.normalize();
 
             ent.setVelocity(v.multiply(2.4));
+
+            if(ent instanceof Fireball)
+            {
+                Fireball ball = (Fireball) ent;
+                ball.setIsIncendiary(false);
+            }
         }
     }
 
