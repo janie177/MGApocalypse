@@ -29,7 +29,7 @@ public class InventoryListener implements Listener {
         }
 
         //Perk shop
-        else if (e.getClickedInventory().getName().startsWith(ChatColor.DARK_RED + "~" + ChatColor.GOLD + "Perk Store " + ChatColor.YELLOW + "Points: ")) {
+        else if (e.getClickedInventory().getName().startsWith(ChatColor.DARK_RED + "~" + ChatColor.GOLD + "PerkPoints: ")) {
             e.setCancelled(true);
             Player p = (Player) e.getWhoClicked();
             MGPlayer mgp = MGApocalypse.getMGPlayer(p);

@@ -33,7 +33,7 @@ public class PerkMenu {
     }
 
     public static String getInventoryName(Player p) {
-        return ChatColor.DARK_RED + "~" + ChatColor.GOLD + "Perk Store " + ChatColor.YELLOW + "Points: " + ChatColor.LIGHT_PURPLE + MGApocalypse.getMGPlayer(p).getPerkPoints() + ChatColor.DARK_RED + "~";
+        return ChatColor.DARK_RED + "~" + ChatColor.GOLD + "PerkPoints: " + ChatColor.LIGHT_PURPLE + MGApocalypse.getMGPlayer(p).getPerkPoints() + ChatColor.DARK_RED + "~";
     }
 
     private static void fillInventory(Player p, Inventory inventory) {
