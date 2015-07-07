@@ -669,7 +669,7 @@ public class MGPlayer {
 
     public void updateStatus()
     {
-        PlayerStatus start = PlayerStatus.valueOf(status.getTag());
+        PlayerStatus start = PlayerStatus.valueOf(status.name());
 
         if(getPlayerKills() > 9) status = PlayerStatus.BANDIT;
         else if (getHeals() > 9) status = PlayerStatus.HEALER;
