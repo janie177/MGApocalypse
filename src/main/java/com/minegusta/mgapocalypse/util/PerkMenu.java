@@ -61,8 +61,8 @@ public class PerkMenu {
 
             if(level == 0)
             {
-                mat = Material.STAINED_GLASS_PANE;
-                mdata = 6;
+                mat = Material.BARRIER;
+                mdata = 0;
             }
 
             inventory.setItem(perk.getSlot(), new ItemStack(mat, amount, (short) mdata) {

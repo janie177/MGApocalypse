@@ -30,7 +30,7 @@ public class PerkMenuTask
                     }
                 }
             });
-        }, 5, 5);
+        }, 3, 3);
     }
 
     public static void stop()
