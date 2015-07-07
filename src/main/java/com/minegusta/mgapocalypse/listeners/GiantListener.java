@@ -11,6 +11,7 @@ import com.minegusta.mgloot.managers.LootManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -71,16 +72,18 @@ public class GiantListener implements Listener
 
         Giant g = (Giant) e.getEntity();
 
-        g.setTarget(p);
+        moveToPlayer(g, p);
+
         g.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 600, 0, false, false));
+        g.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 600, 4, false, false));
         attack(RandomNumber.get(7), p, g);
     }
 
     private void attack(int style, Player p, Giant g)
     {
-        if(style < 4) spawnZombie(p, g.getLocation());
-        else if (style < 7) arrow(g, p);
-        else jump(g);
+        if(style < 2 && g.getHealth() > 20) jump(g);
+        else if (style < 5) arrow(g, p);
+        else spawnZombie(p, g.getLocation());
     }
 
     private void spawnZombie(Player p, Location l)
@@ -97,7 +100,7 @@ public class GiantListener implements Listener
 
     private void jump(Giant g) {
         final Location center = g.getLocation();
-        g.setVelocity(new Vector(0, 3.6, 0));
+        g.setVelocity(new Vector(0, 7, 0));
 
         List<Location> close = Lists.newArrayList();
         List<Location> medium = Lists.newArrayList();
@@ -105,22 +108,22 @@ public class GiantListener implements Listener
 
         for (int degrees = 0; degrees < 361; degrees = degrees + 45)
         {
-            close.add(calculateCircle(center, degrees, 6));
+            close.add(calculateCircle(center, degrees, 3));
         }
 
         for (int degrees = 0; degrees < 361; degrees = degrees + 45)
         {
-            medium.add(calculateCircle(center, degrees, 12));
+            medium.add(calculateCircle(center, degrees, 5));
         }
 
         for (int degrees = 0; degrees < 361; degrees = degrees + 45)
         {
-            far.add(calculateCircle(center, degrees, 18));
+            far.add(calculateCircle(center, degrees, 10));
         }
 
-        explode(close, 2, 4);
-        explode(medium, 4, 3);
-        explode(far, 4, 6);
+        explode(close, 2, 3);
+        explode(medium, 4, 2);
+        explode(far, 6, 1);
     }
     
     public void explode(final List<Location> locations, int delay, float strength)
@@ -140,19 +143,47 @@ public class GiantListener implements Listener
         Location l = new Location(g.getWorld(), g.getLocation().getX(), g.getLocation().getY() + 10, g.getLocation().getZ());
 
         double x = p.getLocation().getX() - l.getX();
-        double y = p.getLocation().getY() + 2 - l.getY();
+        double y = p.getLocation().getY() + (RandomNumber.get(3) - 1) - l.getY();
         double z = p.getLocation().getZ() - l.getZ();
 
         Vector v = new Vector(x, y, z);
         v.normalize();
-        v.multiply(3.0);
+        v.multiply(2.6);
 
-        Arrow arrow = g.getWorld().spawnArrow(l, v, 2, 0);
+        Arrow arrow = (Arrow) g.getWorld().spawnEntity(l, EntityType.ARROW);
         arrow.setBounce(false);
+        arrow.setVelocity(v);
         arrow.setCritical(true);
+        arrow.setKnockbackStrength(2);
     }
 
     private static Location calculateCircle(Location l, int angle, double radius) {
         return new Location(l.getWorld(), l.getX() + radius * Math.sin(angle), l.getY(), l.getZ() + radius * Math.cos(angle));
+    }
+
+    private void moveToPlayer(Giant g, Player p)
+    {
+
+        for (int i = 0; i < 3; i++)
+        {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, () ->
+            {
+                if (!g.isDead() || p != null)
+                {
+                    double x = p.getLocation().getX() - g.getLocation().getX();
+                    double z = p.getLocation().getZ() - g.getLocation().getZ();
+
+                    Vector v = new Vector(x, 0, z);
+                    v.normalize();
+                    v.multiply(0.2);
+
+                    Location to = new Location(g.getWorld(), g.getLocation().getX(), g.getLocation().getY(), g.getLocation().getZ()).add(v);
+                    if (to.getBlock().getType() != Material.AIR) return;
+
+                    g.teleport(to);
+                }
+
+            }, 5 * i);
+        }
     }
 }
