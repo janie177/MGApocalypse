@@ -442,4 +442,12 @@ public class PlayerListener implements Listener {
         MGApocalypse.removeMGPlayer(e.getPlayer());
         ScoreboardUtil.removeScoreBoard(e.getPlayer());
     }
+
+    @EventHandler
+    public void onWorldSwitch(PlayerChangedWorldEvent e)
+    {
+        MGPlayer mgp = MGApocalypse.getMGPlayer(e.getPlayer());
+
+        mgp.updateScoreBoard();
+    }
 }

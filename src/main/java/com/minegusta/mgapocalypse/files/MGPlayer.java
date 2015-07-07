@@ -5,6 +5,7 @@ import com.minegusta.mgapocalypse.perks.Perk;
 import com.minegusta.mgapocalypse.util.Break;
 import com.minegusta.mgapocalypse.util.PlayerStatus;
 import com.minegusta.mgapocalypse.util.ScoreboardUtil;
+import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -140,6 +141,7 @@ public class MGPlayer {
 
     public void updateConfig() {
         if (playing) updatePlayerStats();
+        updateScoreBoard();
 
         conf.set("status", status);
         conf.set("perkpoints", perkPoints);
@@ -678,7 +680,10 @@ public class MGPlayer {
 
         updateStatus();
 
-        ScoreboardUtil.addScoreBoard(p, status);
+        if(!WorldCheck.is(p.getWorld()))
+        {
+            ScoreboardUtil.removeScoreBoard(p);
+        } else ScoreboardUtil.addScoreBoard(p, status);
     }
 
 }
