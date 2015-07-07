@@ -3,6 +3,8 @@ package com.minegusta.mgapocalypse.files;
 import com.google.common.collect.Maps;
 import com.minegusta.mgapocalypse.perks.Perk;
 import com.minegusta.mgapocalypse.util.Break;
+import com.minegusta.mgapocalypse.util.PlayerStatus;
+import com.minegusta.mgapocalypse.util.ScoreboardUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -27,6 +29,8 @@ public class MGPlayer {
     private int totalPlayerKills;
     private int playTime;
     private int alive;
+
+    private PlayerStatus status;
 
     private int mostHeals;
     private int mostPlayerKills;
@@ -69,6 +73,7 @@ public class MGPlayer {
         this.lastHealedOther = 0;
         this.lastBandaged = 0;
 
+        this.status = PlayerStatus.valueOf(f.getString("status", "REGULAR").toUpperCase());
         this.perkPoints = f.getInt("perkpoints", 0);
         this.health = f.getDouble("health", 20.0);
         this.zombieKills = f.getInt("kills", 0);
@@ -110,6 +115,8 @@ public class MGPlayer {
                 perks.put(perk, level);
             }
         }
+
+        updateScoreBoard();
     }
 
     public static MGPlayer build(String uuid, FileConfiguration f) {
@@ -134,6 +141,7 @@ public class MGPlayer {
     public void updateConfig() {
         if (playing) updatePlayerStats();
 
+        conf.set("status", status);
         conf.set("perkpoints", perkPoints);
         conf.set("playing", playing);
         conf.set("health", health);
@@ -225,6 +233,8 @@ public class MGPlayer {
         setPlayerKills(0);
         setTimeAlive(0);
         setPerkPoints(0);
+
+        updateScoreBoard();
 
         //Clear all perks, auto saves to config.
         conf.set("perks", null);
@@ -472,19 +482,23 @@ public class MGPlayer {
 
     public void setHeals(int amount) {
         this.heals = amount;
+        updateScoreBoard();
     }
 
     public void addHeals(int amount) {
         this.heals = heals + amount;
+        updateScoreBoard();
     }
 
     public void setPlayerKills(int kills) {
         playerKills = kills;
+        updateScoreBoard();
     }
 
     public void addPlayerKills(int killsAdded) {
         playerKills = playerKills + killsAdded;
         addPerkPoints(killsAdded * 3);
+        updateScoreBoard();
     }
 
     public void setPlayTime(int timePlayed) {
@@ -642,6 +656,29 @@ public class MGPlayer {
         this.mostGiantKills = amount;
         getPlayer().sendMessage(ChatColor.GREEN + "You broke your record for largest giant killstreak!");
         getPlayer().sendMessage(ChatColor.GREEN + "You killed " + ChatColor.DARK_PURPLE + getLongestAlive() + ChatColor.GREEN + " giants!");
+    }
+
+    public void updateStatus()
+    {
+        PlayerStatus start = PlayerStatus.valueOf(status.getName());
+
+        if(getPlayerKills() > 9) status = PlayerStatus.BANDIT;
+        else if (getHeals() > 9) status = PlayerStatus.HEALER;
+
+        if(status != start && start != PlayerStatus.REGULAR)
+        {
+            getPlayer().sendMessage(status.getColor() + "You are now a " + status.getFullname() + "!");
+            getPlayer().sendMessage(status.getColor() + "Other players will see the " + status.getName() + " tag near your name.");
+        }
+    }
+
+    public void updateScoreBoard()
+    {
+        Player p = getPlayer();
+
+        updateStatus();
+
+        ScoreboardUtil.addScoreBoard(p, status);
     }
 
 }

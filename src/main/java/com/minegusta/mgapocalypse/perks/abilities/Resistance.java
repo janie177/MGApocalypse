@@ -7,7 +7,7 @@ import org.bukkit.Material;
 public class Resistance implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[]{"You are more", "resistant to bleeding", "and diseases.", "Next level: +" + level * 2 + "% resistance."};
+        return new String[]{"You are more", "resistant to bleeding", "and disease infection.", "Next level: +" + level * 2 + "% resistance."};
     }
 
     @Override

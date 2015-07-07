@@ -7,7 +7,7 @@ import org.bukkit.Material;
 public class Farmer implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[]{"Crops sometimes", "give more loot", "Next level: +" + level * 2 + "%"};
+        return new String[]{"Crops sometimes", "give more loot", "Next level: +" + level * 4 + "%"};
     }
 
     @Override

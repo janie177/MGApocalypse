@@ -7,7 +7,7 @@ import org.bukkit.Material;
 public class Consumer implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[]{"Food heals", "more foodbar.", "Next level: " + level * 5 + "%"};
+        return new String[]{"Food drains", "a little slower.", "Next level: -" + level * 3 + "%"};
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Consumer implements IPerk {
 
     @Override
     public int getCost() {
-        return 8;
+        return 6;
     }
 
     @Override

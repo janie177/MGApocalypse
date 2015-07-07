@@ -37,7 +37,7 @@ public class Hydration implements IPerk {
 
     @Override
     public int getCost() {
-        return 5;
+        return 3;
     }
 
     @Override

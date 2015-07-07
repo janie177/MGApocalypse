@@ -7,6 +7,7 @@ import com.minegusta.mgapocalypse.dotmanagers.BleedingManager;
 import com.minegusta.mgapocalypse.dotmanagers.DiseaseManager;
 import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.lootblocks.Loot;
+import com.minegusta.mgapocalypse.perks.Perk;
 import com.minegusta.mgapocalypse.util.*;
 import com.minegusta.mgloot.loottables.LootItem;
 import org.bukkit.ChatColor;
@@ -20,10 +21,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -39,8 +37,8 @@ public class PlayerListener implements Listener {
     private static final List<Material> blockedBlocks = Lists.newArrayList(Material.ENCHANTMENT_TABLE, Material.ANVIL, Material.BED, Material.MINECART, Material.STORAGE_MINECART, Material.ITEM_FRAME);
 
     //Chances for bleeding. Also for diseases.
-    private final static int bleedChance = 12; //In %
-    private final static int diseaseChance = 3; //In %
+    private final static double bleedChance = 200.0; //In promillage
+    private final static double diseaseChance = 60.0; //In promillage
 
     //All the allowed commands, lower case only.
     private final static List<String> allowedCMDS = Lists.newArrayList("/credits", "/pop", "/break", "/hub", "/pause", "/logout", "/log-out", "/leave", "/abort", "/exit", "/msg", "/r", "/pm", "/message", "/me", "ccmsg", "/perk", "/info");
@@ -48,12 +46,29 @@ public class PlayerListener implements Listener {
     //All food types that heal you
     private final static List<Material> food = Lists.newArrayList(Material.MELON, Material.RAW_FISH, Material.RAW_CHICKEN, Material.RAW_BEEF, Material.BREAD, Material.COOKIE, Material.POTATO_ITEM, Material.CARROT_ITEM, Material.APPLE, Material.MUSHROOM_SOUP, Material.PORK, Material.GRILLED_PORK, Material.COOKED_FISH, Material.BAKED_POTATO, Material.COOKED_CHICKEN, Material.RABBIT_STEW, Material.COOKED_RABBIT, Material.RABBIT);
 
+
+    @EventHandler
+    public void onFoodHealed(FoodLevelChangeEvent e) {
+        if (!WorldCheck.is(e.getEntity().getWorld())) return;
+        if (!(e.getEntity() instanceof Player)) return;
+
+        Player p = (Player) e.getEntity();
+        MGPlayer mgp = MGApocalypse.getMGPlayer(p);
+
+        if (e.getFoodLevel() < p.getFoodLevel()) {
+            if (RandomNumber.get(100) < mgp.getPerkLevel(Perk.CONSUMER) * 3) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEvent(PlayerItemConsumeEvent e) {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
 
         Player p = e.getPlayer();
         Material m = e.getItem().getType();
+        MGPlayer mgp = MGApocalypse.getMGPlayer(p);
 
         if (food.contains(m)) {
             if (p.getHealth() <= 19.0) p.setHealth(p.getHealth() + 1.0);
@@ -61,7 +76,7 @@ public class PlayerListener implements Listener {
 
         if (m == Material.POTION) {
             if (e.getItem().getDurability() == 0) {
-                p.setLevel(20);
+                p.setLevel(20 + mgp.getPerkLevel(Perk.HYDRATION));
                 p.sendMessage(ChatColor.GREEN + "You feel refreshed.");
                 e.setCancelled(true);
                 ItemUtil.removeOne(p, Material.POTION);
@@ -184,15 +199,20 @@ public class PlayerListener implements Listener {
             e.getBlock().setType(Material.AIR);
         }
 
+        MGPlayer mgp = MGApocalypse.getMGPlayer(p);
+        boolean farmerBoost = (mgp.getPerkLevel(Perk.FARMER) * 4) >= RandomNumber.get(100);
+        int amount = 1;
+        if (farmerBoost) amount++;
+
         if (type == Material.CROPS && hand == Material.WOOD_HOE) {
-            l.getWorld().dropItemNaturally(l, new ItemStack(Material.WHEAT, 1));
+            l.getWorld().dropItemNaturally(l, new ItemStack(Material.WHEAT, amount));
             tool.setDurability((short) (tool.getDurability() + 5));
             if (tool.getDurability() >= hand.getMaxDurability())
                 new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
         }
 
         if (type == Material.MELON_BLOCK && hand == Material.WOOD_HOE) {
-            l.getWorld().dropItemNaturally(l, new ItemStack(Material.MELON, 1));
+            l.getWorld().dropItemNaturally(l, new ItemStack(Material.MELON, amount));
             tool.setDurability((short) (tool.getDurability() + 15));
             if (tool.getDurability() >= hand.getMaxDurability())
                 new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
@@ -227,7 +247,6 @@ public class PlayerListener implements Listener {
             //Healing check
             if (e.getDamager() instanceof Player) {
                 Player damager = (Player) e.getDamager();
-                MGPlayer damagerMGP = MGApocalypse.getMGPlayer(damager);
 
                 ItemStack hand = damager.getItemInHand();
                 if (hand.getType() == Material.PAPER) {
@@ -254,13 +273,15 @@ public class PlayerListener implements Listener {
             }
 
             //Disease checking
+            double reduction = 0.01 * (100 - mgp.getPerkLevel(Perk.RESISTANCE) * 2);
+
             if (!e.isCancelled() && WGManager.canGetDamage(p)) {
                 if (e.getDamager() != null && e.getDamager() instanceof Zombie) {
-                    if (RandomNumber.get(100) <= diseaseChance) {
+                    if (RandomNumber.get(1000) <= diseaseChance * reduction) {
                         DiseaseManager.infect(p);
                     }
                 }
-                if (RandomNumber.get(100) <= bleedChance) {
+                if (RandomNumber.get(1000) <= bleedChance * reduction) {
                     BleedingManager.bleed(p);
                 }
             }
@@ -281,14 +302,22 @@ public class PlayerListener implements Listener {
         }
     }
 
+    private static double healed = 4.0;
+
     private void healPlayer(Player p, Player healer) {
         p.sendMessage(ChatColor.LIGHT_PURPLE + "You were healed by " + healer.getName() + ".");
         healer.sendMessage(ChatColor.LIGHT_PURPLE + "You healed " + p.getName() + ".");
         p.getWorld().spigot().playEffect(p.getLocation(), Effect.HEART);
-        p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 7, 0));
+
+        double heal = healed * (1 + 0.01 * (100 - MGApocalypse.getMGPlayer(healer).getPerkLevel(Perk.HEALER) * 3));
+
+        double maxHealed = p.getMaxHealth() - p.getHealth();
+        if (maxHealed < heal) {
+            p.setHealth(p.getMaxHealth());
+        } else p.setHealth(p.getHealth() + heal);
 
         //Healer check
-        MGApocalypse.getMGPlayer(p).addHeals(1);
+        MGApocalypse.getMGPlayer(healer).addHeals(1);
     }
 
     //Spawn a zombie on death
@@ -385,7 +414,7 @@ public class PlayerListener implements Listener {
     public void onEvent(PlayerToggleSprintEvent e) {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
 
-        e.getPlayer().getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(e.getPlayer().getLocation()) < 56 && ent instanceof Zombie && ((Zombie)ent).getTarget() == null).forEach(zombie -> ((Creature) zombie).setTarget(e.getPlayer()));
+        e.getPlayer().getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(e.getPlayer().getLocation()) < 56 && ent instanceof Zombie && ((Zombie) ent).getTarget() == null).forEach(zombie -> ((Creature) zombie).setTarget(e.getPlayer()));
     }
 
     //Stop health regen.
@@ -411,5 +440,6 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         MGApocalypse.removeMGPlayer(e.getPlayer());
+        ScoreboardUtil.removeScoreBoard(e.getPlayer());
     }
 }

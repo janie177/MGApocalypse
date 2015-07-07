@@ -10,6 +10,7 @@ import com.minegusta.mgapocalypse.config.LogoutManager;
 import com.minegusta.mgapocalypse.config.SavedLocationsManager;
 import com.minegusta.mgapocalypse.listeners.*;
 import com.minegusta.mgapocalypse.pvplog.PvpLogListener;
+import com.minegusta.mgapocalypse.util.ScoreboardUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -56,6 +57,7 @@ public class Main extends JavaPlugin {
         BROADCASTTASK = BroadCastTask.start();
         PlayTimeTask.start();
         SpawnTask.start();
+        ScoreboardUtil.setBoard();
 
         //Worldguard enabled
         if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) WG_ENABLED = true;
