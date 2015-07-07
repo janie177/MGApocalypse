@@ -4,8 +4,7 @@ import com.minegusta.mgapocalypse.perks.abilities.*;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public enum Perk
-{
+public enum Perk {
     SLAYER(9, new Slayer()), //Do more damage with swords
     BOWMAN(11, new Bowman()), //Do more damage with bows
     HEALER(13, new Healer()), //Heal more health
@@ -22,63 +21,51 @@ public enum Perk
     AIRDROP(35, new AirDrop()); //Buy supplies one-time
 
 
-
     private IPerk perk;
     private int slot;
 
-    private Perk(int slot, IPerk perk)
-    {
+    private Perk(int slot, IPerk perk) {
         this.slot = slot;
         this.perk = perk;
     }
 
-    public int getSlot()
-    {
+    public int getSlot() {
         return slot;
     }
 
-    public IPerk getIPerk()
-    {
+    public IPerk getIPerk() {
         return perk;
     }
 
-    public IPerk.Type getType()
-    {
+    public IPerk.Type getType() {
         return perk.getType();
     }
 
-    public void apply(Player p)
-    {
+    public void apply(Player p) {
         perk.apply(p);
     }
 
-    public String getName()
-    {
+    public String getName() {
         return perk.getName();
     }
 
-    public String[] description(int level)
-    {
+    public String[] description(int level) {
         return perk.getDescription(level);
     }
 
-    public Material getMaterial()
-    {
+    public Material getMaterial() {
         return perk.getMaterial();
     }
 
-    public int getDataValue()
-    {
+    public int getDataValue() {
         return perk.getDataValue();
     }
 
-    public int getMaxLevel()
-    {
+    public int getMaxLevel() {
         return perk.getMaxLevel();
     }
 
-    public int getCost()
-    {
+    public int getCost() {
         return perk.getCost();
     }
 }

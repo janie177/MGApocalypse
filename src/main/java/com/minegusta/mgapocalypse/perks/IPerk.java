@@ -3,10 +3,8 @@ package com.minegusta.mgapocalypse.perks;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public interface IPerk
-{
-    public enum Type
-    {
+public interface IPerk {
+    public enum Type {
         INSTANT, UPGRADE;
     }
 
@@ -26,8 +24,7 @@ public interface IPerk
 
     Perk getPerk();
 
-    default void apply(Player p)
-    {
+    default void apply(Player p) {
 
     }
 }

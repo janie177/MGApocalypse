@@ -14,11 +14,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class PerkMenu
-{
+public class PerkMenu {
 
-    private static ItemStack bg = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5)
-    {
+    private static ItemStack bg = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5) {
         {
             ItemMeta meta = getItemMeta();
             meta.setDisplayName(" ");
@@ -26,8 +24,7 @@ public class PerkMenu
         }
     };
 
-    public static Inventory build(Player p)
-    {
+    public static Inventory build(Player p) {
         Inventory inv = Bukkit.createInventory(p, 9 * 6, getInventoryName(p));
 
         fillInventory(p, inv);
@@ -35,44 +32,35 @@ public class PerkMenu
         return inv;
     }
 
-    public static String getInventoryName(Player p)
-    {
+    public static String getInventoryName(Player p) {
         return ChatColor.DARK_RED + "~" + ChatColor.GOLD + "Perk Store " + ChatColor.YELLOW + "Points: " + ChatColor.LIGHT_PURPLE + MGApocalypse.getMGPlayer(p).getPerkPoints() + ChatColor.DARK_RED + "~";
     }
 
-    private static void fillInventory(Player p, Inventory inventory)
-    {
+    private static void fillInventory(Player p, Inventory inventory) {
         MGPlayer mgp = MGApocalypse.getMGPlayer(p);
 
-        for(int i  = 0; i < inventory.getSize(); i++)
-        {
+        for (int i = 0; i < inventory.getSize(); i++) {
             inventory.setItem(i, bg);
         }
 
-        for (Perk perk : Perk.values())
-        {
+        for (Perk perk : Perk.values()) {
             int level = mgp.getPerkLevel(perk);
             int amount = level + 1;
-            if(amount > 64) amount = 64;
-            inventory.setItem(perk.getSlot(), new ItemStack(perk.getMaterial(), amount, (short) perk.getDataValue())
-            {
+            if (amount > 64) amount = 64;
+            inventory.setItem(perk.getSlot(), new ItemStack(perk.getMaterial(), amount, (short) perk.getDataValue()) {
                 {
                     ItemMeta meta = getItemMeta();
                     meta.setDisplayName(ChatColor.DARK_RED + perk.getName());
                     List<String> lore = Lists.newArrayList();
 
-                    if(level >= perk.getMaxLevel() && perk.getMaxLevel() != 0)
-                    {
+                    if (level >= perk.getMaxLevel() && perk.getMaxLevel() != 0) {
                         lore.add(ChatColor.BOLD + "" + ChatColor.DARK_GRAY + "Max Level Reached!");
-                    }
-                    else
-                    {
+                    } else {
                         lore.add(ChatColor.YELLOW + "Cost: " + ChatColor.LIGHT_PURPLE + perk.getCost());
                         lore.add(ChatColor.YELLOW + "Type: " + ChatColor.AQUA + perk.getType().name());
                     }
 
-                    for(String s : perk.description(level))
-                    {
+                    for (String s : perk.description(level)) {
                         lore.add(ChatColor.GREEN + s);
                     }
 

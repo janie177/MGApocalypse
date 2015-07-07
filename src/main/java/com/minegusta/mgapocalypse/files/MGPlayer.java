@@ -123,8 +123,7 @@ public class MGPlayer {
         return conf;
     }
 
-    public void updatePlayerStats()
-    {
+    public void updatePlayerStats() {
         Player p = getPlayer();
 
         setHealth(p.getHealth());
@@ -132,9 +131,8 @@ public class MGPlayer {
         setThirst(p.getLevel());
     }
 
-    public void updateConfig()
-    {
-        if(playing) updatePlayerStats();
+    public void updateConfig() {
+        if (playing) updatePlayerStats();
 
         conf.set("perkpoints", perkPoints);
         conf.set("playing", playing);
@@ -175,8 +173,7 @@ public class MGPlayer {
         FileManager.save(uuid, conf);
     }
 
-    public void applyConfigStats()
-    {
+    public void applyConfigStats() {
         Player p = getPlayer();
 
         p.setHealth(getHealth());
@@ -206,16 +203,13 @@ public class MGPlayer {
         if (getLongestAlive() < getTimeAlive()) {
             setlongestAlive(getTimeAlive());
         }
-        if(getGiantKills() > getMostGiantKills())
-        {
+        if (getGiantKills() > getMostGiantKills()) {
             setMostGiantKills(getGiantKills());
         }
-        if(getHeals() > getMostHeals())
-        {
+        if (getHeals() > getMostHeals()) {
             setMostHeals(getHeals());
         }
-        if(getPlayerKills() > getMostPlayerKills())
-        {
+        if (getPlayerKills() > getMostPlayerKills()) {
             setMostPlayerKills(getPlayerKills());
         }
 
@@ -251,13 +245,11 @@ public class MGPlayer {
         return Bukkit.getOfflinePlayer(UUID.fromString(uuid));
     }
 
-    public Player getPlayer()
-    {
+    public Player getPlayer() {
         return Bukkit.getPlayer(UUID.fromString(uuid));
     }
 
-    public boolean getIfPlaying()
-    {
+    public boolean getIfPlaying() {
         return playing;
     }
 
@@ -281,8 +273,7 @@ public class MGPlayer {
         return totalGiantKills;
     }
 
-    public int getPerkPoints()
-    {
+    public int getPerkPoints() {
         return perkPoints;
     }
 
@@ -338,18 +329,15 @@ public class MGPlayer {
         return chestsLooted;
     }
 
-    public int getMostHeals()
-    {
+    public int getMostHeals() {
         return mostHeals;
     }
 
-    public int getMostPlayerKills()
-    {
+    public int getMostPlayerKills() {
         return mostPlayerKills;
     }
 
-    public int getMostGiantKills()
-    {
+    public int getMostGiantKills() {
         return mostGiantKills;
     }
 
@@ -416,11 +404,9 @@ public class MGPlayer {
         }
     }
 
-    public int getPerksBought()
-    {
+    public int getPerksBought() {
         int amount = 0;
-        for(int i : perks.values())
-        {
+        for (int i : perks.values()) {
             amount = amount + i;
         }
 
@@ -447,8 +433,7 @@ public class MGPlayer {
         p.sendMessage(ChatColor.GOLD + "You earned " + ChatColor.LIGHT_PURPLE + Integer.toString(credits) + ChatColor.GOLD + " credits.");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + p.getName() + " " + credits);
         addEarnedcredits(credits);
-        if(getZombieKills() % 3 == 0)
-        {
+        if (getZombieKills() % 3 == 0) {
             addPerkPoints(1);
         }
     }
@@ -622,45 +607,38 @@ public class MGPlayer {
         lastBandaged = System.currentTimeMillis();
     }
 
-    public void setPlaying(boolean playing)
-    {
+    public void setPlaying(boolean playing) {
         this.playing = playing;
     }
 
-    public void setPerkPoints(int perkPoints)
-    {
+    public void setPerkPoints(int perkPoints) {
         this.perkPoints = perkPoints;
     }
 
-    public void addPerkPoints(int added)
-    {
+    public void addPerkPoints(int added) {
         this.perkPoints = perkPoints + added;
         getPlayer().sendMessage(ChatColor.YELLOW + "You earned " + ChatColor.LIGHT_PURPLE + added + ChatColor.YELLOW + " Perk Points.");
     }
 
-    public boolean removePerkPoints(int cost)
-    {
-        if(cost > getPerkPoints()) return false;
+    public boolean removePerkPoints(int cost) {
+        if (cost > getPerkPoints()) return false;
         setPerkPoints(getPerkPoints() - cost);
         return true;
     }
 
-    public void setMostHeals(int amount)
-    {
+    public void setMostHeals(int amount) {
         this.mostHeals = amount;
         getPlayer().sendMessage(ChatColor.GREEN + "You broke your record for most heals!");
         getPlayer().sendMessage(ChatColor.GREEN + "You healed " + ChatColor.DARK_PURPLE + getMostHeals() + ChatColor.GREEN + " players!");
     }
 
-    public void setMostPlayerKills(int amount)
-    {
+    public void setMostPlayerKills(int amount) {
         this.mostPlayerKills = amount;
         getPlayer().sendMessage(ChatColor.GREEN + "You broke your record for largest player killstreak!");
         getPlayer().sendMessage(ChatColor.GREEN + "You killed " + ChatColor.DARK_PURPLE + getLongestAlive() + ChatColor.GREEN + " players!");
     }
 
-    public void setMostGiantKills(int amount)
-    {
+    public void setMostGiantKills(int amount) {
         this.mostGiantKills = amount;
         getPlayer().sendMessage(ChatColor.GREEN + "You broke your record for largest giant killstreak!");
         getPlayer().sendMessage(ChatColor.GREEN + "You killed " + ChatColor.DARK_PURPLE + getLongestAlive() + ChatColor.GREEN + " giants!");

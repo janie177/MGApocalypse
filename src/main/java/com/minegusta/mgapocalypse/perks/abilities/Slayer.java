@@ -4,8 +4,7 @@ import com.minegusta.mgapocalypse.perks.IPerk;
 import com.minegusta.mgapocalypse.perks.Perk;
 import org.bukkit.Material;
 
-public class Slayer implements IPerk
-{
+public class Slayer implements IPerk {
     @Override
     public String[] getDescription(int level) {
         return new String[]{"Do more damage", "with swords.", "Next level: " + level * 2 + "%"};

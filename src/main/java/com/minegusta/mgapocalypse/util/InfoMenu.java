@@ -5,7 +5,6 @@ import com.minegusta.mgapocalypse.files.MGPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -13,11 +12,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class InfoMenu
-{
+public class InfoMenu {
     //--// Static Stacks //--//
-    private static ItemStack redStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 6)
-    {
+    private static ItemStack redStack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 6) {
         {
             ItemMeta meta = getItemMeta();
             meta.setDisplayName(" ");
@@ -33,35 +30,30 @@ public class InfoMenu
             }
         }
     };
-    private static List<Integer> green = Lists.newArrayList(3,5,21,23);
-    private static List<Integer> red = Lists.newArrayList(0,1,2,6,7,8,9,11,15,17,18,19,20,24,25,26,30,31,32,39,41,48,49,50);
+    private static List<Integer> green = Lists.newArrayList(3, 5, 21, 23);
+    private static List<Integer> red = Lists.newArrayList(0, 1, 2, 6, 7, 8, 9, 11, 15, 17, 18, 19, 20, 24, 25, 26, 30, 31, 32, 39, 41, 48, 49, 50);
 
     //--// Methods //--//
 
-    public static Inventory build(MGPlayer mgp, Player observer)
-    {
+    public static Inventory build(MGPlayer mgp, Player observer) {
         Inventory inv = getInv(observer);
         fillInventory(inv, mgp);
 
         return inv;
     }
 
-    private static Inventory getInv(Player p)
-    {
+    private static Inventory getInv(Player p) {
         return Bukkit.createInventory(p, 9 * 6, getInventoryName());
     }
 
-    public static String getInventoryName()
-    {
+    public static String getInventoryName() {
         return ChatColor.GOLD + "~~=~ " + ChatColor.DARK_RED + "Info Menu" + ChatColor.GOLD + " ~=~~";
     }
 
-    private static void fillInventory(Inventory inv, MGPlayer mgp)
-    {
-        for(int i = 0; i < inv.getSize(); i++)
-        {
-            if(green.contains(i)) inv.setItem(i, greenStack);
-            else if(red.contains(i)) inv.setItem(i, redStack);
+    private static void fillInventory(Inventory inv, MGPlayer mgp) {
+        for (int i = 0; i < inv.getSize(); i++) {
+            if (green.contains(i)) inv.setItem(i, greenStack);
+            else if (red.contains(i)) inv.setItem(i, redStack);
         }
 
         //Set all the items by hand... :(
@@ -89,52 +81,42 @@ public class InfoMenu
         inv.setItem(45, getItem("Infected", Material.MILK_BUCKET, Boolean.toString(mgp.isInfected())));
         inv.setItem(46, getItem("Bleeding", Material.REDSTONE, Boolean.toString(mgp.isBleeding())));
 
-        if(mgp.getOfflinePlayer().isOnline())
-        {
+        if (mgp.getOfflinePlayer().isOnline()) {
             inv.setItem(47, getItem("Thirst Level", Material.POTION, mgp.getPlayer().getLevel()));
-        }
-        else inv.setItem(47, getItem("Thirst Level", Material.POTION, mgp.getThirst()));
+        } else inv.setItem(47, getItem("Thirst Level", Material.POTION, mgp.getThirst()));
 
         inv.setItem(51, getItem("Iron Chests", Material.IRON_BLOCK, mgp.getIronChestsLooted()));
         inv.setItem(52, getItem("Low Level Chests", Material.CHEST, mgp.getChestsLooted()));
         inv.setItem(53, getItem("Deaths", Material.BONE, mgp.getDeaths()));
     }
 
-    private static ItemStack getItem(String name, Material m, int data, long lore)
-    {
+    private static ItemStack getItem(String name, Material m, int data, long lore) {
         return getItem(name, m, data, Long.toString(lore));
     }
 
-    private static ItemStack getItem(String name, Material m, int data, int lore)
-    {
-        return getItem(name , m, data, Integer.toString(lore));
+    private static ItemStack getItem(String name, Material m, int data, int lore) {
+        return getItem(name, m, data, Integer.toString(lore));
     }
 
-    private static ItemStack getItem(String name, Material m, long lore)
-    {
+    private static ItemStack getItem(String name, Material m, long lore) {
         return getItem(name, m, 0, Long.toString(lore));
     }
 
-    private static ItemStack getItem(String name, Material m, int lore)
-    {
-        return getItem(name , m, 0, Integer.toString(lore));
+    private static ItemStack getItem(String name, Material m, int lore) {
+        return getItem(name, m, 0, Integer.toString(lore));
     }
 
-    private static ItemStack getItem(String name, Material m, String... lore)
-    {
-        return getItem(name , m, 0, lore);
+    private static ItemStack getItem(String name, Material m, String... lore) {
+        return getItem(name, m, 0, lore);
     }
 
-    private static ItemStack getItem(String name, Material m, int data, String... lore)
-    {
-        return new ItemStack(m, 1, (short) data)
-        {
+    private static ItemStack getItem(String name, Material m, int data, String... lore) {
+        return new ItemStack(m, 1, (short) data) {
             {
                 ItemMeta meta = getItemMeta();
                 meta.setDisplayName(ChatColor.GREEN + name);
                 List<String> loreList = Lists.newArrayList();
-                for (String s : lore)
-                {
+                for (String s : lore) {
                     loreList.add(ChatColor.YELLOW + s);
                 }
                 meta.setLore(loreList);

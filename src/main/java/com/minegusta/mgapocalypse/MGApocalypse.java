@@ -6,7 +6,6 @@ import com.minegusta.mgapocalypse.files.Storage;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
-import java.util.concurrent.ConcurrentMap;
 
 public class MGApocalypse {
     public static MGPlayer getMGPlayer(Player p) {

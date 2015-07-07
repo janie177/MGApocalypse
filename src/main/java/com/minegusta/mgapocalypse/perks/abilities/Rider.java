@@ -3,7 +3,6 @@ package com.minegusta.mgapocalypse.perks.abilities;
 import com.minegusta.mgapocalypse.perks.IPerk;
 import com.minegusta.mgapocalypse.perks.Perk;
 import org.bukkit.Material;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 public class Rider implements IPerk {
@@ -48,8 +47,7 @@ public class Rider implements IPerk {
     }
 
     @Override
-    public void apply(Player p)
-    {
+    public void apply(Player p) {
 
 
     }

@@ -29,8 +29,7 @@ public class YamlUtil {
         }
     }
 
-    public static boolean fileExists(String path, String fileName)
-    {
+    public static boolean fileExists(String path, String fileName) {
         File dataFile = new File(Main.PLUGIN.getDataFolder() + path + fileName);
         return dataFile.exists();
     }

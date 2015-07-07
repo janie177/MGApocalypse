@@ -13,12 +13,10 @@ public class SpawnKit {
     }
 
     private void start() {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, ()->
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, () ->
         {
-            for(RespawnKit kit : RespawnKit.values())
-            {
-                if(p.hasPermission(kit.getPermissionsNode()))
-                {
+            for (RespawnKit kit : RespawnKit.values()) {
+                if (p.hasPermission(kit.getPermissionsNode())) {
                     addKit(kit);
                 }
             }

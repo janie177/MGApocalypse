@@ -1,11 +1,8 @@
 package com.minegusta.mgapocalypse.Tasks;
 
 import com.minegusta.mgapocalypse.Main;
-import com.minegusta.mgapocalypse.files.MGPlayer;
-import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 
 public class BroadCastTask {
     private static final String[] messages =
@@ -19,7 +16,7 @@ public class BroadCastTask {
     private static int index = 0;
 
     public static int start() {
-        return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, ()-> {
+        return Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, () -> {
 
             Bukkit.getOnlinePlayers().forEach(p ->
             {

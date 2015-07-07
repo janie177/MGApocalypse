@@ -12,8 +12,7 @@ public class Storage {
     }
 
     public static void removePlayer(String uuid) {
-        if (containsPlayer(uuid))
-        {
+        if (containsPlayer(uuid)) {
             players.get(uuid).saveFile();
             players.remove(uuid);
         }
