@@ -55,13 +55,13 @@ public class Athlete implements IPerk {
 
     public static void setBoost(Player p)
     {
-        double speed = 1 + MGApocalypse.getMGPlayer(p).getPerkLevel(Perk.ATHLETE) * 0.5;
+        double speed = 0.2 + MGApocalypse.getMGPlayer(p).getPerkLevel(Perk.ATHLETE) * 0.0005;
         p.setWalkSpeed((float) speed);
     }
 
     public static void reset(Player p)
     {
-        p.setWalkSpeed(1);
+        p.setWalkSpeed(0.2F);
     }
 
 }
