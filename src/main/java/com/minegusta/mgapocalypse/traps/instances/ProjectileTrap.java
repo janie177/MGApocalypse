@@ -55,6 +55,6 @@ public class ProjectileTrap implements ITrap {
 
     @Override
     public int getCooldownTime() {
-        return 60;
+        return 20;
     }
 }
