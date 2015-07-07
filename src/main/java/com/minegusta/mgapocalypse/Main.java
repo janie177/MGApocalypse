@@ -43,6 +43,7 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
         Bukkit.getPluginManager().registerEvents(new PerkListener(), this);
         Bukkit.getPluginManager().registerEvents(new TrapListener(), this);
+        Bukkit.getPluginManager().registerEvents(new GiantListener(), this);
 
         //Commands
         getCommand("mga").setExecutor(new MGACommand());
