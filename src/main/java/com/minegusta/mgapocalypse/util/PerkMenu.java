@@ -50,6 +50,13 @@ public class PerkMenu {
             data++;
         }
 
+        data = 1;
+        for(int i = 0; i < 9; i++)
+        {
+            inventory.getItem(i).setDurability((short) data);
+            data++;
+        }
+
         for (Perk perk : Perk.values()) {
             int level = mgp.getPerkLevel(perk);
             int amount = level;

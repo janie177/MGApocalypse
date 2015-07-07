@@ -83,7 +83,7 @@ public class InventoryListener implements Listener {
             clickedPerk.apply(p);
 
             //Re-Open the thing
-            p.chat("/menu");
+            p.chat("/perk");
         }
 
     }

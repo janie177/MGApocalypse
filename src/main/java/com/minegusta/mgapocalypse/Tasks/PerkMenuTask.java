@@ -28,6 +28,13 @@ public class PerkMenuTask
                         if(newDurability > 15) newDurability = 1;
                         inv.getItem(i).setDurability((short) newDurability);
                     }
+
+                    for(int i = 0; i < 9; i++)
+                    {
+                        int newDurability = inv.getItem(i).getDurability() + 1;
+                        if(newDurability > 15) newDurability = 1;
+                        inv.getItem(i).setDurability((short) newDurability);
+                    }
                 }
             });
         }, 3, 3);
