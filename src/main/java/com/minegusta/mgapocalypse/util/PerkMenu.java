@@ -66,7 +66,7 @@ public class PerkMenu {
             Material mat = perk.getMaterial();
             int mdata = perk.getDataValue();
 
-            if(level == 0)
+            if(level == 0 && perk.getMaxLevel() != 0)
             {
                 mat = Material.BARRIER;
                 mdata = 0;
