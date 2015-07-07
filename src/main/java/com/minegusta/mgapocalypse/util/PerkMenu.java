@@ -43,6 +43,13 @@ public class PerkMenu {
             inventory.setItem(i, bg);
         }
 
+        int data = 1;
+        for(int i = 45; i < 54; i++)
+        {
+            inventory.getItem(i).setDurability((short) data);
+            data++;
+        }
+
         for (Perk perk : Perk.values()) {
             int level = mgp.getPerkLevel(perk);
             int amount = level;
@@ -50,15 +57,15 @@ public class PerkMenu {
             if (amount > 64) amount = 64;
 
             Material mat = perk.getMaterial();
-            int data = perk.getDataValue();
+            int mdata = perk.getDataValue();
 
             if(level == 0)
             {
                 mat = Material.STAINED_GLASS_PANE;
-                data = 6;
+                mdata = 6;
             }
 
-            inventory.setItem(perk.getSlot(), new ItemStack(perk.getMaterial(), amount, (short) perk.getDataValue()) {
+            inventory.setItem(perk.getSlot(), new ItemStack(mat, amount, (short) mdata) {
                 {
                     ItemMeta meta = getItemMeta();
                     meta.setDisplayName(ChatColor.DARK_RED + perk.getName());
