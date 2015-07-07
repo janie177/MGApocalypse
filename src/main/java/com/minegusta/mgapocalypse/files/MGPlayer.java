@@ -146,7 +146,7 @@ public class MGPlayer {
         if (playing) updatePlayerStats();
         updateScoreBoard();
 
-        conf.set("status", status);
+        conf.set("status", status.name());
         conf.set("perkpoints", perkPoints);
         conf.set("playing", playing);
         conf.set("health", health);

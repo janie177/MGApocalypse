@@ -60,7 +60,7 @@ public class PerkMenu {
                         lore.add(ChatColor.YELLOW + "Type: " + ChatColor.AQUA + perk.getType().name());
                     }
 
-                    for (String s : perk.description(level)) {
+                    for (String s : perk.description(level + 1)) {
                         lore.add(ChatColor.GREEN + s);
                     }
 

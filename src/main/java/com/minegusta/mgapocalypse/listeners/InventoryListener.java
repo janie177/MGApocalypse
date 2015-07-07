@@ -50,7 +50,7 @@ public class InventoryListener implements Listener {
             Perk clickedPerk = null;
 
             for (Perk perk : Perk.values()) {
-                if (perk.getName().equals(clicked.getItemMeta().getDisplayName())) {
+                if (perk.getName().equals(ChatColor.stripColor(clicked.getItemMeta().getDisplayName()))) {
                     clickedPerk = perk;
                     break;
                 }
