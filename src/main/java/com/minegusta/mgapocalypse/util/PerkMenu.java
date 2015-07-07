@@ -45,7 +45,8 @@ public class PerkMenu {
 
         for (Perk perk : Perk.values()) {
             int level = mgp.getPerkLevel(perk);
-            int amount = level + 1;
+            int amount = level;
+            if(amount == 0) amount++;
             if (amount > 64) amount = 64;
             inventory.setItem(perk.getSlot(), new ItemStack(perk.getMaterial(), amount, (short) perk.getDataValue()) {
                 {
