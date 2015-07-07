@@ -26,6 +26,7 @@ public class PerkListener implements Listener {
 
             for (int i = 0; i < 3; i++) {
                 l.getWorld().dropItemNaturally(l, LootItem.getRandom());
+                l.getWorld().playSound(l, Sound.CHICKEN_EGG_POP, 1, 1);
             }
         }
     }

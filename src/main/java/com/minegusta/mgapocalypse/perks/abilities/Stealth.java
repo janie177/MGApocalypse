@@ -7,7 +7,7 @@ import org.bukkit.Material;
 public class Stealth implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[]{"You are less", "visible to zombies.", "Next level: " + level * 2 + " % visible"};
+        return new String[]{"You are less", "visible to zombies.", "Next level: -" + level * 2 + " % visible"};
     }
 
     @Override
@@ -22,7 +22,7 @@ public class Stealth implements IPerk {
 
     @Override
     public int getMaxLevel() {
-        return 20;
+        return 15;
     }
 
     @Override

@@ -385,7 +385,7 @@ public class PlayerListener implements Listener {
     public void onEvent(PlayerToggleSprintEvent e) {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
 
-        e.getPlayer().getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(e.getPlayer().getLocation()) < 47 && ent instanceof Zombie).forEach(zombie -> ((Creature) zombie).setTarget(e.getPlayer()));
+        e.getPlayer().getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(e.getPlayer().getLocation()) < 56 && ent instanceof Zombie && ((Zombie)ent).getTarget() == null).forEach(zombie -> ((Creature) zombie).setTarget(e.getPlayer()));
     }
 
     //Stop health regen.

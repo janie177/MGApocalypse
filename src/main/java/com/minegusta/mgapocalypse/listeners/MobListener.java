@@ -2,6 +2,8 @@ package com.minegusta.mgapocalypse.listeners;
 
 import com.google.common.collect.Lists;
 import com.minegusta.mgapocalypse.MGApocalypse;
+import com.minegusta.mgapocalypse.files.MGPlayer;
+import com.minegusta.mgapocalypse.perks.Perk;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import com.minegusta.mgloot.loottables.LootItem;
@@ -86,22 +88,38 @@ public class MobListener implements Listener {
          **/
     }
 
+    private static int SNEAKDISTANCE = 15;
+    private static int WALKDDISTANCE = 28;
+    private static int RUNDISTANCE = 56;
 
     //Make mobs faster and stronger on target, also block target from far on crouching players.
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDeath(EntityTargetLivingEntityEvent e) {
         if (!WorldCheck.is(e.getEntity().getWorld())) return;
 
-        if (e.getEntity().getType() == EntityType.ZOMBIE && e.getTarget() instanceof Player) {
-            //Sneaking hides you from zombies.
+        if (e.getEntity().getType() == EntityType.ZOMBIE && e.getTarget() instanceof Player)
+        {
             Player p = (Player) e.getTarget();
+            MGPlayer mgp = MGApocalypse.getMGPlayer(p);
+            double reduction = (100 - (2 * mgp.getPerkLevel(Perk.STEALTH))) * 0.01 ;
+
             Zombie zombie = (Zombie) e.getEntity();
-            if (zombie.getLocation().distance(p.getLocation()) > 21 && !p.isSprinting()) {
-                e.setCancelled(true);
-            } else if (p.isSneaking() && zombie.getLocation().distance(p.getLocation()) > 9) {
+
+
+            if(p.isSprinting() && zombie.getLocation().distance(p.getLocation()) > RUNDISTANCE * reduction)
+            {
                 e.setCancelled(true);
             }
-            //Adults only
+            else if (zombie.getLocation().distance(p.getLocation()) > WALKDDISTANCE * reduction && !p.isSprinting())
+            {
+                e.setCancelled(true);
+
+            } else if (p.isSneaking() && zombie.getLocation().distance(p.getLocation()) > SNEAKDISTANCE * reduction) {
+                e.setCancelled(true);
+            }
+
+
+            //Setting the zombie speed
             else if (!zombie.isBaby()) {
                 zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 180, 1));
             } else {
