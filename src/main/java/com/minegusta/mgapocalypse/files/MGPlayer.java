@@ -1,6 +1,7 @@
 package com.minegusta.mgapocalypse.files;
 
 import com.google.common.collect.Maps;
+import com.minegusta.mgapocalypse.perks.Perk;
 import com.minegusta.mgapocalypse.util.Break;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,6 +32,8 @@ public class MGPlayer {
     private int mostPlayerKills;
     private int mostGiantKills;
 
+    private int perkPoints;
+
     private int deaths;
     private int longestKillStreak;
     private int longestAlive;
@@ -50,10 +53,6 @@ public class MGPlayer {
     private long lastHealedOther;
     private long lastBandaged;
 
-    private enum Perk {
-        LOOTER, ZOMBIESLAYER;
-    }
-
     private ConcurrentMap<Perk, Integer> perks = Maps.newConcurrentMap();
 
     //static
@@ -70,6 +69,7 @@ public class MGPlayer {
         this.lastHealedOther = 0;
         this.lastBandaged = 0;
 
+        this.perkPoints = f.getInt("perkpoints", 0);
         this.health = f.getDouble("health", 20.0);
         this.zombieKills = f.getInt("kills", 0);
         this.totalZombieKills = f.getLong("totalkills", 0);
@@ -136,6 +136,7 @@ public class MGPlayer {
     {
         if(playing) updatePlayerStats();
 
+        conf.set("perkpoints", perkPoints);
         conf.set("playing", playing);
         conf.set("health", health);
         conf.set("kills", zombieKills);
@@ -229,12 +230,12 @@ public class MGPlayer {
         setHeals(0);
         setPlayerKills(0);
         setTimeAlive(0);
+        setPerkPoints(0);
 
         //Clear all perks, auto saves to config.
         conf.set("perks", null);
         perks.clear();
 
-        addDeaths(1);
         setPlaying(false);
         p.getInventory().clear();
 
@@ -278,6 +279,11 @@ public class MGPlayer {
 
     public int getTotalGiantKills() {
         return totalGiantKills;
+    }
+
+    public int getPerkPoints()
+    {
+        return perkPoints;
     }
 
     public int getZombieKills() {
@@ -613,6 +619,23 @@ public class MGPlayer {
     public void setPlaying(boolean playing)
     {
         this.playing = playing;
+    }
+
+    public void setPerkPoints(int perkPoints)
+    {
+        this.perkPoints = perkPoints;
+    }
+
+    public void addPerkPoints(int added)
+    {
+        this.perkPoints = perkPoints + added;
+    }
+
+    public boolean removePerkPoints(int cost)
+    {
+        if(cost > getPerkPoints()) return false;
+        setPerkPoints(getPerkPoints() - cost);
+        return true;
     }
 
     public void setMostHeals(int amount)

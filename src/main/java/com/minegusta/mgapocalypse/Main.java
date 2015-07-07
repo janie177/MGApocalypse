@@ -39,6 +39,7 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ProjectileListener(), this);
         Bukkit.getPluginManager().registerEvents(new PvpLogListener(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PerkListener(), this);
 
         //Commands
         getCommand("mga").setExecutor(new MGACommand());
