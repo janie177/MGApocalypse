@@ -15,7 +15,7 @@ public class MobTrap implements ITrap
     {
         int amount = 3;
         EntityType type = EntityType.ZOMBIE;
-        Location location = new Location(p.getWorld(), p.getLocation().getX() + RandomNumber.get(30) - 15, p.getLocation().getY(), p.getLocation().getZ() + RandomNumber.get(30) - 15);
+        Location location = new Location(p.getWorld(), p.getLocation().getX() + RandomNumber.get(20) - 10, p.getLocation().getY(), p.getLocation().getZ() + RandomNumber.get(20) - 10);
 
         try
         {
@@ -38,6 +38,6 @@ public class MobTrap implements ITrap
 
     @Override
     public int getCooldownTime() {
-        return 60;
+        return 20;
     }
 }
