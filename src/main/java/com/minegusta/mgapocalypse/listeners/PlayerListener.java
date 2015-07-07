@@ -286,11 +286,21 @@ public class PlayerListener implements Listener {
                 }
             }
         } else if (e.getEntity() instanceof Zombie) {
-            if (e.getDamager() instanceof Player) {
+            if (e.getDamager() instanceof Player)
+            {
                 Zombie zombie = (Zombie) e.getEntity();
                 Player p = (Player) e.getDamager();
+
                 zombie.setVelocity(zombie.getLocation().toVector().subtract(p.getLocation().toVector()).normalize().multiply(1.1));
                 zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 5, 1, false, false));
+
+                zombie.getWorld().getLivingEntities().stream().filter(z -> z instanceof Zombie && z.getLocation().distance(zombie.getLocation()) < 2).forEach(z ->
+                {
+                    z.damage(1);
+                    z.setVelocity(z.getLocation().toVector().subtract(p.getLocation().toVector()).normalize().multiply(1.1));
+                    z.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 5, 1, false, false));
+                });
+
             } else if (e.getDamager() instanceof Arrow) {
                 if (((Arrow) e.getDamager()).getShooter() != null && ((Arrow) e.getDamager()).getShooter() instanceof Player) {
                     Zombie zombie = (Zombie) e.getEntity();
