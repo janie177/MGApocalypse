@@ -24,7 +24,7 @@ public class ProjectileTrap implements ITrap {
 
         } catch (Exception igored){}
 
-        Location location = new Location(p.getWorld(), p.getLocation().getX() + RandomNumber.get(30) - 15, p.getLocation().getY() + 3, p.getLocation().getZ() + RandomNumber.get(30) - 15);
+        Location location = new Location(p.getWorld(), p.getLocation().getX() + RandomNumber.get(30) - 15, p.getLocation().getY() + 4, p.getLocation().getZ() + RandomNumber.get(30) - 15);
 
         for (int i = 0; i < amount; i++)
         {
@@ -37,7 +37,7 @@ public class ProjectileTrap implements ITrap {
             Vector v = new Vector(x, y, z);
             v.normalize();
 
-            ent.setVelocity(v.multiply(2.2));
+            ent.setVelocity(v.multiply(2.4));
         }
     }
 
