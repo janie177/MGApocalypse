@@ -2,6 +2,8 @@ package com.minegusta.mgapocalypse.files;
 
 import com.google.common.collect.Maps;
 import com.minegusta.mgapocalypse.perks.Perk;
+import com.minegusta.mgapocalypse.perks.abilities.Athlete;
+import com.minegusta.mgapocalypse.perks.abilities.Health;
 import com.minegusta.mgapocalypse.util.Break;
 import com.minegusta.mgapocalypse.util.PlayerStatus;
 import com.minegusta.mgapocalypse.util.ScoreboardUtil;
@@ -131,7 +133,8 @@ public class MGPlayer {
         return conf;
     }
 
-    public void updatePlayerStats() {
+    public void updatePlayerStats()
+    {
         Player p = getPlayer();
 
         setHealth(p.getHealth());
@@ -185,6 +188,9 @@ public class MGPlayer {
 
     public void applyConfigStats() {
         Player p = getPlayer();
+
+        Health.setBoost(p);
+        Athlete.setBoost(p);
 
         p.setHealth(getHealth());
         p.setFoodLevel(getHunger());
@@ -240,6 +246,7 @@ public class MGPlayer {
 
         //Clear all perks, auto saves to config.
         conf.set("perks", null);
+        resetPerkBoosts();
         perks.clear();
 
         setPlaying(false);
@@ -684,6 +691,13 @@ public class MGPlayer {
         {
             ScoreboardUtil.removeScoreBoard(p);
         } else ScoreboardUtil.addScoreBoard(p, status);
+    }
+
+    public void resetPerkBoosts()
+    {
+        Player p = getPlayer();
+        Health.reset(p);
+        Athlete.reset(p);
     }
 
 }

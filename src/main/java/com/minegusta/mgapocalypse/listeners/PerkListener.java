@@ -1,8 +1,11 @@
 package com.minegusta.mgapocalypse.listeners;
 
 import com.minegusta.mgapocalypse.MGApocalypse;
+import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.perks.Perk;
 import com.minegusta.mgapocalypse.perks.abilities.AirDrop;
+import com.minegusta.mgapocalypse.perks.abilities.Athlete;
+import com.minegusta.mgapocalypse.perks.abilities.Health;
 import com.minegusta.mgapocalypse.util.ItemUtil;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import com.minegusta.mgloot.loottables.LootItem;
@@ -17,7 +20,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PerkListener implements Listener {
 
@@ -36,6 +41,62 @@ public class PerkListener implements Listener {
                 l.getWorld().dropItemNaturally(l, LootItem.getRandom());
                 l.getWorld().playSound(l, Sound.CHICKEN_EGG_POP, 1, 1);
             }
+        }
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e)
+    {
+        boolean isWorld = WorldCheck.is(e.getPlayer().getWorld());
+
+        MGPlayer mgp = MGApocalypse.getMGPlayer(e.getPlayer());
+        Player p = e.getPlayer();
+
+        if(mgp.getPerkLevel(Perk.ATHLETE) != 0)
+        {
+            if(isWorld) Athlete.setBoost(p);
+            else Athlete.reset(p);
+        }
+
+        if(mgp.getPerkLevel(Perk.HEALTH) != 0)
+        {
+            if(isWorld) Health.setBoost(p);
+            else Health.reset(p);
+        }
+    }
+
+    @EventHandler
+    public void onLeave(PlayerQuitEvent e)
+    {
+        boolean isWorld = WorldCheck.is(e.getPlayer().getWorld());
+
+        Player p = e.getPlayer();
+
+        if(isWorld)
+        {
+            Health.reset(p);
+            Athlete.reset(p);
+        }
+    }
+
+    @EventHandler
+    public void onWorldChange(PlayerChangedWorldEvent e)
+    {
+        boolean isWorld = WorldCheck.is(e.getPlayer().getWorld());
+
+        MGPlayer mgp = MGApocalypse.getMGPlayer(e.getPlayer());
+        Player p = e.getPlayer();
+
+        if(mgp.getPerkLevel(Perk.ATHLETE) != 0)
+        {
+            if(isWorld) Athlete.setBoost(p);
+            else Athlete.reset(p);
+        }
+
+        if(mgp.getPerkLevel(Perk.HEALTH) != 0)
+        {
+            if(isWorld) Health.setBoost(p);
+            else Health.reset(p);
         }
     }
 

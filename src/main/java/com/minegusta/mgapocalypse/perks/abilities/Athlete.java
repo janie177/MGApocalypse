@@ -1,8 +1,10 @@
 package com.minegusta.mgapocalypse.perks.abilities;
 
+import com.minegusta.mgapocalypse.MGApocalypse;
 import com.minegusta.mgapocalypse.perks.IPerk;
 import com.minegusta.mgapocalypse.perks.Perk;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 public class Athlete implements IPerk {
     @Override
@@ -37,12 +39,29 @@ public class Athlete implements IPerk {
 
     @Override
     public int getCost() {
-        return 5;
+        return 4;
     }
 
     @Override
     public Perk getPerk() {
         return Perk.ATHLETE;
+    }
+
+    @Override
+    public void apply(Player p)
+    {
+        setBoost(p);
+    }
+
+    public static void setBoost(Player p)
+    {
+        double speed = 1 + MGApocalypse.getMGPlayer(p).getPerkLevel(Perk.ATHLETE) * 0.5;
+        p.setWalkSpeed((float) speed);
+    }
+
+    public static void reset(Player p)
+    {
+        p.setWalkSpeed(1);
     }
 
 }
