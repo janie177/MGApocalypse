@@ -1,15 +1,23 @@
 package com.minegusta.mgapocalypse.listeners;
 
+import com.minegusta.mgapocalypse.MGApocalypse;
+import com.minegusta.mgapocalypse.perks.Perk;
 import com.minegusta.mgapocalypse.perks.abilities.AirDrop;
+import com.minegusta.mgapocalypse.util.ItemUtil;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import com.minegusta.mgloot.loottables.LootItem;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class PerkListener implements Listener {
 
@@ -29,6 +37,54 @@ public class PerkListener implements Listener {
                 l.getWorld().playSound(l, Sound.CHICKEN_EGG_POP, 1, 1);
             }
         }
+    }
+
+    @EventHandler
+    public void onEntityDamageEvent(EntityDamageByEntityEvent e)
+    {
+        if(e.isCancelled())return;
+
+        //Axes and swords
+        if(e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity)
+        {
+            Player damager = (Player) e.getDamager();
+            if(ItemUtil.isSword(damager.getItemInHand().getType()))
+            {
+                double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.SLAYER);
+                if(percentage != 0)
+                {
+                    e.setDamage(addDamage(e.getDamage(), percentage));
+                }
+            }
+            else if(ItemUtil.isAxe(damager.getItemInHand().getType()))
+            {
+                double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.AXEMAN);
+                if(percentage != 0)
+                {
+                    e.setDamage(addDamage(e.getDamage(), percentage));
+                }
+            }
+
+        }
+        //Bows
+        else if(e.getDamager() instanceof Arrow && ((Arrow)e.getDamager()).getShooter() instanceof Player && e.getEntity() instanceof LivingEntity)
+        {
+            Player damager = (Player) ((Arrow) e.getDamager()).getShooter();
+            if(ItemUtil.isBow(damager.getItemInHand().getType()))
+            {
+                double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.BOWMAN);
+                if(percentage != 0)
+                {
+                    e.setDamage(addDamage(e.getDamage(), percentage));
+                }
+            }
+
+        }
+    }
+
+    private double addDamage(double start, double percentage)
+    {
+        return (1 + 0.01 * percentage) * start;
     }
 
 }
