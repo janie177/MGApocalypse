@@ -83,7 +83,7 @@ public class InventoryListener implements Listener
 
             if(clickedPerk.getType() == IPerk.Type.INSTANT)
             {
-                clickedPerk.apply();
+                clickedPerk.apply(p);
                 p.sendMessage(ChatColor.YELLOW + "You bought the instant boost " + clickedPerk.getName() + "!");
             }
             else
