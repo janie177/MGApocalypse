@@ -1,6 +1,7 @@
 package com.minegusta.mgapocalypse.commands;
 
 import com.minegusta.mgapocalypse.config.DefaultConfig;
+import com.minegusta.mgapocalypse.traps.Trap;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -28,6 +29,20 @@ public class MGACommand implements CommandExecutor {
                 p.sendMessage(ChatColor.GREEN + "You added this position as a spawn!");
                 DefaultConfig.addSpawn(p.getLocation());
                 return true;
+            } else if (args[0].equalsIgnoreCase("traps"))
+            {
+                p.sendMessage(ChatColor.GREEN + "Place a sign. Then place a block on top.");
+                p.sendMessage(ChatColor.GREEN + "On that signs, place a pressureplate.");
+                p.sendMessage(ChatColor.GREEN + "Line 1: [Trap].");
+                p.sendMessage(ChatColor.GREEN + "Line 2: Name of the trap.");
+                p.sendMessage(ChatColor.GREEN + "Line 3: Amount of entities to spawn (if appliable).");
+                p.sendMessage(ChatColor.GREEN + "--- Trap Names ---");
+                for(Trap trap : Trap.values())
+                {
+                    p.sendMessage(ChatColor.GRAY + " - " + trap.name());
+                }
+                return true;
+
             } else if (args[0].equalsIgnoreCase("listspawns")) {
                 int index = 1;
                 for (String spawn : DefaultConfig.getSpawns()) {
@@ -111,5 +126,6 @@ public class MGACommand implements CommandExecutor {
         p.sendMessage(ChatColor.GREEN + " - /mga deletetown <index>");
         p.sendMessage(ChatColor.GREEN + " - /mga setmainspawn");
         p.sendMessage(ChatColor.GREEN + " - /mga world <world>");
+        p.sendMessage(ChatColor.GREEN + " - /mga traps");
     }
 }
