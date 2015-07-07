@@ -16,7 +16,7 @@ import java.util.List;
 
 public class PerkMenu {
 
-    private static ItemStack bg = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5) {
+    private static ItemStack bg = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 13) {
         {
             ItemMeta meta = getItemMeta();
             meta.setDisplayName(" ");
