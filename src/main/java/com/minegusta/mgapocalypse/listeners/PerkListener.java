@@ -41,6 +41,8 @@ public class PerkListener implements Listener {
                 l.getWorld().dropItemNaturally(l, LootItem.getRandom());
                 l.getWorld().playSound(l, Sound.CHICKEN_EGG_POP, 1, 1);
             }
+
+            AirDrop.blocks.remove(e.getEntity());
         }
     }
 

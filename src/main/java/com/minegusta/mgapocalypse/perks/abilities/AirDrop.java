@@ -3,6 +3,8 @@ package com.minegusta.mgapocalypse.perks.abilities;
 import com.google.common.collect.Maps;
 import com.minegusta.mgapocalypse.perks.IPerk;
 import com.minegusta.mgapocalypse.perks.Perk;
+import com.minegusta.mgapocalypse.util.RandomNumber;
+import org.apache.commons.lang.math.RandomUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.FallingBlock;
@@ -56,11 +58,11 @@ public class AirDrop implements IPerk {
 
     @Override
     public void apply(Player p) {
-        Location l = new Location(p.getWorld(), p.getLocation().getX(), p.getLocation().getY() + 30, p.getLocation().getZ());
+        Location l = new Location(p.getWorld(), p.getLocation().getX() + (RandomNumber.get(10) - 5), p.getLocation().getY() + 20, p.getLocation().getZ() + (RandomNumber.get(10) - 5));
 
         byte blockdata = 0x0;
 
-        FallingBlock block = l.getWorld().spawnFallingBlock(l, Material.TRAPPED_CHEST, blockdata);
+        FallingBlock block = l.getWorld().spawnFallingBlock(l, Material.WOOD, blockdata);
 
         block.setDropItem(false);
 
