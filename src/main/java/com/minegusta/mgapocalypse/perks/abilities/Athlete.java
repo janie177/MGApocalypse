@@ -7,27 +7,27 @@ import org.bukkit.Material;
 public class Athlete implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[0];
+        return new String[]{"Increase movement speed.", "Next level: +" + level * 0.5 + "%"};
     }
 
     @Override
     public Material getMaterial() {
-        return null;
+        return Material.LEATHER_BOOTS;
     }
 
     @Override
     public Type getType() {
-        return null;
+        return Type.UPGRADE;
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 25;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "Athlete";
     }
 
     @Override
@@ -37,16 +37,12 @@ public class Athlete implements IPerk {
 
     @Override
     public int getCost() {
-        return 0;
+        return 5;
     }
 
     @Override
     public Perk getPerk() {
-        return null;
+        return Perk.ATHLETE;
     }
 
-    @Override
-    public void apply() {
-
-    }
 }

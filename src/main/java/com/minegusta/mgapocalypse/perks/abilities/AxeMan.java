@@ -7,27 +7,27 @@ import org.bukkit.Material;
 public class AxeMan implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[0];
+        return new String[]{"Do more damage", "with Axes.", "Next level: " + level * 2 + "%"};
     }
 
     @Override
     public Material getMaterial() {
-        return null;
+        return Material.IRON_AXE;
     }
 
     @Override
     public Type getType() {
-        return null;
+        return Type.UPGRADE;
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 50;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "AxeMan";
     }
 
     @Override
@@ -37,16 +37,11 @@ public class AxeMan implements IPerk {
 
     @Override
     public int getCost() {
-        return 0;
+        return 2;
     }
 
     @Override
     public Perk getPerk() {
-        return null;
-    }
-
-    @Override
-    public void apply() {
-
+        return Perk.AXEMAN;
     }
 }

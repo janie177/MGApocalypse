@@ -2,6 +2,7 @@ package com.minegusta.mgapocalypse.perks;
 
 import com.minegusta.mgapocalypse.perks.abilities.*;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 public enum Perk
 {
@@ -46,9 +47,9 @@ public enum Perk
         return perk.getType();
     }
 
-    public void apply()
+    public void apply(Player p)
     {
-        perk.apply();
+        perk.apply(p);
     }
 
     public String getName()

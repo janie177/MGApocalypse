@@ -52,11 +52,13 @@ public class PerkMenu
         for (Perk perk : Perk.values())
         {
             int level = mgp.getPerkLevel(perk);
-            inventory.setItem(perk.getSlot(), new ItemStack(perk.getMaterial(), level + 1, (short) perk.getDataValue())
+            int amount = level + 1;
+            if(amount > 64) amount = 64;
+            inventory.setItem(perk.getSlot(), new ItemStack(perk.getMaterial(), amount, (short) perk.getDataValue())
             {
                 {
                     ItemMeta meta = getItemMeta();
-                    meta.setDisplayName(perk.getName());
+                    meta.setDisplayName(ChatColor.DARK_RED + perk.getName());
                     List<String> lore = Lists.newArrayList();
 
                     if(level >= perk.getMaxLevel() && perk.getMaxLevel() != 0)

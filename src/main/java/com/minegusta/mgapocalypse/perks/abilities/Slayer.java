@@ -13,7 +13,7 @@ public class Slayer implements IPerk
 
     @Override
     public Material getMaterial() {
-        return Material.SKULL_ITEM;
+        return Material.IRON_SWORD;
     }
 
     @Override
@@ -33,21 +33,16 @@ public class Slayer implements IPerk
 
     @Override
     public int getDataValue() {
-        return 2;
+        return 0;
     }
 
     @Override
     public int getCost() {
-        return 1;
+        return 2;
     }
 
     @Override
     public Perk getPerk() {
         return Perk.SLAYER;
-    }
-
-    @Override
-    public void apply() {
-
     }
 }

@@ -447,6 +447,10 @@ public class MGPlayer {
         p.sendMessage(ChatColor.GOLD + "You earned " + ChatColor.LIGHT_PURPLE + Integer.toString(credits) + ChatColor.GOLD + " credits.");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + p.getName() + " " + credits);
         addEarnedcredits(credits);
+        if(getZombieKills() % 3 == 0)
+        {
+            addPerkPoints(1);
+        }
     }
 
     public void setTotalZombieKills(int totalKills) {
@@ -478,6 +482,7 @@ public class MGPlayer {
         p.sendMessage(ChatColor.GOLD + "You earned " + ChatColor.LIGHT_PURPLE + Integer.toString(credits) + ChatColor.GOLD + " credits.");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + p.getName() + " " + credits);
         addEarnedcredits(credits);
+        addPerkPoints(killsAdded);
     }
 
     public void setHeals(int amount) {
@@ -494,6 +499,7 @@ public class MGPlayer {
 
     public void addPlayerKills(int killsAdded) {
         playerKills = playerKills + killsAdded;
+        addPerkPoints(killsAdded * 3);
     }
 
     public void setPlayTime(int timePlayed) {
@@ -629,6 +635,7 @@ public class MGPlayer {
     public void addPerkPoints(int added)
     {
         this.perkPoints = perkPoints + added;
+        getPlayer().sendMessage(ChatColor.YELLOW + "You earned " + ChatColor.LIGHT_PURPLE + added + ChatColor.YELLOW + " Perk Points.");
     }
 
     public boolean removePerkPoints(int cost)

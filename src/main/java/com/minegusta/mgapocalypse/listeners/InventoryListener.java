@@ -84,12 +84,14 @@ public class InventoryListener implements Listener
             if(clickedPerk.getType() == IPerk.Type.INSTANT)
             {
                 clickedPerk.apply();
+                p.sendMessage(ChatColor.YELLOW + "You bought the instant boost " + clickedPerk.getName() + "!");
             }
-
-            int newLevel = level + 1;
-
-            p.sendMessage(ChatColor.YELLOW + "You bought " + clickedPerk.getName() + " level " + newLevel + "!");
-            mgp.setPerkLevel(clickedPerk, newLevel);
+            else
+            {
+                int newLevel = level + 1;
+                p.sendMessage(ChatColor.YELLOW + "You bought " + clickedPerk.getName() + " level " + newLevel + "!");
+                mgp.setPerkLevel(clickedPerk, newLevel);
+            }
 
             //Re-Open the thing
             p.openInventory(PerkMenu.build(p));

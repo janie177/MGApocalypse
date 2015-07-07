@@ -7,27 +7,27 @@ import org.bukkit.Material;
 public class Farmer implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[0];
+        return new String[]{"Crops sometimes", "give more loot", "Next level: +" + level * 2 + "%"};
     }
 
     @Override
     public Material getMaterial() {
-        return null;
+        return Material.STONE_HOE;
     }
 
     @Override
     public Type getType() {
-        return null;
+        return Type.UPGRADE;
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 25;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "Farmer";
     }
 
     @Override
@@ -37,16 +37,12 @@ public class Farmer implements IPerk {
 
     @Override
     public int getCost() {
-        return 0;
+        return 1;
     }
 
     @Override
     public Perk getPerk() {
-        return null;
+        return Perk.FARMER;
     }
 
-    @Override
-    public void apply() {
-
-    }
 }

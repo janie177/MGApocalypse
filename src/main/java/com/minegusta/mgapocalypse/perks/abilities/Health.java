@@ -7,27 +7,27 @@ import org.bukkit.Material;
 public class Health implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[0];
+        return new String[]{"You get", "more health.", "Next level: +" + level * 0.5 + " hearts."};
     }
 
     @Override
     public Material getMaterial() {
-        return null;
+        return Material.APPLE;
     }
 
     @Override
     public Type getType() {
-        return null;
+        return Type.UPGRADE;
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 10;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "Health";
     }
 
     @Override
@@ -37,16 +37,11 @@ public class Health implements IPerk {
 
     @Override
     public int getCost() {
-        return 0;
+        return 20;
     }
 
     @Override
     public Perk getPerk() {
-        return null;
-    }
-
-    @Override
-    public void apply() {
-
+        return Perk.HEALTH;
     }
 }

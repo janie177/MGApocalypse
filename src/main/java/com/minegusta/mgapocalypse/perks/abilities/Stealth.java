@@ -7,27 +7,27 @@ import org.bukkit.Material;
 public class Stealth implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[0];
+        return new String[]{"You are less", "visible to zombies.", "Next level: " + level * 2 + " % visible"};
     }
 
     @Override
     public Material getMaterial() {
-        return null;
+        return Material.FEATHER;
     }
 
     @Override
     public Type getType() {
-        return null;
+        return Type.UPGRADE;
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 20;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "Stealth";
     }
 
     @Override
@@ -37,16 +37,11 @@ public class Stealth implements IPerk {
 
     @Override
     public int getCost() {
-        return 0;
+        return 2;
     }
 
     @Override
     public Perk getPerk() {
-        return null;
-    }
-
-    @Override
-    public void apply() {
-
+        return Perk.STEALTH;
     }
 }

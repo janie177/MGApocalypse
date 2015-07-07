@@ -7,27 +7,27 @@ import org.bukkit.Material;
 public class Hydration implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[0];
+        return new String[]{"You can survive", "longer without water.", "Next level: " + level + " extra water."};
     }
 
     @Override
     public Material getMaterial() {
-        return null;
+        return Material.POTION;
     }
 
     @Override
     public Type getType() {
-        return null;
+        return Type.UPGRADE;
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 10;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "Hydration";
     }
 
     @Override
@@ -37,16 +37,11 @@ public class Hydration implements IPerk {
 
     @Override
     public int getCost() {
-        return 0;
+        return 5;
     }
 
     @Override
     public Perk getPerk() {
-        return null;
-    }
-
-    @Override
-    public void apply() {
-
+        return Perk.HYDRATION;
     }
 }

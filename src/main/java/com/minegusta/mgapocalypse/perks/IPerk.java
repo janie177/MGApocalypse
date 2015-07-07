@@ -1,6 +1,7 @@
 package com.minegusta.mgapocalypse.perks;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 public interface IPerk
 {
@@ -25,5 +26,8 @@ public interface IPerk
 
     Perk getPerk();
 
-    void apply();
+    default void apply(Player p)
+    {
+
+    }
 }

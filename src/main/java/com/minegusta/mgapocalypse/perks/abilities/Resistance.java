@@ -7,27 +7,27 @@ import org.bukkit.Material;
 public class Resistance implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[0];
+        return new String[]{"You are more", "resistant to bleeding", "and diseases.", "Next level: +" + level * 2 + "% resistance." };
     }
 
     @Override
     public Material getMaterial() {
-        return null;
+        return Material.MILK_BUCKET;
     }
 
     @Override
     public Type getType() {
-        return null;
+        return Type.UPGRADE;
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 20;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "Resistance";
     }
 
     @Override
@@ -37,16 +37,11 @@ public class Resistance implements IPerk {
 
     @Override
     public int getCost() {
-        return 0;
+        return 3;
     }
 
     @Override
     public Perk getPerk() {
-        return null;
-    }
-
-    @Override
-    public void apply() {
-
+        return Perk.RESISTANCE;
     }
 }

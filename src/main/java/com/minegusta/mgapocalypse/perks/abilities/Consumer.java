@@ -7,27 +7,27 @@ import org.bukkit.Material;
 public class Consumer implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[0];
+        return new String[]{"Food heals", "more foodbar.", "Next level: " + level * 5 + "%"};
     }
 
     @Override
     public Material getMaterial() {
-        return null;
+        return Material.COOKIE;
     }
 
     @Override
     public Type getType() {
-        return null;
+        return Type.UPGRADE;
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 10;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "Consumer";
     }
 
     @Override
@@ -37,16 +37,12 @@ public class Consumer implements IPerk {
 
     @Override
     public int getCost() {
-        return 0;
+        return 8;
     }
 
     @Override
     public Perk getPerk() {
-        return null;
+        return Perk.CONSUMER;
     }
 
-    @Override
-    public void apply() {
-
-    }
 }

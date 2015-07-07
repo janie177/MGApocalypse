@@ -5,29 +5,30 @@ import com.minegusta.mgapocalypse.perks.Perk;
 import org.bukkit.Material;
 
 public class Bowman implements IPerk {
+
     @Override
     public String[] getDescription(int level) {
-        return new String[0];
+        return new String[]{"Do more damage", "with bows.", "Next level: " + level * 2 + "%"};
     }
 
     @Override
     public Material getMaterial() {
-        return null;
+        return Material.BOW;
     }
 
     @Override
     public Type getType() {
-        return null;
+        return Type.UPGRADE;
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 50;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "BowMan";
     }
 
     @Override
@@ -37,16 +38,11 @@ public class Bowman implements IPerk {
 
     @Override
     public int getCost() {
-        return 0;
+        return 2;
     }
 
     @Override
     public Perk getPerk() {
-        return null;
-    }
-
-    @Override
-    public void apply() {
-
+        return Perk.BOWMAN;
     }
 }
