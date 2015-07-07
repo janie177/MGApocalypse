@@ -121,9 +121,9 @@ public class MobListener implements Listener {
 
             //Setting the zombie speed
             else if (!zombie.isBaby()) {
-                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 180, 1));
+                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 180, 1, false, false));
             } else {
-                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 40, 0));
+                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 40, 0, false, false));
             }
         }
     }
