@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class Rider implements IPerk {
     @Override
@@ -61,5 +62,6 @@ public class Rider implements IPerk {
         horse.setTamed(true);
         horse.setOwner(p);
         horse.setMaxHealth(16);
+        horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
     }
 }
