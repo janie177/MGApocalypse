@@ -75,7 +75,7 @@ public class GiantListener implements Listener
         moveToPlayer(g, p);
 
         g.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 600, 0, false, false));
-        g.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 600, 4, false, false));
+        g.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 600, 2, false, false));
         attack(RandomNumber.get(7), p, g);
     }
 
@@ -164,7 +164,7 @@ public class GiantListener implements Listener
     private void moveToPlayer(Giant g, Player p)
     {
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 10; i++)
         {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, () ->
             {
@@ -175,7 +175,6 @@ public class GiantListener implements Listener
 
                     Vector v = new Vector(x, 0, z);
                     v.normalize();
-                    v.multiply(0.2);
 
                     Location to = new Location(g.getWorld(), g.getLocation().getX(), g.getLocation().getY(), g.getLocation().getZ()).add(v);
                     if (to.getBlock().getType() != Material.AIR) return;
