@@ -58,7 +58,7 @@ public class AirDrop implements IPerk {
 
     @Override
     public void apply(Player p) {
-        Location l = new Location(p.getWorld(), p.getLocation().getX() + (RandomNumber.get(10) - 5), p.getLocation().getY() + 20, p.getLocation().getZ() + (RandomNumber.get(10) - 5));
+        Location l = new Location(p.getWorld(), p.getLocation().getX() + (RandomNumber.get(10) - 5), p.getLocation().getY() + 40, p.getLocation().getZ() + (RandomNumber.get(10) - 5));
 
         byte blockdata = 0x0;
 
