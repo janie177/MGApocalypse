@@ -50,7 +50,10 @@ public class Break {
                     p.sendMessage(ChatColor.DARK_GREEN + "- - - - - - - - - - - - - - - -");
                     p.teleport(DefaultConfig.getMainSpawn());
 
-                    MGApocalypse.getMGPlayer(p).setPlaying(false);
+                    MGPlayer mgp = MGApocalypse.getMGPlayer(p);
+
+                    mgp.setPlaying(false);
+                    mgp.updatePlayerStats();
                 } else {
                     p.sendMessage(ChatColor.DARK_GREEN + "- - - - - - - - - - - - - - - -");
                     p.sendMessage(ChatColor.GREEN + "You either moved or changed health.");

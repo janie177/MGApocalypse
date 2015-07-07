@@ -449,5 +449,6 @@ public class PlayerListener implements Listener {
         MGPlayer mgp = MGApocalypse.getMGPlayer(e.getPlayer());
 
         mgp.updateScoreBoard();
+        if(mgp.getIfPlaying()) mgp.updatePlayerStats();
     }
 }
