@@ -48,6 +48,16 @@ public class PerkMenu {
             int amount = level;
             if(amount == 0) amount++;
             if (amount > 64) amount = 64;
+
+            Material mat = perk.getMaterial();
+            int data = perk.getDataValue();
+
+            if(level == 0)
+            {
+                mat = Material.STAINED_GLASS_PANE;
+                data = 6;
+            }
+
             inventory.setItem(perk.getSlot(), new ItemStack(perk.getMaterial(), amount, (short) perk.getDataValue()) {
                 {
                     ItemMeta meta = getItemMeta();
