@@ -29,23 +29,20 @@ public class MGACommand implements CommandExecutor {
                 p.sendMessage(ChatColor.GREEN + "You added this position as a spawn!");
                 DefaultConfig.addSpawn(p.getLocation());
                 return true;
-            } else if (args[0].equalsIgnoreCase("traps"))
-            {
+            } else if (args[0].equalsIgnoreCase("traps")) {
                 p.sendMessage(ChatColor.DARK_GREEN + "- - - Trap Help - - -");
                 p.sendMessage(ChatColor.GREEN + "Place a sign. Then place a block on top.");
                 p.sendMessage(ChatColor.GREEN + "On that signs, place a pressure plate.");
                 p.sendMessage(ChatColor.YELLOW + "Line 1: [Trap].");
                 p.sendMessage(ChatColor.YELLOW + "Line 2: Name of the trap.");
-                p.sendMessage(ChatColor.YELLOW+ "Line 3: Entity amount or duration.");
+                p.sendMessage(ChatColor.YELLOW + "Line 3: Entity amount or duration.");
                 p.sendMessage(ChatColor.YELLOW + "Line 4: Entity type / potion type");
                 p.sendMessage(ChatColor.GREEN + "Be careful with entity types.");
                 p.sendMessage(ChatColor.GREEN + "--- Trap Names ---");
-                for(Trap trap : Trap.values())
-                {
+                for (Trap trap : Trap.values()) {
                     p.sendMessage(ChatColor.GRAY + " - " + trap.name());
                 }
                 return true;
-
             } else if (args[0].equalsIgnoreCase("listspawns")) {
                 int index = 1;
                 for (String spawn : DefaultConfig.getSpawns()) {
