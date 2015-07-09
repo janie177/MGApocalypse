@@ -19,7 +19,7 @@ public class SpawnTask {
     private static int SPAWNTASK = -1;
 
     //-- FINAL VARIABLES --//
-    private final static int interval = 10; //Interval in seconds to spawn new zombies.
+    private final static int interval = 20; //Interval in seconds to spawn new zombies.
     private final static int townDistance = 130; //The distance from towns that counts as a town still.
     private final static int zombieRadius = 100; //The radius in which there's a zombie limit.
     private final static int maxZombieAmount = 16; //The maximum amount of zombies near a player.
@@ -34,12 +34,13 @@ public class SpawnTask {
         SPAWNTASK = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.PLUGIN, () ->
         {
             {
-                for (Player p : Bukkit.getOnlinePlayers()) {
+                for (Player p : Bukkit.getOnlinePlayers())
+                {
                     //Making sure the player is in an enabled world.
-                    if (!WorldCheck.is(p.getWorld())) return;
+                    if (!WorldCheck.is(p.getWorld())) continue;
 
                     int chance = RandomNumber.get(1000);
-                    if (!(chance <= townSpawnChance)) return;
+                    if (!(chance <= townSpawnChance)) continue;
 
                     Location l = p.getLocation();
                     boolean town = false;
@@ -54,16 +55,16 @@ public class SpawnTask {
 
                     //Check if the spawn is if it's not a town.
                     if (!town) {
-                        if (!(chance <= spawnChance)) return;
+                        if (!(chance <= spawnChance)) continue;
                     }
 
                     //Check if the player does not have too many zombies around them already.
                     int zombieAmount = (int) p.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(p.getLocation()) <= zombieRadius).count();
 
                     if (town) {
-                        if (zombieAmount >= townMaxZombieAmount) return;
+                        if (zombieAmount >= townMaxZombieAmount) continue;
                     } else {
-                        if (zombieAmount >= maxZombieAmount) return;
+                        if (zombieAmount >= maxZombieAmount) continue;
                     }
 
                     //Find the location and then spawn the mobs.
