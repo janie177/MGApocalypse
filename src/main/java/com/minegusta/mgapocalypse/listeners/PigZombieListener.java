@@ -83,7 +83,7 @@ public class PigZombieListener implements Listener{
                 {
                     Block b = l.getBlock().getRelative(x,y,z);
 
-                    if(b.getLocation().distance(l) > 5) continue;
+                    if(b.getLocation().distance(l) > 4) continue;
 
                     if(b.getType() != Material.AIR && b.getRelative(0,1,0).getType() == Material.AIR && com.minegusta.mgloot.util.RandomNumber.get(10) > 3)
                     {
@@ -105,7 +105,7 @@ public class PigZombieListener implements Listener{
         });
     }
 
-    private static final int[][] bloodTypes = new int[][]{{159,5}, {159,14}, {159,5}, {159,6}, {35,14}, {35,13}};
+    private static final int[][] bloodTypes = new int[][]{{159,14}, {159,13}, {159,6}, {35,14}};
 
     private int[] getBloodMaterial()
     {
