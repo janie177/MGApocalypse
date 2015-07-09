@@ -5,10 +5,7 @@ import com.minegusta.mgapocalypse.MGApocalypse;
 import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.PigZombie;
@@ -70,6 +67,7 @@ public class PigZombieListener implements Listener{
             MGPlayer mgp = MGApocalypse.getMGPlayer((Player) ((Arrow) e.getDamager()).getShooter());
             mgp.addZombieKills(1);
         }
+
     }
 
     private List<Block> getBlocks(Location l)
@@ -79,7 +77,7 @@ public class PigZombieListener implements Listener{
 
         for(int x = -radius; x < radius; x++)
         {
-            for(int y = -1; y < 2; y++)
+            for(int y = -3; y < 1; y++)
             {
                 for(int z = -radius; z < radius; z++)
                 {
@@ -92,7 +90,6 @@ public class PigZombieListener implements Listener{
                 }
             }
         }
-
         return blocks;
 
     }
@@ -118,7 +115,7 @@ public class PigZombieListener implements Listener{
     {
         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 3, 0, false, false));
         p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * 15, 0, false, false));
-        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 25, 0, false, false));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 15, 0, false, false));
     }
 
     private void effect (Location l)
@@ -128,6 +125,5 @@ public class PigZombieListener implements Listener{
         l.getWorld().spigot().playEffect(l, Effect.CRIT, 0, 0, 1, 1, 1, 1/10, 40, 35);
         l.getWorld().spigot().playEffect(l, Effect.SLIME, 0, 0, 1, 1, 1, 1/10, 40, 35);
         l.getWorld().spigot().playEffect(l, Effect.SNOWBALL_BREAK, 0, 0, 1, 1, 1, 1/10, 40, 35);
-        l.getWorld().spigot().playEffect(l, Effect.ITEM_BREAK, 55, 0, 1, 1, 1, 1/10, 40, 35);
     }
 }
