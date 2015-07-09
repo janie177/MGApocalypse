@@ -83,7 +83,9 @@ public class PigZombieListener implements Listener{
                 {
                     Block b = l.getBlock().getRelative(x,y,z);
 
-                    if(b.getType() != Material.AIR && b.getRelative(0,1,0).getType() == Material.AIR)
+                    if(b.getLocation().distance(l) > 3) continue;
+
+                    if(b.getType() != Material.AIR && b.getRelative(0,1,0).getType() == Material.AIR && com.minegusta.mgloot.util.RandomNumber.get(10) > 3)
                     {
                         blocks.add(b);
                     }
@@ -122,8 +124,9 @@ public class PigZombieListener implements Listener{
     {
         l.getWorld().playSound(l, Sound.SLIME_WALK2, 10, 1);
         l.getWorld().playSound(l, Sound.CHICKEN_EGG_POP, 10F, 0.1F);
-        l.getWorld().spigot().playEffect(l, Effect.CRIT, 0, 0, 1, 1, 1, 1/10, 40, 35);
-        l.getWorld().spigot().playEffect(l, Effect.SLIME, 0, 0, 1, 1, 1, 1/10, 40, 35);
-        l.getWorld().spigot().playEffect(l, Effect.SNOWBALL_BREAK, 0, 0, 1, 1, 1, 1/10, 40, 35);
+        l.getWorld().spigot().playEffect(l, Effect.CRIT, 0, 0, 2, 2, 2, 1/10, 40, 35);
+        l.getWorld().spigot().playEffect(l, Effect.SLIME, 0, 0, 2, 2, 2, 1/10, 40, 35);
+        l.getWorld().spigot().playEffect(l, Effect.POTION_BREAK, 16389, 1, 1, 1, 1, 1, 1, 20);
+        l.getWorld().spigot().playEffect(l, Effect.SNOWBALL_BREAK, 0, 0, 2, 2, 2, 1/10, 40, 35);
     }
 }
