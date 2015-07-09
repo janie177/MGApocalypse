@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -62,6 +63,11 @@ public class PigZombieListener implements Listener{
         if(e.getDamager() instanceof Player)
         {
             MGPlayer mgp = MGApocalypse.getMGPlayer((Player) e.getDamager());
+            mgp.addZombieKills(1);
+        }
+        else if(e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof Player)
+        {
+            MGPlayer mgp = MGApocalypse.getMGPlayer((Player) ((Arrow) e.getDamager()).getShooter());
             mgp.addZombieKills(1);
         }
     }
