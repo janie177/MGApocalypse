@@ -35,7 +35,7 @@ public class PlayerListener implements Listener {
 
     //All the blocks that are disallowed to right click.
     private static final List<Material> blockedBlocks = Lists.newArrayList(Material.ENCHANTMENT_TABLE, Material.ANVIL, Material.BED, Material.MINECART, Material.STORAGE_MINECART, Material.ITEM_FRAME);
-    private static final List<Material> removeBlocks = Lists.newArrayList(Material.BED, Material.ITEM_FRAME);
+    private static final List<Material> removeBlocks = Lists.newArrayList(Material.BED);
 
     //Chances for bleeding. Also for diseases.
     private final static double bleedChance = 200.0; //In promillage
