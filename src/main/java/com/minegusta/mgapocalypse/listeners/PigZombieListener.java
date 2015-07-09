@@ -83,7 +83,7 @@ public class PigZombieListener implements Listener{
                 {
                     Block b = l.getBlock().getRelative(x,y,z);
 
-                    if(b.getLocation().distance(l) > 4) continue;
+                    if(b.getLocation().distance(l) > 4 ) continue;
 
                     if(b.getType() != Material.AIR && b.getRelative(0,1,0).getType() == Material.AIR && com.minegusta.mgloot.util.RandomNumber.get(10) > 3)
                     {
