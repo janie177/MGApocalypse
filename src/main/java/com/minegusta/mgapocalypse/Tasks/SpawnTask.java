@@ -5,15 +5,11 @@ import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.StringLocConverter;
 import com.minegusta.mgapocalypse.util.WorldCheck;
-import org.apache.commons.lang.math.RandomUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.PigZombie;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 
 import java.util.List;
 
@@ -28,6 +24,7 @@ public class SpawnTask {
     private final static int townMaxZombieAmount = 35; //The maximum amount of zombies near a player in towns.
     private final static int spawnChance = 200; //Promillage chance to spawn a zombie group.
     private final static int pigManChance = 3; //percentage chance to spawn a zombiepigman.
+    private final static int horseChance = 5; //Promillage chance to spawn a zombieHorse.
     private final static int townSpawnChance = 700; //Promillage chance to spawn a zombie group in towns.
     private final static int maxGroupSize = 6; //The maximum group size for zombies.
     private final static List<String> towns = DefaultConfig.getTowns(); //All towns defined.
@@ -130,7 +127,14 @@ public class SpawnTask {
 
         for (int i = 0; i <= RandomNumber.get(maxGroupSize); i++) {
             Location random = zombie.getLocation().add(RandomNumber.getDouble(10) - 5, 0, RandomNumber.getDouble(10) - 5);
-            if(com.minegusta.mgloot.util.RandomNumber.get(100) <= pigManChance)
+            if(com.minegusta.mgloot.util.RandomNumber.get(1000) <= horseChance)
+            {
+                Horse horse = (Horse) loc.getWorld().spawnEntity(random, EntityType.HORSE);
+                horse.setBreed(false);
+                horse.setAdult();
+                horse.setVariant(Horse.Variant.UNDEAD_HORSE);
+            }
+            else if(com.minegusta.mgloot.util.RandomNumber.get(100) <= pigManChance)
             {
                 PigZombie p = (PigZombie) loc.getWorld().spawnEntity(random, EntityType.PIG_ZOMBIE);
                 p.setAngry(false);

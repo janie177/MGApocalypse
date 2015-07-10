@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import com.minegusta.mgapocalypse.perks.IPerk;
 import com.minegusta.mgapocalypse.perks.Perk;
 import com.minegusta.mgapocalypse.util.RandomNumber;
-import org.apache.commons.lang.math.RandomUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.FallingBlock;

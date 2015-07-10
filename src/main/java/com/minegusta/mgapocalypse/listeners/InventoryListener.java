@@ -5,7 +5,6 @@ import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.perks.IPerk;
 import com.minegusta.mgapocalypse.perks.Perk;
 import com.minegusta.mgapocalypse.util.InfoMenu;
-import com.minegusta.mgapocalypse.util.PerkMenu;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
