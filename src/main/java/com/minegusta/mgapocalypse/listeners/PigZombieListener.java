@@ -60,19 +60,17 @@ public class PigZombieListener implements Listener{
         if(e.getEntity() instanceof PigZombie)
         {
             ((PigZombie) e.getEntity()).damage(100);
+            if(e.getDamager() instanceof Player)
+            {
+                MGPlayer mgp = MGApocalypse.getMGPlayer((Player) e.getDamager());
+                mgp.addZombieKills(1);
+            }
+            else if(e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof Player)
+            {
+                MGPlayer mgp = MGApocalypse.getMGPlayer((Player) ((Arrow) e.getDamager()).getShooter());
+                mgp.addZombieKills(1);
+            }
         }
-
-        if(e.getDamager() instanceof Player)
-        {
-            MGPlayer mgp = MGApocalypse.getMGPlayer((Player) e.getDamager());
-            mgp.addZombieKills(1);
-        }
-        else if(e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof Player)
-        {
-            MGPlayer mgp = MGApocalypse.getMGPlayer((Player) ((Arrow) e.getDamager()).getShooter());
-            mgp.addZombieKills(1);
-        }
-
     }
 
     private void potion(Player p)

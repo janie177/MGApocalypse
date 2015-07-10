@@ -1,6 +1,8 @@
 package com.minegusta.mgapocalypse.listeners;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mgapocalypse.MGApocalypse;
+import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.util.BloodBlockUtil;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
@@ -12,10 +14,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -39,6 +38,16 @@ public class ZombieHorseListener implements Listener
             if(h.getVariant() == Horse.Variant.UNDEAD_HORSE)
             {
                 h.damage(100);
+                if(e.getDamager() instanceof Player)
+                {
+                    MGPlayer mgp = MGApocalypse.getMGPlayer((Player) e.getDamager());
+                    mgp.addZombieKills(1);
+                }
+                else if(e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof Player)
+                {
+                    MGPlayer mgp = MGApocalypse.getMGPlayer((Player) ((Arrow) e.getDamager()).getShooter());
+                    mgp.addZombieKills(1);
+                }
             }
         }
     }
