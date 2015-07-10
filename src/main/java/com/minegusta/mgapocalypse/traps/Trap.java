@@ -12,6 +12,8 @@ public enum Trap {
     FIRE(new FireTrap()),
     POTION(new PotionTrap()),
     GIANT(new GiantTrap()),
+    UPOTION(new UPotion()),
+    UFIRE(new UFire()),
     UPROJECTILE(new UProjectileTrap()),
     MOBTRAP(new MobTrap());
 
