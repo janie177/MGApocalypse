@@ -9,10 +9,7 @@ import com.minegusta.mgapocalypse.util.WorldCheck;
 import com.minegusta.mgloot.loottables.Loot;
 import com.minegusta.mgloot.loottables.LootItem;
 import com.minegusta.mgloot.managers.LootManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -65,6 +62,7 @@ public class ZombieHorseListener implements Listener
             List<Player> players = Lists.newArrayList();
             Bukkit.getOnlinePlayers().stream().filter(p -> p.getLocation().distance(l) < 30).forEach(players::add);
 
+            effect(l);
 
             BloodBlockUtil.applyBlood(l, players);
             reward(l, players);
@@ -95,6 +93,15 @@ public class ZombieHorseListener implements Listener
                 z.setCanPickupItems(false);
             }
         }
+    }
+
+    private void effect (Location l)
+    {
+        l.getWorld().playSound(l, Sound.SLIME_WALK2, 10, 1);
+        l.getWorld().playSound(l, Sound.CHICKEN_EGG_POP, 10F, 0.1F);
+        l.getWorld().spigot().playEffect(l, Effect.CRIT, 0, 0, 2, 2, 2, 1/10, 40, 35);
+        l.getWorld().spigot().playEffect(l, Effect.SLIME, 0, 0, 2, 2, 2, 1/10, 40, 35);
+        l.getWorld().spigot().playEffect(l, Effect.SNOWBALL_BREAK, 0, 0, 2, 2, 2, 1/10, 40, 35);
     }
 }
 
