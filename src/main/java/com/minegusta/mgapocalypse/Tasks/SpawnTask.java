@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
@@ -146,6 +147,7 @@ public class SpawnTask {
             {
                 Zombie zombie2 = (Zombie) loc.getWorld().spawnEntity(random, EntityType.ZOMBIE);
                 zombie2.setCanPickupItems(false);
+                zombie2.getEquipment().setItemInHand(new ItemStack(Material.AIR));
                 if (RandomNumber.get(25) == 1) {
                     zombie2.setBaby(true);
                 }

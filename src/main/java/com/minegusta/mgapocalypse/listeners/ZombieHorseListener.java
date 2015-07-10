@@ -4,13 +4,10 @@ import com.google.common.collect.Lists;
 import com.minegusta.mgapocalypse.MGApocalypse;
 import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.util.BloodBlockUtil;
-import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import com.minegusta.mgloot.loottables.Loot;
-import com.minegusta.mgloot.loottables.LootItem;
 import com.minegusta.mgloot.managers.LootManager;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,30 +15,22 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class ZombieHorseListener implements Listener
-{
+public class ZombieHorseListener implements Listener {
     @EventHandler
-    public void onHorseHit(EntityDamageByEntityEvent e)
-    {
-        if(!WorldCheck.is(e.getEntity().getWorld()))return;
+    public void onHorseHit(EntityDamageByEntityEvent e) {
+        if (!WorldCheck.is(e.getEntity().getWorld())) return;
 
-        if(e.getEntity() instanceof Horse)
-        {
+        if (e.getEntity() instanceof Horse) {
             Horse h = (Horse) e.getEntity();
-            if(h.getVariant() == Horse.Variant.UNDEAD_HORSE)
-            {
+            if (h.getVariant() == Horse.Variant.UNDEAD_HORSE) {
                 h.damage(100);
-                if(e.getDamager() instanceof Player)
-                {
+                if (e.getDamager() instanceof Player) {
                     MGPlayer mgp = MGApocalypse.getMGPlayer((Player) e.getDamager());
                     mgp.addZombieKills(1);
-                }
-                else if(e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof Player)
-                {
+                } else if (e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof Player) {
                     MGPlayer mgp = MGApocalypse.getMGPlayer((Player) ((Arrow) e.getDamager()).getShooter());
                     mgp.addZombieKills(1);
                 }
@@ -56,8 +45,6 @@ public class ZombieHorseListener implements Listener
         if (e.getEntity() instanceof Horse && ((Horse) e.getEntity()).getVariant() == Horse.Variant.UNDEAD_HORSE) {
             Horse h = (Horse) e.getEntity();
             Location l = h.getLocation();
-            e.setDroppedExp(0);
-            e.getDrops().clear();
 
             List<Player> players = Lists.newArrayList();
             Bukkit.getOnlinePlayers().stream().filter(p -> p.getLocation().distance(l) < 30).forEach(players::add);
@@ -69,39 +56,34 @@ public class ZombieHorseListener implements Listener
         }
     }
 
-    private void reward(Location l, List<Player> players)
-    {
+    private void reward(Location l, List<Player> players) {
         Random rand = new Random();
-        if(rand.nextBoolean())
-        {
+
+        if (rand.nextBoolean()) {
             players.stream().forEach(p -> p.sendMessage(ChatColor.RED + "The zombie horse recently ate some fresh food!"));
             LootManager m = new LootManager(Loot.foodLoot, 6);
-            for(ItemStack i : m.getLoot())
-            {
+            for (ItemStack i : m.getLoot()) {
                 l.getWorld().dropItemNaturally(l, i);
             }
-        }
-        else
-        {
+        } else {
             players.stream().forEach(p -> p.sendMessage(ChatColor.RED + "The zombie horse was filled with baby zombies!"));
             int amount = rand.nextInt(5) + 2;
 
-            for(int x = 0; x < amount; x++)
-            {
+            for (int x = 0; x < amount; x++) {
                 Zombie z = (Zombie) l.getWorld().spawnEntity(l, EntityType.ZOMBIE);
                 z.setBaby(true);
                 z.setCanPickupItems(false);
+                z.getEquipment().setItemInHand(new ItemStack(Material.AIR));
             }
         }
     }
 
-    private void effect (Location l)
-    {
+    private void effect(Location l) {
         l.getWorld().playSound(l, Sound.SLIME_WALK2, 10, 1);
         l.getWorld().playSound(l, Sound.CHICKEN_EGG_POP, 10F, 0.1F);
-        l.getWorld().spigot().playEffect(l, Effect.CRIT, 0, 0, 2, 2, 2, 1/10, 40, 35);
-        l.getWorld().spigot().playEffect(l, Effect.SLIME, 0, 0, 2, 2, 2, 1/10, 40, 35);
-        l.getWorld().spigot().playEffect(l, Effect.SNOWBALL_BREAK, 0, 0, 2, 2, 2, 1/10, 40, 35);
+        l.getWorld().spigot().playEffect(l, Effect.CRIT, 0, 0, 2, 2, 2, 1 / 10, 40, 35);
+        l.getWorld().spigot().playEffect(l, Effect.SLIME, 0, 0, 2, 2, 2, 1 / 10, 40, 35);
+        l.getWorld().spigot().playEffect(l, Effect.SNOWBALL_BREAK, 0, 0, 2, 2, 2, 1 / 10, 40, 35);
     }
 }
 

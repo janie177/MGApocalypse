@@ -8,10 +8,7 @@ import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import com.minegusta.mgloot.loottables.LootItem;
 import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -25,7 +22,7 @@ public class MobListener implements Listener {
     private final static int nightChance = 2; //Promillage to spawn a zombie group
     private final static int dayChance = 100; //promillage to spawn a zombie group
 
-    private final List<EntityType> blockedDrops = Lists.newArrayList(EntityType.ZOMBIE, EntityType.SHEEP, EntityType.SQUID, EntityType.HORSE, EntityType.PIG_ZOMBIE);
+    private final List<EntityType> blockedDrops = Lists.newArrayList(EntityType.ZOMBIE, EntityType.SHEEP, EntityType.SQUID, EntityType.HORSE, EntityType.PIG_ZOMBIE, EntityType.SKELETON);
 
     private final static List<Material> highspawnchance = Lists.newArrayList(Material.SMOOTH_BRICK, Material.STONE, Material.WOOD, Material.DOUBLE_STEP);
 
@@ -38,7 +35,8 @@ public class MobListener implements Listener {
     public void onSpawn(CreatureSpawnEvent e) {
         if (!WorldCheck.is(e.getEntity().getWorld())) return;
 
-        if (allowedReasons.contains(e.getSpawnReason())) {
+        if (allowedReasons.contains(e.getSpawnReason()))
+        {
             return;
         }
         e.setCancelled(true);
@@ -121,9 +119,9 @@ public class MobListener implements Listener {
 
             //Setting the zombie speed
             else if (!zombie.isBaby()) {
-                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 180, 1, false, false));
+                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 600, 1, false, false));
             } else {
-                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 40, 0, false, false));
+                zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 180, 0, false, false));
             }
         }
     }
