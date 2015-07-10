@@ -26,7 +26,7 @@ public class ZombieHorseListener implements Listener {
         if (e.getEntity() instanceof Horse) {
             Horse h = (Horse) e.getEntity();
             if (h.getVariant() == Horse.Variant.UNDEAD_HORSE) {
-                h.damage(100);
+                e.setDamage(1000);
                 if (e.getDamager() instanceof Player) {
                     MGPlayer mgp = MGApocalypse.getMGPlayer((Player) e.getDamager());
                     mgp.addZombieKills(1);
@@ -56,11 +56,13 @@ public class ZombieHorseListener implements Listener {
         }
     }
 
-    private void reward(Location l, List<Player> players) {
+    private void reward(Location l, List<Player> players)
+    {
         Random rand = new Random();
+        Boolean reward = rand.nextBoolean();
 
-        if (rand.nextBoolean()) {
-            players.stream().forEach(p -> p.sendMessage(ChatColor.RED + "The zombie horse recently ate some fresh food!"));
+        if (reward) {
+            players.stream().forEach(p -> p.sendMessage(ChatColor.GREEN + "The zombie horse recently ate some fresh food!"));
             LootManager m = new LootManager(Loot.foodLoot, 6);
             for (ItemStack i : m.getLoot()) {
                 l.getWorld().dropItemNaturally(l, i);

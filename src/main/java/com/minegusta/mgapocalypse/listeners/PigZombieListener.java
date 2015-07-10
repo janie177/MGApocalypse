@@ -6,10 +6,7 @@ import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.util.BloodBlockUtil;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.PigZombie;
@@ -32,8 +29,6 @@ public class PigZombieListener implements Listener{
 
         if(e.getEntity() instanceof PigZombie)
         {
-            e.setDroppedExp(0);
-            e.getDrops().clear();
             Location l = e.getEntity().getLocation().add(0,1,0);
             effect(l);
 
@@ -59,7 +54,7 @@ public class PigZombieListener implements Listener{
 
         if(e.getEntity() instanceof PigZombie)
         {
-            ((PigZombie) e.getEntity()).damage(100);
+            e.setDamage(1000);
             if(e.getDamager() instanceof Player)
             {
                 MGPlayer mgp = MGApocalypse.getMGPlayer((Player) e.getDamager());
