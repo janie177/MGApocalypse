@@ -46,7 +46,7 @@ public class MGPlayer {
     private int longestAlive;
     private int chestsLooted;
     private int emeraldChestsLooted;
-    private int ironChestsLooted;
+    private int metalChestsLooted;
     private int diamondChestsLooted;
     private long earnedcredits;
     private int hunger;
@@ -96,7 +96,7 @@ public class MGPlayer {
         this.earnedcredits = f.getInt("earnedcredits", 0);
         this.emeraldChestsLooted = f.getInt("emeraldchestslooted", 0);
         this.diamondChestsLooted = f.getInt("diamondchestslooted", 0);
-        this.ironChestsLooted = f.getInt("ironchestslooted", 0);
+        this.metalChestsLooted = f.getInt("ironchestslooted", 0);
         this.hunger = f.getInt("hunger", 20);
         this.bleeding = f.getBoolean("bleeding", false);
         this.infected = f.getBoolean("infected", false);
@@ -164,7 +164,7 @@ public class MGPlayer {
         conf.set("earnedcredits", earnedcredits);
         conf.set("emeraldchestslooted", emeraldChestsLooted);
         conf.set("diamondchestslooted", diamondChestsLooted);
-        conf.set("ironchestslooted", ironChestsLooted);
+        conf.set("ironchestslooted", metalChestsLooted);
         conf.set("hunger", hunger);
         conf.set("bleeding", bleeding);
         conf.set("infected", infected);
@@ -388,8 +388,8 @@ public class MGPlayer {
         return emeraldChestsLooted;
     }
 
-    public int getIronChestsLooted() {
-        return ironChestsLooted;
+    public int getMetalChestsLooted() {
+        return metalChestsLooted;
     }
 
     public Perk[] getPerks() {
@@ -582,12 +582,12 @@ public class MGPlayer {
         diamondChestsLooted = diamondChestsLooted + chestsAdded;
     }
 
-    public void setIronChestsLooted(int chests) {
-        ironChestsLooted = chests;
+    public void setMetalChestsLooted(int chests) {
+        metalChestsLooted = chests;
     }
 
-    public void addIronChestsLooted(int chestsAdded) {
-        ironChestsLooted = ironChestsLooted + chestsAdded;
+    public void addMetalChestsLooted(int chestsAdded) {
+        metalChestsLooted = metalChestsLooted + chestsAdded;
     }
 
     public void addEmeraldChestsLooted(int chestsAdded) {

@@ -85,7 +85,7 @@ public class InfoMenu {
             inv.setItem(47, getItem("Thirst Level", Material.POTION, mgp.getPlayer().getLevel()));
         } else inv.setItem(47, getItem("Thirst Level", Material.POTION, mgp.getThirst()));
 
-        inv.setItem(51, getItem("Iron Chests", Material.IRON_BLOCK, mgp.getIronChestsLooted()));
+        inv.setItem(51, getItem("Metal Chests", Material.IRON_BLOCK, mgp.getMetalChestsLooted()));
         inv.setItem(52, getItem("Low Level Chests", Material.CHEST, mgp.getChestsLooted()));
         inv.setItem(53, getItem("Deaths", Material.BONE, mgp.getDeaths()));
     }
