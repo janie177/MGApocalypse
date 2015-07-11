@@ -41,9 +41,15 @@ public class WhirlWindTrap implements ITrap {
 
                     //The sucking people in effect
                     center.getWorld().getEntitiesByClasses(LivingEntity.class, Item.class, Projectile.class).stream().
-                            filter(ent -> ent.getLocation().distance(center) <= 5).forEach(ent -> {
+                            filter(ent -> ent.getLocation().distance(center) <= 5).forEach(ent ->
+                    {
                         double angle = Math.toRadians(14);
                         double radius = Math.abs(ent.getLocation().distance(center));
+
+                        if(radius < 1)
+                        {
+                            ent.setVelocity(new Vector(1,1,1));
+                        }
 
                         double x = ent.getLocation().getX() - center.getX();
                         double z = ent.getLocation().getZ() - center.getZ();
@@ -59,9 +65,8 @@ public class WhirlWindTrap implements ITrap {
                         Vector v = new Vector(ix, -0.2, iz);
                         v.normalize();
 
-                        //The closer to the center, the stronger the force.
                         double amplifier = 1.8;
-                        ent.setVelocity(ent.getVelocity().add(v).multiply(-amplifier));
+                        ent.setVelocity(ent.getVelocity().add(v.multiply(amplifier)));
                     });
                 }, i);
             }
