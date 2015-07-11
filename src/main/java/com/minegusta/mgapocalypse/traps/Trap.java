@@ -15,6 +15,8 @@ public enum Trap {
     UPOTION(new UPotion()),
     UFIRE(new UFire()),
     UPROJECTILE(new UProjectileTrap()),
+    UEXPLODE(new UExplode()),
+    WOLFPET(new WolfPet()),
     MOBTRAP(new MobTrap());
 
     private ITrap trap;
