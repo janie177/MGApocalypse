@@ -14,7 +14,7 @@ public class ExplodeTrap implements ITrap {
 
         } catch (Exception ignored){}
 
-        s.getWorld().createExplosion(s.getX(), s.getY(), s.getZ(), strength, false, false);
+        p.getWorld().createExplosion(p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), strength, false, false);
         return true;
     }
 
