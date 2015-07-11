@@ -60,7 +60,7 @@ public class WhirlWindTrap implements ITrap {
                         v.normalize();
 
                         //The closer to the center, the stronger the force.
-                        double amplifier = 2.12 / radius;
+                        double amplifier = 1.8;
                         ent.setVelocity(ent.getVelocity().add(v).multiply(-amplifier));
                     });
                 }, i);
