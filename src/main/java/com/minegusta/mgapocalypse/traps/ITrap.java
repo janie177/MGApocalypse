@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 public interface ITrap
 {
-    void apply(Player p, Sign s);
+    boolean apply(Player p, Sign s);
 
     String getMessage();
 

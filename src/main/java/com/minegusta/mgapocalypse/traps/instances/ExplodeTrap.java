@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 public class ExplodeTrap implements ITrap {
     @Override
-    public void apply(Player p, Sign s) {
+    public boolean apply(Player p, Sign s) {
         int strength = 3;
         try {
             if(s.getLine(2).length() != 0) strength = Integer.parseInt(s.getLine(2));
@@ -15,6 +15,7 @@ public class ExplodeTrap implements ITrap {
         } catch (Exception ignored){}
 
         s.getWorld().createExplosion(s.getX(), s.getY(), s.getZ(), strength, false, false);
+        return true;
     }
 
     @Override

@@ -26,9 +26,9 @@ public enum Trap {
         this.trap = trap;
     }
 
-    public void apply(Player p, Sign sign)
+    public boolean apply(Player p, Sign sign)
     {
-        trap.apply(p, sign);
+        return trap.apply(p, sign);
     }
 
     public String getMessage()

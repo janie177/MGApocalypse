@@ -11,12 +11,13 @@ import org.bukkit.entity.Player;
 
 public class GiantTrap implements ITrap {
     @Override
-    public void apply(Player p, Sign s) {
+    public boolean apply(Player p, Sign s) {
         Location location = new Location(p.getWorld(), p.getLocation().getX() + RandomNumber.get(30) - 15, p.getLocation().getY() + 1, p.getLocation().getZ() + RandomNumber.get(30) - 15);
 
         Giant g = (Giant) location.getWorld().spawnEntity(location, EntityType.GIANT);
         g.setCustomName(ChatColor.DARK_GREEN + "Giant");
         g.setCustomNameVisible(true);
+        return true;
     }
 
     @Override

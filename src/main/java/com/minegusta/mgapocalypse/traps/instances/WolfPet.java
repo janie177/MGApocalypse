@@ -17,11 +17,14 @@ public class WolfPet implements ITrap {
     private static ConcurrentMap<String, Long> claimed = Maps.newConcurrentMap();
 
     @Override
-    public void apply(Player p, Sign s) {
+    public boolean apply(Player p, Sign s) {
 
         String uuid = p.getUniqueId().toString();
 
-        if(claimed.containsKey(uuid) && (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) - TimeUnit.MILLISECONDS.toSeconds(claimed.get(uuid)) < 21600)) return;
+        if(claimed.containsKey(uuid) && (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) - TimeUnit.MILLISECONDS.toSeconds(claimed.get(uuid)) < 21600))
+        {
+            return false;
+        }
 
 
         Wolf w = (Wolf) p.getWorld().spawnEntity(p.getLocation(), EntityType.WOLF);
@@ -32,6 +35,7 @@ public class WolfPet implements ITrap {
         w.setBreed(false);
 
         claimed.put(uuid, System.currentTimeMillis());
+        return true;
     }
 
     @Override

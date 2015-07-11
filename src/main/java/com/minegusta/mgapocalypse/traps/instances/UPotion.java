@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class UPotion implements ITrap {
     @Override
-    public void apply(Player p, Sign s) {
+    public boolean apply(Player p, Sign s) {
         int duration = 7;
         PotionEffectType type = PotionEffectType.BLINDNESS;
 
@@ -20,6 +20,7 @@ public class UPotion implements ITrap {
         } catch (Exception ignored){}
 
         p.addPotionEffect(new PotionEffect(type, duration * 20, 0, false, true));
+        return true;
     }
 
     @Override

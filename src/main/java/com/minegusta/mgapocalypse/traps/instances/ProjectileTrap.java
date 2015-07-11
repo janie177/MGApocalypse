@@ -13,7 +13,7 @@ import org.bukkit.util.Vector;
 
 public class ProjectileTrap implements ITrap {
     @Override
-    public void apply(Player p, Sign s) {
+    public boolean apply(Player p, Sign s) {
 
         int amount = 1;
         EntityType type = EntityType.ARROW;
@@ -26,6 +26,11 @@ public class ProjectileTrap implements ITrap {
         } catch (Exception igored){}
 
         Location location = new Location(p.getWorld(), p.getLocation().getX() + RandomNumber.get(30) - 15, p.getLocation().getY() + 4, p.getLocation().getZ() + RandomNumber.get(30) - 15);
+
+        if(!type.isSpawnable())
+        {
+            return false;
+        }
 
         for (int i = 0; i < amount; i++)
         {
@@ -46,6 +51,7 @@ public class ProjectileTrap implements ITrap {
                 ball.setIsIncendiary(false);
             }
         }
+        return true;
     }
 
     @Override

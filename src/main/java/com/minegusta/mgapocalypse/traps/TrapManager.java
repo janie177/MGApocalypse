@@ -25,8 +25,10 @@ public class TrapManager {
         if(trap.isCooledDown(sign.getLocation()))
         {
             trap.startCooldown(sign.getLocation());
-            trap.apply(p, sign);
-            p.sendMessage(trap.getMessage());
+            if(trap.apply(p, sign))
+            {
+                p.sendMessage(trap.getMessage());
+            }
         }
     }
 }

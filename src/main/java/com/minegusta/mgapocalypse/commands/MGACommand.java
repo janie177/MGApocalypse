@@ -35,8 +35,8 @@ public class MGACommand implements CommandExecutor {
                 p.sendMessage(ChatColor.GREEN + "On that signs, place a pressure plate.");
                 p.sendMessage(ChatColor.YELLOW + "Line 1: [Trap].");
                 p.sendMessage(ChatColor.YELLOW + "Line 2: Name of the trap.");
-                p.sendMessage(ChatColor.YELLOW + "Line 3: Entity amount or duration.");
-                p.sendMessage(ChatColor.YELLOW + "Line 4: Entity type / potion type");
+                p.sendMessage(ChatColor.YELLOW + "Line 3: Amount/Duration/Strength/Size (int)");
+                p.sendMessage(ChatColor.YELLOW + "Line 4: Entity type/potion type (enum entry)");
                 p.sendMessage(ChatColor.GREEN + "Be careful with entity types.");
                 p.sendMessage(ChatColor.GREEN + "--- Trap Names ---");
                 for (Trap trap : Trap.values()) {
