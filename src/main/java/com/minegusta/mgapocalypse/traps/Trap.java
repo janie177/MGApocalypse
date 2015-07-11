@@ -18,7 +18,7 @@ public enum Trap {
     UPROJECTILE(new UProjectileTrap()),
     UEXPLODE(new UExplode()),
     WOLFPET(new WolfPet()),
-    WHIRLWILD(new WhirlWindTrap()),
+    WHIRLWIND(new WhirlWindTrap()),
     ENTITYRAIN(new EntityRainTrap()),
     MOBTRAP(new MobTrap());
 
