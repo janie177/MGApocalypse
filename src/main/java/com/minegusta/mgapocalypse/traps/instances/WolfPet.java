@@ -2,6 +2,7 @@ package com.minegusta.mgapocalypse.traps.instances;
 
 import com.google.common.collect.Maps;
 import com.minegusta.mgapocalypse.traps.ITrap;
+import com.minegusta.mgloot.util.RandomNumber;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.block.Sign;
@@ -33,6 +34,12 @@ public class WolfPet implements ITrap {
         w.setOwner(p);
         w.setCollarColor(DyeColor.CYAN);
         w.setBreed(false);
+
+        if(RandomNumber.get(30) == 30)
+        {
+            w.setCustomNameVisible(true);
+            w.setCustomName(ChatColor.RED + "DogMeat");
+        }
 
         claimed.put(uuid, System.currentTimeMillis());
         return true;
