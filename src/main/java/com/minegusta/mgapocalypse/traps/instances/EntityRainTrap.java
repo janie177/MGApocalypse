@@ -33,12 +33,12 @@ public class EntityRainTrap implements ITrap {
     }
 
     private void startRain(int duration, final Player p, EntityType type) {
-        for (int i = 0; i <= duration * 4; i++) {
+        for (int i = 0; i <= duration * 2; i++) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () ->
             {
                 if(p == null || !p.isOnline() || !WorldCheck.is(p.getWorld()))return;
-                p.getWorld().spawnEntity(p.getLocation(), type);
-            }, 5 * i);
+                p.getWorld().spawnEntity(p.getLocation().clone().add(0,13,0), type);
+            }, 10 * i);
         }
     }
 

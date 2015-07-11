@@ -22,7 +22,7 @@ public class WolfPet implements ITrap {
 
         String uuid = p.getUniqueId().toString();
 
-        if(claimed.containsKey(uuid) && (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) - TimeUnit.MILLISECONDS.toSeconds(claimed.get(uuid)) < 21600))
+        if(claimed.containsKey(uuid) && (TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) - TimeUnit.MILLISECONDS.toSeconds(claimed.get(uuid)) < 3600))
         {
             return false;
         }
