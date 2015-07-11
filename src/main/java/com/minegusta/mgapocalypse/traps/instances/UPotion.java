@@ -25,7 +25,7 @@ public class UPotion implements ITrap {
 
     @Override
     public String getMessage() {
-        return ChatColor.GOLD + "A trap sprayed a potion on you!";
+        return ChatColor.GOLD + "A potion is sprayed on you!";
     }
 
     @Override

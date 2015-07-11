@@ -210,6 +210,7 @@ public class PlayerListener implements Listener {
         if (farmerBoost) amount++;
 
         if (type == Material.CROPS && hand == Material.WOOD_HOE) {
+            BlockUtil.changeBlock(l, Material.AIR, 0);
             l.getWorld().dropItemNaturally(l, new ItemStack(Material.WHEAT, amount));
             tool.setDurability((short) (tool.getDurability() + 5));
             if (tool.getDurability() >= hand.getMaxDurability())
@@ -217,6 +218,7 @@ public class PlayerListener implements Listener {
         }
 
         if (type == Material.MELON_BLOCK && hand == Material.WOOD_HOE) {
+            BlockUtil.changeBlock(l, Material.GRASS, 0);
             l.getWorld().dropItemNaturally(l, new ItemStack(Material.MELON, amount));
             tool.setDurability((short) (tool.getDurability() + 15));
             if (tool.getDurability() >= hand.getMaxDurability())
@@ -224,6 +226,7 @@ public class PlayerListener implements Listener {
         }
 
         if (type == Material.SOUL_SAND && hand == Material.WOOD_SPADE) {
+            BlockUtil.changeBlock(l, Material.STONE, 0);
             l.getWorld().dropItemNaturally(l, Loot.getGrave().build());
             if (RandomNumber.get(3) == 1) l.getWorld().spawnEntity(l, EntityType.SKELETON);
             tool.setDurability((short) (tool.getDurability() + 15));
@@ -232,6 +235,7 @@ public class PlayerListener implements Listener {
         }
 
         if ((type == Material.IRON_ORE || type == Material.DIAMOND_ORE || type == Material.COAL_ORE) && hand == Material.WOOD_PICKAXE) {
+            BlockUtil.changeBlock(l, Material.STONE, 0);
             l.getWorld().dropItemNaturally(l, Loot.getOre().build());
             tool.setDurability((short) (tool.getDurability() + 20));
             if (tool.getDurability() >= hand.getMaxDurability())

@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -37,6 +38,16 @@ public class MobListener implements Listener {
 
         if (allowedReasons.contains(e.getSpawnReason()))
         {
+            if(e.getEntity() instanceof Zombie)
+            {
+                Zombie z = (Zombie) e.getEntity();
+                z.setVillager(false);
+            }
+            else if(e.getEntity() instanceof PigZombie)
+            {
+                PigZombie p = (PigZombie) e.getEntity();
+                p.getEquipment().setItemInHand(new ItemStack(Material.AIR));
+            }
             return;
         }
         e.setCancelled(true);
