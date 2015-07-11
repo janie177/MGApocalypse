@@ -43,12 +43,12 @@ public class WhirlWindTrap implements ITrap {
                     center.getWorld().getEntitiesByClasses(LivingEntity.class, Item.class, Projectile.class).stream().
                             filter(ent -> ent.getLocation().distance(center) <= 5).forEach(ent ->
                     {
-                        double angle = Math.toRadians(14);
+                        double angle = Math.toRadians(8);
                         double radius = Math.abs(ent.getLocation().distance(center));
 
                         if(radius < 1)
                         {
-                            ent.setVelocity(new Vector(1,1,1));
+                            ent.setVelocity(new Vector(1,0,1));
                         }
 
                         double x = ent.getLocation().getX() - center.getX();
@@ -65,8 +65,8 @@ public class WhirlWindTrap implements ITrap {
                         Vector v = new Vector(ix, -0.2, iz);
                         v.normalize();
 
-                        double amplifier = 1.1;
-                        ent.setVelocity(ent.getVelocity().add(v.multiply(-amplifier)));
+                        double amplifier = 0.6;
+                        ent.setVelocity(ent.getVelocity().add(v).multiply(-amplifier));
                     });
                 }, i);
             }
