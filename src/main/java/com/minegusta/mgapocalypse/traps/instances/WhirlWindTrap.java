@@ -65,8 +65,8 @@ public class WhirlWindTrap implements ITrap {
                         Vector v = new Vector(ix, -0.2, iz);
                         v.normalize();
 
-                        double amplifier = 1.8;
-                        ent.setVelocity(ent.getVelocity().add(v.multiply(amplifier)));
+                        double amplifier = 1.1;
+                        ent.setVelocity(ent.getVelocity().add(v.multiply(-amplifier)));
                     });
                 }, i);
             }
