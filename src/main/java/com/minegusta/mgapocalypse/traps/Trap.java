@@ -1,6 +1,7 @@
 package com.minegusta.mgapocalypse.traps;
 
 import com.minegusta.mgapocalypse.traps.instances.*;
+import com.minegusta.mgapocalypse.traps.instances.WhirlWindTrap;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -17,6 +18,7 @@ public enum Trap {
     UPROJECTILE(new UProjectileTrap()),
     UEXPLODE(new UExplode()),
     WOLFPET(new WolfPet()),
+    WHIRLWILD(new WhirlWindTrap()),
     MOBTRAP(new MobTrap());
 
     private ITrap trap;

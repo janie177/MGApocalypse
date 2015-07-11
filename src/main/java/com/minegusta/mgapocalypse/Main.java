@@ -68,6 +68,11 @@ public class Main extends JavaPlugin {
         if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) WG_ENABLED = true;
     }
 
+    public static Plugin getPlugin()
+    {
+        return PLUGIN;
+    }
+
     @Override
     public void onDisable() {
         //Cancel Tasks

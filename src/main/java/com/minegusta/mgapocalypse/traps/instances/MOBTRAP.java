@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class MobTrap implements ITrap
 {
     @Override
-    public void apply(Player p, Sign s)
+    public boolean apply(Player p, Sign s)
     {
         int amount = 3;
         EntityType type = EntityType.ZOMBIE;
@@ -25,10 +25,16 @@ public class MobTrap implements ITrap
 
         if(!type.isAlive()) type = EntityType.ZOMBIE;
 
+        if(!type.isSpawnable())
+        {
+            return false;
+        }
+
         for (int i = 0; i < amount; i++)
         {
             p.getWorld().spawnEntity(location, type);
         }
+        return true;
     }
 
     @Override
