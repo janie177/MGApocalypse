@@ -16,7 +16,7 @@ public class BleedingManager {
     public static void bandage(Player p, boolean heal) {
         MGPlayer mgp = MGApocalypse.getMGPlayer(p);
 
-        if (heal && (p.getMaxHealth() > p.getHealth())) p.setHealth(p.getHealth() + 1.0);
+        if (heal && (p.getMaxHealth() - p.getHealth() >= 1)) p.setHealth(p.getHealth() + 1.0);
 
         if (mgp.isBleeding()) {
             mgp.setBleeding(false);
