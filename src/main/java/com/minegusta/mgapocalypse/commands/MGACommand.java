@@ -1,6 +1,8 @@
 package com.minegusta.mgapocalypse.commands;
 
+import com.minegusta.mgapocalypse.MGApocalypse;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
+import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.traps.Trap;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.Bukkit;
@@ -9,12 +11,29 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class MGACommand implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender s, Command cmd, String label, String[] args) {
-        if (!(s instanceof Player) || !(s.isOp())) return true;
+    public boolean onCommand(CommandSender s, Command cmd, String label, String[] args)
+    {
+        if(s instanceof ConsoleCommandSender && args.length == 2 && args[0].equalsIgnoreCase("addperkpoint"))
+        {
+            Player p;
+            try
+            {
+                p = Bukkit.getPlayer(args[1]);
+            }catch (Exception ignored){
+                return true;
+            }
+
+            MGPlayer mgp = MGApocalypse.getMGPlayer(p);
+            mgp.addPerkPoints(1);
+
+            return true;
+        }
+        else if (!(s instanceof Player) || !s.isOp()) return true;
 
         Player p = (Player) s;
         if (args == null || args.length == 0) {
