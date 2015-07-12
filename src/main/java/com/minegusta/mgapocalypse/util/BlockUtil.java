@@ -10,6 +10,5 @@ public class BlockUtil {
     public static void changeBlock(Location l, Material to, int data)
     {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()-> l.getWorld().getPlayers().stream().filter(p -> l.distance(p.getLocation()) < 45).forEach(p -> p.sendBlockChange(l, to, (byte) data)), 2);
-
     }
 }

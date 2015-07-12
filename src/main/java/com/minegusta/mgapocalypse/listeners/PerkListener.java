@@ -8,6 +8,7 @@ import com.minegusta.mgapocalypse.perks.abilities.Athlete;
 import com.minegusta.mgapocalypse.perks.abilities.Health;
 import com.minegusta.mgapocalypse.util.ItemUtil;
 import com.minegusta.mgapocalypse.util.WorldCheck;
+import com.minegusta.mgloot.loottables.Loot;
 import com.minegusta.mgloot.loottables.LootItem;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -23,6 +24,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class PerkListener implements Listener {
 
@@ -37,8 +39,8 @@ public class PerkListener implements Listener {
             l.getWorld().spigot().playEffect(l, Effect.SMOKE, 0, 0, 1, 1, 1, 1 / 30, 50, 50);
             l.getWorld().playSound(l, Sound.CHEST_OPEN, 2, 2);
 
-            for (int i = 0; i < 3; i++) {
-                l.getWorld().dropItemNaturally(l, LootItem.getRandom());
+            for (ItemStack is : LootItem.getRandom(3, Loot.goodLoot, Loot.toolLoot, Loot.normalLoot, Loot.betterLoot, Loot.healingLoot, Loot.defaultLoot, Loot.foodLoot)) {
+                l.getWorld().dropItemNaturally(l, is);
                 l.getWorld().playSound(l, Sound.CHICKEN_EGG_POP, 1, 1);
             }
 
