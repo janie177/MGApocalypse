@@ -20,6 +20,7 @@ public enum Trap {
     WOLFPET(new WolfPet()),
     WHIRLWIND(new WhirlWindTrap()),
     ENTITYRAIN(new EntityRainTrap()),
+    SOUND(new SoundTrap()),
     MOBTRAP(new MobTrap());
 
     private ITrap trap;
