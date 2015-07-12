@@ -38,7 +38,7 @@ public class SoundTrap implements ITrap {
 
     @Override
     public String getMessage() {
-        return ChatColor.RED + "Something starts raining down on you!";
+        return ChatColor.RED + "You hear a noise..";
     }
 
     @Override
