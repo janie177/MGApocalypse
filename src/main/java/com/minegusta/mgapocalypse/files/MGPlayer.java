@@ -240,9 +240,12 @@ public class MGPlayer {
         setHeals(0);
         setPlayerKills(0);
         setTimeAlive(0);
-        setPerkPoints(0);
 
         updateScoreBoard();
+
+        addDeaths(1);
+
+        setPerkPoints(0);
 
         //Clear all perks, auto saves to config.
         conf.set("perks", null);
@@ -253,6 +256,28 @@ public class MGPlayer {
         p.getInventory().clear();
 
         saveFile();
+    }
+
+    public void cleanPlayerKeepPerks()
+    {
+        Player p = getPlayer();
+
+        p.setGameMode(GameMode.SURVIVAL);
+
+        setHealth(p.getMaxHealth());
+        setHunger(20);
+        setThirst(20);
+        setBleeding(false);
+        setInfected(false);
+        p.setHealth(getHealth());
+        p.setLevel(getThirst());
+        p.setFoodLevel(getHunger());
+        setGiantKills(0);
+        setZombieKills(0);
+        setHeals(0);
+        setPlayerKills(0);
+        setTimeAlive(0);
+        updateScoreBoard();
     }
 
 

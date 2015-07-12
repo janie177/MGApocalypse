@@ -38,7 +38,7 @@ public class Bowman implements IPerk {
 
     @Override
     public int getCost() {
-        return 2;
+        return 4;
     }
 
     @Override

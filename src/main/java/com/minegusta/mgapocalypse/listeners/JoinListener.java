@@ -57,7 +57,7 @@ public class JoinListener implements Listener {
 
                     MGPlayer mgp = MGApocalypse.getMGPlayer(e.getPlayer());
 
-                    mgp.killPlayer();
+                    mgp.cleanPlayerKeepPerks();
 
                     e.getPlayer().teleport(DefaultConfig.getRandomSpawn());
 

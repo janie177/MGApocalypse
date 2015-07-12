@@ -37,7 +37,7 @@ public class Slayer implements IPerk {
 
     @Override
     public int getCost() {
-        return 2;
+        return 5;
     }
 
     @Override

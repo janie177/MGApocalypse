@@ -42,7 +42,7 @@ public class Rider implements IPerk {
 
     @Override
     public int getCost() {
-        return 25;
+        return 40;
     }
 
     @Override
