@@ -46,6 +46,8 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PigZombieListener(), this);
         Bukkit.getPluginManager().registerEvents(new ZombieHorseListener(), this);
 
+
+
         //Commands
         getCommand("mga").setExecutor(new MGACommand());
         getCommand("break").setExecutor(new BreakCommand());

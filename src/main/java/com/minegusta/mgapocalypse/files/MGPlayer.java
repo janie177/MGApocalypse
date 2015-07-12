@@ -452,7 +452,7 @@ public class MGPlayer {
         p.sendMessage(ChatColor.GOLD + "You earned " + ChatColor.LIGHT_PURPLE + Integer.toString(credits) + ChatColor.GOLD + " credits.");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + p.getName() + " " + credits);
         addEarnedcredits(credits);
-        if (getZombieKills() % 3 == 0) {
+        if (getZombieKills() % 5 == 0) {
             addPerkPoints(1);
         }
     }
