@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 public class PlayerListener implements Listener {
 
     //All the blocks that are disallowed to right click.
-    private static final List<Material> blockedBlocks = Lists.newArrayList(Material.ENCHANTMENT_TABLE, Material.ANVIL, Material.BED_BLOCK, Material.MINECART, Material.STORAGE_MINECART, Material.ITEM_FRAME);
+    private static final List<Material> blockedBlocks = Lists.newArrayList(Material.ENCHANTMENT_TABLE, Material.ANVIL, Material.BED_BLOCK, Material.MINECART, Material.STORAGE_MINECART, Material.ITEM_FRAME, Material.ENDER_CHEST);
     private static final List<Material> removeBlocks = Lists.newArrayList(Material.BED_BLOCK);
 
     //Chances for bleeding. Also for diseases.
