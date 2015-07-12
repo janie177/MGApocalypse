@@ -347,6 +347,11 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEvent(PlayerDeathEvent e) {
         if (!WorldCheck.is(e.getEntity().getWorld())) return;
+
+        e.getEntity().getWorld().getPlayers().stream().filter(p -> p.getLocation().distance(e.getEntity().getLocation()) < 1100).forEach(p -> p.sendMessage(e.getDeathMessage()));
+
+        e.setDeathMessage("");
+
         //Check for bandits
         if (e.getEntity().getLastDamageCause() != null) {
             EntityDamageEvent cause = e.getEntity().getLastDamageCause();
