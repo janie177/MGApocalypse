@@ -7,7 +7,7 @@ import org.bukkit.Material;
 public class AxeMan implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[]{"Do more damage", "with Axes.", "Next level: " + level * 2 + "%"};
+        return new String[]{"Do more damage", "with Axes.", "Next level: +" + level * 2 + "%"};
     }
 
     @Override
@@ -22,7 +22,7 @@ public class AxeMan implements IPerk {
 
     @Override
     public int getMaxLevel() {
-        return 50;
+        return 35;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class AxeMan implements IPerk {
 
     @Override
     public int getCost() {
-        return 2;
+        return 3;
     }
 
     @Override

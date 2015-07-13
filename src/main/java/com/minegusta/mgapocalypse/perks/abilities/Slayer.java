@@ -7,7 +7,7 @@ import org.bukkit.Material;
 public class Slayer implements IPerk {
     @Override
     public String[] getDescription(int level) {
-        return new String[]{"Do more damage", "with swords.", "Next level: " + level * 2 + "%"};
+        return new String[]{"Do more damage", "with swords.", "Next level: +" + level * 2 + "%"};
     }
 
     @Override
@@ -22,7 +22,7 @@ public class Slayer implements IPerk {
 
     @Override
     public int getMaxLevel() {
-        return 50;
+        return 30;
     }
 
     @Override

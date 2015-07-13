@@ -8,7 +8,7 @@ public class Bowman implements IPerk {
 
     @Override
     public String[] getDescription(int level) {
-        return new String[]{"Do more damage", "with bows.", "Next level: " + level * 2 + "%"};
+        return new String[]{"Do more damage", "with bows.", "Next level: +" + level * 2 + "%"};
     }
 
     @Override
@@ -23,7 +23,7 @@ public class Bowman implements IPerk {
 
     @Override
     public int getMaxLevel() {
-        return 50;
+        return 30;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Bowman implements IPerk {
 
     @Override
     public int getCost() {
-        return 4;
+        return 5;
     }
 
     @Override

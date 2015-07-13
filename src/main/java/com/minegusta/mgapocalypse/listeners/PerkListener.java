@@ -115,7 +115,7 @@ public class PerkListener implements Listener {
             Player damager = (Player) e.getDamager();
             if(ItemUtil.isSword(damager.getItemInHand().getType()))
             {
-                double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.SLAYER);
+                double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.SLAYER) * 2;
                 if(percentage != 0)
                 {
                     e.setDamage(addDamage(e.getDamage(), percentage));
@@ -123,7 +123,7 @@ public class PerkListener implements Listener {
             }
             else if(ItemUtil.isAxe(damager.getItemInHand().getType()))
             {
-                double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.AXEMAN);
+                double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.AXEMAN) * 2;
                 if(percentage != 0)
                 {
                     e.setDamage(addDamage(e.getDamage(), percentage));
@@ -137,7 +137,7 @@ public class PerkListener implements Listener {
             Player damager = (Player) ((Arrow) e.getDamager()).getShooter();
             if(ItemUtil.isBow(damager.getItemInHand().getType()))
             {
-                double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.BOWMAN);
+                double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.BOWMAN) * 2;
                 if(percentage != 0)
                 {
                     e.setDamage(addDamage(e.getDamage(), percentage));
