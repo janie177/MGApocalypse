@@ -471,7 +471,7 @@ public class MGPlayer {
 
     public void addZombieKills(int killsAdded) {
         Player p = getPlayer();
-        int credits = killsAdded * 3;
+        int credits = killsAdded;
         this.zombieKills = zombieKills + killsAdded;
         p.sendMessage(ChatColor.GOLD + "You now have " + ChatColor.DARK_PURPLE + Integer.toString(getZombieKills()) + ChatColor.GOLD + " zombie kills.");
         p.sendMessage(ChatColor.GOLD + "You earned " + ChatColor.LIGHT_PURPLE + Integer.toString(credits) + ChatColor.GOLD + " credits.");
