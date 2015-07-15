@@ -5,7 +5,10 @@ import com.minegusta.mgapocalypse.util.RandomNumber;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Wolf;
 
 public class MobTrap implements ITrap
 {
