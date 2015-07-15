@@ -470,6 +470,11 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         MGApocalypse.addMGPlayer(e.getPlayer());
+
+        if(WorldCheck.is(e.getPlayer().getWorld()) && !MGApocalypse.getMGPlayer(e.getPlayer()).getIfPlaying())
+        {
+            e.getPlayer().teleport(e.getPlayer().getWorld().getSpawnLocation());
+        }
     }
 
     @EventHandler
