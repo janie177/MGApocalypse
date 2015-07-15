@@ -4,6 +4,9 @@ import com.minegusta.mgapocalypse.traps.ITrap;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -18,6 +21,12 @@ public class MobTrap implements ITrap
         int amount = 3;
         EntityType type = EntityType.ZOMBIE;
         Location location = new Location(p.getWorld(), p.getLocation().getX() + RandomNumber.get(20) - 10, p.getLocation().getY(), p.getLocation().getZ() + RandomNumber.get(20) - 10);
+
+        location = getAir(location);
+        if(location.getBlock().getType() != Material.AIR)
+        {
+            return false;
+        }
 
         try
         {
@@ -44,9 +53,26 @@ public class MobTrap implements ITrap
         return true;
     }
 
+    private Location getAir(Location start)
+    {
+        if(start.getBlock().getType() != Material.AIR)
+        {
+            Block b = start.getBlock();
+            for(int i = 1; i < 15; i++)
+            {
+                Block get = b.getRelative(BlockFace.UP, i);
+                if(get.getType() == Material.AIR)
+                {
+                    return get.getLocation();
+                }
+            }
+        }
+        return start;
+    }
+
     @Override
     public String getMessage() {
-        return ChatColor.DARK_GREEN + "Enemies have spawned nearby!";
+        return ChatColor.DARK_GREEN + "Enemies appeared nearby!";
     }
 
     @Override
