@@ -683,7 +683,7 @@ public class MGPlayer {
     public void setMostPlayerKills(int amount) {
         this.mostPlayerKills = amount;
         getPlayer().sendMessage(ChatColor.GREEN + "You broke your record for largest player killstreak!");
-        getPlayer().sendMessage(ChatColor.GREEN + "You killed " + ChatColor.DARK_PURPLE + getLongestAlive() + ChatColor.GREEN + " players!");
+        getPlayer().sendMessage(ChatColor.GREEN + "You killed " + ChatColor.DARK_PURPLE + getMostPlayerKills() + ChatColor.GREEN + " players!");
     }
 
     public void setMostGiantKills(int amount) {
