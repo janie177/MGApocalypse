@@ -21,6 +21,7 @@ public enum Trap {
     WHIRLWIND(new WhirlWindTrap()),
     ENTITYRAIN(new EntityRainTrap()),
     SOUND(new SoundTrap()),
+    CLEAR(new ClearTrap()),
     MOBTRAP(new MobTrap());
 
     private ITrap trap;
