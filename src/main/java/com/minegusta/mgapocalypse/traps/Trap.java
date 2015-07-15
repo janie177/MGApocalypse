@@ -1,7 +1,6 @@
 package com.minegusta.mgapocalypse.traps;
 
 import com.minegusta.mgapocalypse.traps.instances.*;
-import com.minegusta.mgapocalypse.traps.instances.WhirlWindTrap;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
