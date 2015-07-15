@@ -241,8 +241,6 @@ public class MGPlayer {
         setPlayerKills(0);
         setTimeAlive(0);
 
-        updateScoreBoard();
-
         addDeaths(1);
 
         setPerkPoints(0);
@@ -254,6 +252,8 @@ public class MGPlayer {
 
         setPlaying(false);
         p.getInventory().clear();
+
+        updateScoreBoard();
 
         saveFile();
     }
@@ -694,12 +694,13 @@ public class MGPlayer {
 
     public void updateStatus()
     {
-        PlayerStatus start = PlayerStatus.valueOf(status.name());
+        PlayerStatus newStatus;
 
-        if(getPlayerKills() > 3) status = PlayerStatus.BANDIT;
-        else if (getHeals() > 9) status = PlayerStatus.HEALER;
+        if(getPlayerKills() > 3) newStatus = PlayerStatus.BANDIT;
+        else if (getHeals() > 9) newStatus = PlayerStatus.HEALER;
+        else newStatus = PlayerStatus.REGULAR;
 
-        if(status != start && start != PlayerStatus.REGULAR)
+        if(newStatus != status && newStatus != PlayerStatus.REGULAR)
         {
             getPlayer().sendMessage(status.getColor() + "You are now a " + status.getFullname() + "!");
             getPlayer().sendMessage(status.getColor() + "Other players will see the " + status.getTag() + status.getColor() + " tag near your name.");
