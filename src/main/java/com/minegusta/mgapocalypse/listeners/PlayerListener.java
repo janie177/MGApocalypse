@@ -85,7 +85,7 @@ public class PlayerListener implements Listener {
                 p.getInventory().addItem(LootItem.EMPTYBOTTLE.build());
                 p.updateInventory();
             } else {
-                new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
+                new RemoveItemAfterSecond(p, Material.GLASS_BOTTLE);
             }
         }
         //Cure diseases
