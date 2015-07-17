@@ -700,10 +700,14 @@ public class MGPlayer {
         else if (getHeals() > 9) newStatus = PlayerStatus.HEALER;
         else newStatus = PlayerStatus.REGULAR;
 
-        if(newStatus != status && newStatus != PlayerStatus.REGULAR)
+        if(newStatus != status)
         {
-            getPlayer().sendMessage(status.getColor() + "You are now a " + status.getFullname() + "!");
-            getPlayer().sendMessage(status.getColor() + "Other players will see the " + status.getTag() + status.getColor() + " tag near your name.");
+            status = newStatus;
+            if(newStatus != PlayerStatus.REGULAR)
+            {
+                getPlayer().sendMessage(status.getColor() + "You are now a " + status.getFullname() + "!");
+                getPlayer().sendMessage(status.getColor() + "Other players will see the " + status.getTag() + status.getColor() + " tag near your name.");
+            }
         }
     }
 
