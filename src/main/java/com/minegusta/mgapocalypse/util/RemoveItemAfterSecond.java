@@ -33,6 +33,6 @@ public class RemoveItemAfterSecond {
                 p.getInventory().setItem(slot, new ItemStack(Material.AIR));
                 p.updateInventory();
             }
-        }, 4);
+        }, 2);
     }
 }

@@ -81,11 +81,11 @@ public class PlayerListener implements Listener {
                 p.setLevel(20 + mgp.getPerkLevel(Perk.HYDRATION));
                 p.sendMessage(ChatColor.GREEN + "You feel refreshed.");
                 e.setCancelled(true);
-                ItemUtil.removeOne(p, Material.POTION);
+                p.setItemInHand(new ItemStack(Material.AIR));
                 p.getInventory().addItem(LootItem.EMPTYBOTTLE.build());
                 p.updateInventory();
             } else {
-                new RemoveItemAfterSecond(p, Material.GLASS_BOTTLE);
+                new RemoveItemAfterSecond(p, p.getInventory().getHeldItemSlot());
             }
         }
         //Cure diseases
