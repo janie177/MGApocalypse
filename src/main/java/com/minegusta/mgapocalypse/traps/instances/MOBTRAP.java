@@ -21,7 +21,7 @@ public class MobTrap implements ITrap
     {
         int amount = 3;
         EntityType type = EntityType.ZOMBIE;
-        Location location = SpawnLocationFinder.get(s, p);
+        Location location = SpawnLocationFinder.get(s, p).clone();
 
         if(location.getBlock().getType() != Material.AIR)
         {

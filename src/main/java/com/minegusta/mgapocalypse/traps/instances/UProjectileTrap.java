@@ -26,7 +26,8 @@ public class UProjectileTrap implements ITrap {
 
         } catch (Exception igored){}
 
-        Location location = SpawnLocationFinder.get(s, p).clone();
+        Location old = SpawnLocationFinder.get(s, p);
+        Location location = new Location(old.getWorld(), old.getX(), old.getY(), old.getZ());
         location.add(0,2,0);
 
         if(!type.isSpawnable())
