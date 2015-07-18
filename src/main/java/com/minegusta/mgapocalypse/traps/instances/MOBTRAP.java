@@ -2,6 +2,7 @@ package com.minegusta.mgapocalypse.traps.instances;
 
 import com.minegusta.mgapocalypse.traps.ITrap;
 import com.minegusta.mgapocalypse.util.RandomNumber;
+import com.minegusta.mgapocalypse.util.SpawnLocationFinder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,9 +21,8 @@ public class MobTrap implements ITrap
     {
         int amount = 3;
         EntityType type = EntityType.ZOMBIE;
-        Location location = new Location(p.getWorld(), p.getLocation().getX() + RandomNumber.get(20) - 10, p.getLocation().getY(), p.getLocation().getZ() + RandomNumber.get(20) - 10);
+        Location location = SpawnLocationFinder.get(s, p);
 
-        location = getAir(location);
         if(location.getBlock().getType() != Material.AIR)
         {
             return false;
@@ -51,23 +51,6 @@ public class MobTrap implements ITrap
             }
         }
         return true;
-    }
-
-    private Location getAir(Location start)
-    {
-        if(start.getBlock().getType() != Material.AIR)
-        {
-            Block b = start.getBlock();
-            for(int i = 1; i < 15; i++)
-            {
-                Block get = b.getRelative(BlockFace.UP, i);
-                if(get.getType() == Material.AIR)
-                {
-                    return get.getLocation();
-                }
-            }
-        }
-        return start;
     }
 
     @Override

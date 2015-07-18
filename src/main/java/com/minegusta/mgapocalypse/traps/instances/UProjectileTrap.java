@@ -2,6 +2,7 @@ package com.minegusta.mgapocalypse.traps.instances;
 
 import com.minegusta.mgapocalypse.traps.ITrap;
 import com.minegusta.mgapocalypse.util.RandomNumber;
+import com.minegusta.mgapocalypse.util.SpawnLocationFinder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
@@ -25,7 +26,7 @@ public class UProjectileTrap implements ITrap {
 
         } catch (Exception igored){}
 
-        Location location = new Location(p.getWorld(), p.getLocation().getX() + RandomNumber.get(30) - 15, p.getLocation().getY() + 4, p.getLocation().getZ() + RandomNumber.get(30) - 15);
+        Location location = SpawnLocationFinder.get(s, p).clone().add(0,2,0);
 
         if(!type.isSpawnable())
         {
