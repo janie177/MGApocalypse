@@ -28,7 +28,6 @@ public class UProjectileTrap implements ITrap {
 
         Location old = SpawnLocationFinder.get(s, p);
         Location location = new Location(old.getWorld(), old.getX(), old.getY(), old.getZ());
-        location.add(0,2,0);
 
         if(!type.isSpawnable())
         {
@@ -43,10 +42,10 @@ public class UProjectileTrap implements ITrap {
             double y = p.getLocation().getY() - ent.getLocation().getY();
             double z = p.getLocation().getZ() - ent.getLocation().getZ();
 
-            Vector v = new Vector(x, y, z);
+            Vector v = new Vector(x, y + 2, z);
             v.normalize();
 
-            ent.setVelocity(v.multiply(2.4));
+            ent.setVelocity(v.multiply(2.6));
 
             if(ent instanceof Fireball)
             {
