@@ -26,7 +26,8 @@ public class ProjectileTrap implements ITrap {
 
         } catch (Exception igored){}
 
-        Location location = SpawnLocationFinder.get(s, p).clone().add(0,2,0);
+        Location location = SpawnLocationFinder.get(s, p).clone();
+        location.add(0,2,0);
 
         if(!type.isSpawnable())
         {
