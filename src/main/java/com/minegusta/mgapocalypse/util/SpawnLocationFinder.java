@@ -27,7 +27,7 @@ public class SpawnLocationFinder
         int radius = 15;
         for(int x = -radius; x <= radius; x++)
         {
-            for(int y = trap.getY(); y <= trap.getY() + 6; y++)
+            for(int y = trap.getY() + 2; y <= trap.getY() + 6; y++)
             {
                 for(int z = -radius; z <= radius; z++)
                 {
