@@ -23,7 +23,7 @@ public class TrapListener implements Listener{
 
         Player p = e.getPlayer();
 
-        if(e.getAction() == Action.PHYSICAL && e.hasBlock() && (e.getClickedBlock().getType() == Material.STONE_PLATE || e.getClickedBlock().getType() == Material.WOOD_PLATE || e.getClickedBlock().getType() == Material.STONE_BUTTON || e.getClickedBlock().getType() == Material.WOOD_BUTTON))
+        if((e.getAction() == Action.PHYSICAL && e.hasBlock() && (e.getClickedBlock().getType() == Material.STONE_PLATE || e.getClickedBlock().getType() == Material.WOOD_PLATE)) || (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getMaterial() == Material.STONE_BUTTON || e.getMaterial() == Material.WOOD_BUTTON))
         {
             int i = 2;
             while (i < 4)
