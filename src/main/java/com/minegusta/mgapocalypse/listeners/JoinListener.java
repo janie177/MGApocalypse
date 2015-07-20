@@ -62,6 +62,7 @@ public class JoinListener implements Listener {
                     e.getPlayer().teleport(DefaultConfig.getRandomSpawn());
 
                     mgp.setPlaying(true);
+                    e.getPlayer().setGameMode(GameMode.SURVIVAL);
 
                     new SpawnKit(e.getPlayer());
 
