@@ -192,7 +192,12 @@ public class MGPlayer {
         Health.setBoost(p);
         Athlete.setBoost(p);
 
-        p.setHealth(getHealth());
+        if(getHealth() > p.getMaxHealth())
+        {
+            p.setHealth(p.getMaxHealth());
+            setHealth(p.getHealth());
+        }
+        else p.setHealth(getHealth());
         p.setFoodLevel(getHunger());
         p.setLevel(getThirst());
     }
@@ -208,10 +213,6 @@ public class MGPlayer {
         setThirst(20);
         setBleeding(false);
         setInfected(false);
-
-        p.setHealth(getHealth());
-        p.setLevel(getThirst());
-        p.setFoodLevel(getHunger());
 
         if (getZombieKills() > getLongestKillStreak()) {
             setlongestKillStreak(getZombieKills());
@@ -264,12 +265,17 @@ public class MGPlayer {
 
         p.setGameMode(GameMode.SURVIVAL);
 
-        setHealth(p.getMaxHealth());
         setHunger(20);
         setThirst(20);
         setBleeding(false);
         setInfected(false);
-        p.setHealth(getHealth());
+        if(getHealth() > p.getMaxHealth())
+        {
+            p.setHealth(p.getMaxHealth());
+            setHealth(p.getHealth());
+        }
+        else p.setHealth(getHealth());
+
         p.setLevel(getThirst());
         p.setFoodLevel(getHunger());
         setGiantKills(0);
