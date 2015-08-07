@@ -73,7 +73,7 @@ public class PlayerListener implements Listener {
         MGPlayer mgp = MGApocalypse.getMGPlayer(p);
 
         if (food.contains(m)) {
-            if (p.getHealth() <= 19.0) p.setHealth(p.getHealth() + 1.0);
+            if (p.getHealth() < p.getMaxHealth()) p.setHealth(p.getHealth() + 1.0);
         }
 
         if (m == Material.POTION) {
