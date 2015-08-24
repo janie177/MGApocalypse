@@ -6,6 +6,7 @@ import com.minegusta.mgapocalypse.Main;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import com.minegusta.mgloot.loottables.Loot;
+import com.minegusta.mgloot.loottables.LootItem;
 import com.minegusta.mgloot.managers.LootManager;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -45,6 +46,7 @@ public class GiantListener implements Listener
             }
 
             ItemStack loot = new LootManager(Loot.ultraLoot, 1).getLoot()[0];
+            if(RandomNumber.get(100) <= 25) e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), LootItem.DIAMOND.build());
             e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), loot);
         }
     }
