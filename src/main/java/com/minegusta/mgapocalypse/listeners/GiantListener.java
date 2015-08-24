@@ -7,6 +7,7 @@ import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import com.minegusta.mgloot.loottables.Loot;
 import com.minegusta.mgloot.managers.LootManager;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -63,6 +64,15 @@ public class GiantListener implements Listener
 
         if(e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof Player) {
             p = (Player) ((Arrow) e.getDamager()).getShooter();
+
+            if(p.getLocation().distance(e.getEntity().getLocation()) > 36)
+            {
+                p.sendMessage(ChatColor.RED + "You are too far away from the giant!");
+                p.sendMessage(ChatColor.RED + "It saw your arrow coming and deflected it.");
+                e.setCancelled(true);
+                return;
+            }
+
         }
 
         if(p == null)return;
