@@ -142,6 +142,7 @@ public class SpawnTask {
                 p.setBaby(false);
                 p.setCanPickupItems(false);
                 p.getEquipment().getItemInMainHand().setType(Material.AIR);
+                p.getEquipment().getItemInOffHand().setType(Material.AIR);
             }
             else
             {
