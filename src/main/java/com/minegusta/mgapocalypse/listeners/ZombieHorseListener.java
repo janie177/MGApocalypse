@@ -82,8 +82,8 @@ public class ZombieHorseListener implements Listener {
     }
 
     private void effect(Location l) {
-        l.getWorld().playSound(l, Sound.SLIME_WALK2, 10, 1);
-        l.getWorld().playSound(l, Sound.CHICKEN_EGG_POP, 10F, 0.1F);
+        l.getWorld().playSound(l, Sound.ENTITY_SLIME_JUMP, 10, 1);
+        l.getWorld().playSound(l, Sound.ENTITY_CHICKEN_EGG, 10F, 0.1F);
         l.getWorld().spigot().playEffect(l, Effect.CRIT, 0, 0, 2, 2, 2, 1 / 10, 40, 35);
         l.getWorld().spigot().playEffect(l, Effect.SLIME, 0, 0, 2, 2, 2, 1 / 10, 40, 35);
         l.getWorld().spigot().playEffect(l, Effect.SNOWBALL_BREAK, 0, 0, 2, 2, 2, 1 / 10, 40, 35);

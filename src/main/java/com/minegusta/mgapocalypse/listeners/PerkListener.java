@@ -37,11 +37,11 @@ public class PerkListener implements Listener {
 
             l.getWorld().spigot().playEffect(l, Effect.CLOUD, 0, 0, 1, 1, 1, 1 / 30, 50, 50);
             l.getWorld().spigot().playEffect(l, Effect.SMOKE, 0, 0, 1, 1, 1, 1 / 30, 50, 50);
-            l.getWorld().playSound(l, Sound.CHEST_OPEN, 2, 2);
+            l.getWorld().playSound(l, Sound.BLOCK_CHEST_OPEN, 2, 2);
 
             for (ItemStack is : LootItem.getRandom(3, Loot.goodLoot, Loot.toolLoot, Loot.normalLoot, Loot.betterLoot, Loot.healingLoot, Loot.defaultLoot, Loot.foodLoot)) {
                 l.getWorld().dropItemNaturally(l, is);
-                l.getWorld().playSound(l, Sound.CHICKEN_EGG_POP, 1, 1);
+                l.getWorld().playSound(l, Sound.ENTITY_CHICKEN_EGG, 1, 1);
             }
 
             AirDrop.blocks.remove(e.getEntity());

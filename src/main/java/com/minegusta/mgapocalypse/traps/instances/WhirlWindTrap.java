@@ -34,7 +34,7 @@ public class WhirlWindTrap implements ITrap {
 
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), () -> {
                     if (k % 20 == 0) {
-                        center.getWorld().playSound(center, Sound.ENDERDRAGON_WINGS, 10, 1);
+                        center.getWorld().playSound(center, Sound.ENTITY_ENDERDRAGON_FLAP, 10, 1);
                     }
                     center.getWorld().spigot().playEffect(center, Effect.PARTICLE_SMOKE, 0, 0, 1, 5, 1, 1 / 30, 50, 30);
 

@@ -14,7 +14,7 @@ public class SoundTrap implements ITrap {
     public boolean apply(Player p, Sign s) {
 
         int duration = 1;
-        Sound sound = Sound.CLICK;
+        Sound sound = Sound.BLOCK_TRIPWIRE_CLICK_ON;
 
         try
         {
