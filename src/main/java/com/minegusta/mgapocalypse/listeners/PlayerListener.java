@@ -100,7 +100,7 @@ public class PlayerListener implements Listener {
     public void onEvent(PlayerInteractEntityEvent e) {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
 
-        Material hand = e.getPlayer().getItemInHand().getType();
+        Material hand = e.getPlayer().getInventory().getItemInMainHand().getType();
 
         //Check for bandaging
         if (e.getRightClicked() instanceof Player) {
@@ -119,7 +119,7 @@ public class PlayerListener implements Listener {
     public void onEvent(PlayerInteractEvent e) {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
         Player p = e.getPlayer();
-        Material hand = e.getPlayer().getItemInHand().getType();
+        Material hand = e.getPlayer().getInventory().getItemInMainHand().getType();
 
         //Check for bandaging
         if ((e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
@@ -196,7 +196,7 @@ public class PlayerListener implements Listener {
         //Check if you can break these blocks:
         Material type = e.getBlock().getType();
         Location l = e.getBlock().getLocation();
-        ItemStack tool = p.getItemInHand();
+        ItemStack tool = p.getInventory().getItemInMainHand();
         Material hand = tool.getType();
 
         if (type == Material.CROPS) e.setCancelled(true);
@@ -258,7 +258,7 @@ public class PlayerListener implements Listener {
             if (e.getDamager() instanceof Player) {
                 Player damager = (Player) e.getDamager();
 
-                ItemStack hand = damager.getItemInHand();
+                ItemStack hand = damager.getInventory().getItemInMainHand();
                 if (hand.getType() == Material.PAPER) {
                     mgp.setLastBandaged();
                     BleedingManager.bandage(p, false);
@@ -304,7 +304,7 @@ public class PlayerListener implements Listener {
                 zombie.setVelocity(zombie.getLocation().toVector().subtract(p.getLocation().toVector()).normalize().multiply(1.1));
                 zombie.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 5, 1, false, false));
 
-                if(ItemUtil.isAxe(p.getItemInHand().getType()))
+                if(ItemUtil.isAxe(p.getInventory().getItemInMainHand().getType()))
                 {
                     zombie.getWorld().getLivingEntities().stream().filter(z -> z instanceof Zombie && z.getLocation().distance(zombie.getLocation()) < 2).forEach(z ->
                     {

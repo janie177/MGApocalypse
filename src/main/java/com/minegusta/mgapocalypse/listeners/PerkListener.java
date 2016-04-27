@@ -21,6 +21,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -113,7 +114,7 @@ public class PerkListener implements Listener {
         if(e.getDamager() instanceof Player && e.getEntity() instanceof LivingEntity)
         {
             Player damager = (Player) e.getDamager();
-            if(ItemUtil.isSword(damager.getItemInHand().getType()))
+            if(ItemUtil.isSword(damager.getInventory().getItemInMainHand().getType()))
             {
                 double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.SLAYER) * 2;
                 if(percentage != 0)
@@ -121,7 +122,7 @@ public class PerkListener implements Listener {
                     e.setDamage(addDamage(e.getDamage(), percentage));
                 }
             }
-            else if(ItemUtil.isAxe(damager.getItemInHand().getType()))
+            else if(ItemUtil.isAxe(damager.getInventory().getItemInMainHand().getType()))
             {
                 double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.AXEMAN) * 2;
                 if(percentage != 0)
@@ -135,13 +136,10 @@ public class PerkListener implements Listener {
         else if(e.getDamager() instanceof Arrow && ((Arrow)e.getDamager()).getShooter() instanceof Player && e.getEntity() instanceof LivingEntity)
         {
             Player damager = (Player) ((Arrow) e.getDamager()).getShooter();
-            if(ItemUtil.isBow(damager.getItemInHand().getType()))
+            double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.BOWMAN) * 2;
+            if(percentage != 0)
             {
-                double percentage = MGApocalypse.getMGPlayer(damager).getPerkLevel(Perk.BOWMAN) * 2;
-                if(percentage != 0)
-                {
-                    e.setDamage(addDamage(e.getDamage(), percentage));
-                }
+                e.setDamage(addDamage(e.getDamage(), percentage));
             }
 
         }

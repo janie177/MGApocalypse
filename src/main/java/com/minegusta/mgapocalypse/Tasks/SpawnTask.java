@@ -141,7 +141,7 @@ public class SpawnTask {
                 p.setAngry(false);
                 p.setBaby(false);
                 p.setCanPickupItems(false);
-                p.getEquipment().getItemInHand().setType(Material.AIR);
+                p.getEquipment().getItemInMainHand().setType(Material.AIR);
             }
             else
             {
