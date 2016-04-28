@@ -148,7 +148,8 @@ public class SpawnTask {
             {
                 Zombie zombie2 = (Zombie) loc.getWorld().spawnEntity(random, EntityType.ZOMBIE);
                 zombie2.setCanPickupItems(false);
-                zombie2.getEquipment().setItemInHand(new ItemStack(Material.AIR));
+                zombie2.getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
+                zombie2.getEquipment().setItemInOffHand(new ItemStack(Material.AIR));
                 if (RandomNumber.get(25) == 1) {
                     zombie2.setBaby(true);
                 }

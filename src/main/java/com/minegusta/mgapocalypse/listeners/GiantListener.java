@@ -101,7 +101,8 @@ public class GiantListener implements Listener
         {
             Zombie z = (Zombie) l.getWorld().spawnEntity(l, EntityType.ZOMBIE);
             z.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 600, 0, false, false));
-            z.setVillager(false);
+            z.getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
+            z.getEquipment().setItemInOffHand(new ItemStack(Material.AIR));
             ((Creature)z).setTarget(p);
         }
 

@@ -75,8 +75,8 @@ public class ZombieHorseListener implements Listener {
                 Zombie z = (Zombie) l.getWorld().spawnEntity(l, EntityType.ZOMBIE);
                 z.setBaby(true);
                 z.setCanPickupItems(false);
-                z.setVillager(false);
-                z.getEquipment().setItemInHand(new ItemStack(Material.AIR));
+                z.getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
+                z.getEquipment().setItemInOffHand(new ItemStack(Material.AIR));
             }
         }
     }
