@@ -8,10 +8,7 @@ import com.minegusta.mgapocalypse.util.Break;
 import com.minegusta.mgapocalypse.util.PlayerStatus;
 import com.minegusta.mgapocalypse.util.ScoreboardUtil;
 import com.minegusta.mgapocalypse.util.WorldCheck;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -481,7 +478,8 @@ public class MGPlayer {
         this.zombieKills = zombieKills + killsAdded;
         p.sendMessage(ChatColor.GOLD + "You now have " + ChatColor.DARK_PURPLE + Integer.toString(getZombieKills()) + ChatColor.GOLD + " zombie kills.");
         p.sendMessage(ChatColor.GOLD + "You earned " + ChatColor.LIGHT_PURPLE + Integer.toString(credits) + ChatColor.GOLD + " credits.");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + p.getName() + " " + credits);
+        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "addcredits " + p.getName() + " " + credits);
+        Bukkit.getLogger().info("Adding " + credits + " credits to " + p.getName() + ".");
         addEarnedcredits(credits);
         if (getZombieKills() % 5 == 0) {
             addPerkPoints(1);
@@ -515,7 +513,8 @@ public class MGPlayer {
         this.zombieKills = zombieKills + killsAdded;
         p.sendMessage(ChatColor.GOLD + "You now have " + ChatColor.DARK_PURPLE + Integer.toString(getGiantKills()) + ChatColor.GOLD + " giant kills.");
         p.sendMessage(ChatColor.GOLD + "You earned " + ChatColor.LIGHT_PURPLE + Integer.toString(credits) + ChatColor.GOLD + " credits.");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "addcredits " + p.getName() + " " + credits);
+        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "addcredits " + p.getName() + " " + credits);
+        Bukkit.getLogger().info("Adding " + credits + " credits to " + p.getName() + ".");
         addEarnedcredits(credits);
         addPerkPoints(killsAdded);
     }

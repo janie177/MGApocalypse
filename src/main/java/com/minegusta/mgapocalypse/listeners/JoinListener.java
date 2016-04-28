@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -47,6 +48,9 @@ public class JoinListener implements Listener {
     //Listen on interacting with the sign.
     @EventHandler(priority = EventPriority.LOWEST)
     public void onSignClick(PlayerInteractEvent e) {
+
+        if(e.getHand() != EquipmentSlot.HAND) return;
+
         if (e.hasBlock() && e.getAction() == Action.RIGHT_CLICK_BLOCK && (e.getClickedBlock().getType() == Material.WALL_SIGN || e.getClickedBlock().getType() == Material.SIGN_POST)) {
             if (!(e.getClickedBlock().getState() instanceof Sign)) return;
             Sign sign = (Sign) e.getClickedBlock().getState();

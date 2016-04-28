@@ -24,6 +24,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.FurnaceExtractEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
@@ -118,6 +119,8 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEvent(PlayerInteractEvent e) {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
+        if(e.getHand() != EquipmentSlot.HAND) return;
+
         Player p = e.getPlayer();
         Material hand = e.getPlayer().getInventory().getItemInMainHand().getType();
 

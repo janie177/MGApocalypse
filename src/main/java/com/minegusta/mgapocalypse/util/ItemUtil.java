@@ -38,6 +38,8 @@ public class ItemUtil {
         p.updateInventory();
     }
 
+    /*
+
     public static void removeAmount(Player p, Material m, int amount) {
         int remaining = amount;
         int slot = 0;
@@ -93,6 +95,8 @@ public class ItemUtil {
         }
         return false;
     }
+
+    */
 
     private static boolean compareString(String one, String two) {
         return one.equals(two);
