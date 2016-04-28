@@ -41,12 +41,12 @@ public class MobListener implements Listener {
             if(e.getEntity() instanceof Zombie)
             {
                 Zombie z = (Zombie) e.getEntity();
-                z.setVillager(false);
             }
             else if(e.getEntity() instanceof PigZombie)
             {
                 PigZombie p = (PigZombie) e.getEntity();
-                p.getEquipment().setItemInHand(new ItemStack(Material.AIR));
+                p.getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
+                p.getEquipment().setItemInOffHand(new ItemStack(Material.AIR));
             }
             return;
         }

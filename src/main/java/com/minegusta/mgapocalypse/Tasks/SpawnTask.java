@@ -5,6 +5,7 @@ import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.StringLocConverter;
 import com.minegusta.mgapocalypse.util.WorldCheck;
+import com.minegusta.mgapocalypse.util.ZombieUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -147,9 +148,7 @@ public class SpawnTask {
             else
             {
                 Zombie zombie2 = (Zombie) loc.getWorld().spawnEntity(random, EntityType.ZOMBIE);
-                zombie2.setCanPickupItems(false);
-                zombie2.getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
-                zombie2.getEquipment().setItemInOffHand(new ItemStack(Material.AIR));
+                ZombieUtil.setZombieToVanilla(zombie2);
                 if (RandomNumber.get(25) == 1) {
                     zombie2.setBaby(true);
                 }

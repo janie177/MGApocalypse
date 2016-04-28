@@ -5,6 +5,7 @@ import com.minegusta.mgapocalypse.MGApocalypse;
 import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.util.BloodBlockUtil;
 import com.minegusta.mgapocalypse.util.WorldCheck;
+import com.minegusta.mgapocalypse.util.ZombieUtil;
 import com.minegusta.mgloot.loottables.Loot;
 import com.minegusta.mgloot.managers.LootManager;
 import org.bukkit.*;
@@ -73,10 +74,8 @@ public class ZombieHorseListener implements Listener {
 
             for (int x = 0; x < amount; x++) {
                 Zombie z = (Zombie) l.getWorld().spawnEntity(l, EntityType.ZOMBIE);
+                ZombieUtil.setZombieToVanilla(z);
                 z.setBaby(true);
-                z.setCanPickupItems(false);
-                z.getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
-                z.getEquipment().setItemInOffHand(new ItemStack(Material.AIR));
             }
         }
     }

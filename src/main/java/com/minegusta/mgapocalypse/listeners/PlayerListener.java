@@ -82,7 +82,7 @@ public class PlayerListener implements Listener {
                 p.setLevel(20 + mgp.getPerkLevel(Perk.HYDRATION));
                 p.sendMessage(ChatColor.GREEN + "You feel refreshed.");
                 e.setCancelled(true);
-                p.setItemInHand(new ItemStack(Material.AIR));
+                p.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
                 p.getInventory().addItem(LootItem.EMPTYBOTTLE.build());
                 p.updateInventory();
             } else {

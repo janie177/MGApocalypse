@@ -5,6 +5,7 @@ import com.minegusta.mgapocalypse.MGApocalypse;
 import com.minegusta.mgapocalypse.Main;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
+import com.minegusta.mgapocalypse.util.ZombieUtil;
 import com.minegusta.mgloot.loottables.Loot;
 import com.minegusta.mgloot.loottables.LootItem;
 import com.minegusta.mgloot.managers.LootManager;
@@ -101,8 +102,7 @@ public class GiantListener implements Listener
         {
             Zombie z = (Zombie) l.getWorld().spawnEntity(l, EntityType.ZOMBIE);
             z.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 600, 0, false, false));
-            z.getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
-            z.getEquipment().setItemInOffHand(new ItemStack(Material.AIR));
+            ZombieUtil.setZombieToVanilla(z);
             ((Creature)z).setTarget(p);
         }
 
