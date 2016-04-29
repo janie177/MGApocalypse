@@ -73,7 +73,7 @@ public class GiantListener implements Listener
             p = (Player) e.getDamager();
         }
 
-        if(e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof Player) {
+        if(e.getDamager() instanceof Projectile && ((Projectile) e.getDamager()).getShooter() instanceof Player) {
             p = (Player) ((Arrow) e.getDamager()).getShooter();
 
             if(p.getLocation().distance(e.getEntity().getLocation()) > 36)
@@ -90,7 +90,10 @@ public class GiantListener implements Listener
 
         Giant g = (Giant) e.getEntity();
 
-        moveToPlayer(g, p);
+        if(e.getDamager() instanceof Projectile)
+        {
+            moveToPlayer(g, p);
+        }
 
         g.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 600, 0, false, false));
         g.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 600, 2, false, false));
