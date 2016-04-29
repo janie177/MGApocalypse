@@ -120,7 +120,7 @@ public class GiantListener implements Listener
 
     private void jump(Giant g) {
         final Location center = g.getLocation();
-        g.setVelocity(new Vector(0, 4.5, 0));
+        g.setVelocity(new Vector(0, 2.1, 0));
 
         List<Location> close = Lists.newArrayList();
         List<Location> medium = Lists.newArrayList();
@@ -141,9 +141,9 @@ public class GiantListener implements Listener
             far.add(calculateCircle(center, degrees, 10));
         }
 
-        explode(close, 2, 3);
-        explode(medium, 4, 2);
-        explode(far, 6, 1);
+        explode(close, 4, 3);
+        explode(medium, 6, 2);
+        explode(far, 8, 1);
     }
     
     public void explode(final List<Location> locations, int delay, float strength)
