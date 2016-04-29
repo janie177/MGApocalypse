@@ -6,6 +6,7 @@ import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.perks.Perk;
 import com.minegusta.mgapocalypse.util.RandomNumber;
 import com.minegusta.mgapocalypse.util.WorldCheck;
+import com.minegusta.mgapocalypse.util.ZombieUtil;
 import com.minegusta.mgloot.loottables.LootItem;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -41,6 +42,7 @@ public class MobListener implements Listener {
             if(e.getEntity() instanceof Zombie)
             {
                 Zombie z = (Zombie) e.getEntity();
+                ZombieUtil.setZombieToVanilla(z);
             }
             else if(e.getEntity() instanceof PigZombie)
             {
