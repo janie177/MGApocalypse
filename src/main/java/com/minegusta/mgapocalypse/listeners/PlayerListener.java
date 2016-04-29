@@ -382,6 +382,7 @@ public class PlayerListener implements Listener {
 
         Zombie z = (Zombie) p.getWorld().spawnEntity(p.getLocation(), EntityType.ZOMBIE);
         z.setBaby(false);
+        z.setVillagerProfession(null);
         z.setVillager(false);
         z.setCustomNameVisible(true);
         z.setCustomName(p.getName());
