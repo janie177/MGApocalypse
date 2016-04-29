@@ -3,11 +3,14 @@ package com.minegusta.mgapocalypse.listeners;
 
 import com.minegusta.mgapocalypse.util.RemoveEntity;
 import com.minegusta.mgapocalypse.util.WorldCheck;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffect;
@@ -33,7 +36,12 @@ public class ProjectileListener implements Listener {
 
             temp.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20 * 300, 0));
 
-            temp.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(temp.getLocation()) < 30).forEach(ent -> ((Creature) ent).setTarget(temp));
+            temp.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(temp.getLocation()) < 30).forEach(ent ->
+            {
+                ((Creature) ent).setTarget(temp);
+                EntityTargetEvent event = new EntityTargetLivingEntityEvent(ent, temp, EntityTargetEvent.TargetReason.RANDOM_TARGET);
+                Bukkit.getPluginManager().callEvent(event);
+            });
 
             new RemoveEntity(temp, 5);
         }

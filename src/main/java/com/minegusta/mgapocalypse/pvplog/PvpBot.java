@@ -5,6 +5,8 @@ import com.minegusta.mgapocalypse.Main;
 import com.minegusta.mgapocalypse.config.LogoutManager;
 import org.bukkit.*;
 import org.bukkit.entity.*;
+import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -64,6 +66,8 @@ public class PvpBot {
         {
             if (ent instanceof Zombie) {
                 ((Creature) ent).setTarget(v);
+                EntityTargetEvent event = new EntityTargetLivingEntityEvent(ent, v, EntityTargetEvent.TargetReason.RANDOM_TARGET);
+                Bukkit.getPluginManager().callEvent(event);
                 if (v.getLocation().distance(ent.getLocation()) < 6) {
                     v.damage(2, ent);
                 }
@@ -103,7 +107,11 @@ public class PvpBot {
         v.setCustomName(name);
         v.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 100, 10));
 
-        v.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(v.getLocation()) < 30).forEach(ent -> ((Creature) ent).setTarget(v));
+        v.getWorld().getLivingEntities().stream().filter(ent -> ent instanceof Zombie && ent.getLocation().distance(v.getLocation()) < 30).forEach(ent -> {
+            ((Creature) ent).setTarget(v);
+            EntityTargetEvent event = new EntityTargetLivingEntityEvent(ent, v, EntityTargetEvent.TargetReason.RANDOM_TARGET);
+            Bukkit.getPluginManager().callEvent(event);
+        });
 
         return v;
     }

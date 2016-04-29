@@ -16,9 +16,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -114,6 +112,8 @@ public class GiantListener implements Listener
             z.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 600, 0, false, false));
             ZombieUtil.setZombieToVanilla(z);
             ((Creature)z).setTarget(p);
+            EntityTargetEvent event = new EntityTargetLivingEntityEvent(z, p, EntityTargetEvent.TargetReason.RANDOM_TARGET);
+            Bukkit.getPluginManager().callEvent(event);
         }
 
     }

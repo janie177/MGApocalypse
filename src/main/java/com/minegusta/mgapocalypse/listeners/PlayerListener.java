@@ -10,10 +10,7 @@ import com.minegusta.mgapocalypse.lootblocks.Loot;
 import com.minegusta.mgapocalypse.perks.Perk;
 import com.minegusta.mgapocalypse.util.*;
 import com.minegusta.mgloot.loottables.LootItem;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -444,7 +441,12 @@ public class PlayerListener implements Listener {
     public void onEvent(PlayerToggleSprintEvent e) {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
 
-        e.getPlayer().getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(e.getPlayer().getLocation()) < 56 && ent instanceof Zombie && ((Zombie) ent).getTarget() == null).forEach(zombie -> ((Creature) zombie).setTarget(e.getPlayer()));
+        e.getPlayer().getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(e.getPlayer().getLocation()) < 56 && ent instanceof Zombie && ((Zombie) ent).getTarget() == null).forEach(zombie ->
+        {
+            ((Creature) zombie).setTarget(e.getPlayer());
+            EntityTargetEvent event = new EntityTargetLivingEntityEvent(zombie, e.getPlayer(), EntityTargetEvent.TargetReason.RANDOM_TARGET);
+            Bukkit.getPluginManager().callEvent(event);
+        });
     }
 
     //Stop health regen.
