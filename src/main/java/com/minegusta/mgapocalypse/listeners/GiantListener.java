@@ -17,6 +17,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -50,6 +51,15 @@ public class GiantListener implements Listener
             if(RandomNumber.get(100) <= 25) e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), LootItem.DIAMOND.build());
             e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), loot);
         }
+    }
+
+    @EventHandler
+    public void onGiantFallDamage(EntityDamageEvent e)
+    {
+        if(!WorldCheck.is(e.getEntity().getWorld()))return;
+        if(!(e.getEntity() instanceof Giant))return;
+
+        if(e.getCause() == EntityDamageEvent.DamageCause.FALL) e.setCancelled(true);
     }
 
     @EventHandler
@@ -110,7 +120,7 @@ public class GiantListener implements Listener
 
     private void jump(Giant g) {
         final Location center = g.getLocation();
-        g.setVelocity(new Vector(0, 7, 0));
+        g.setVelocity(new Vector(0, 4.5, 0));
 
         List<Location> close = Lists.newArrayList();
         List<Location> medium = Lists.newArrayList();

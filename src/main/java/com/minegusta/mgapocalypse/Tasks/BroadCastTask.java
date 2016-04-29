@@ -24,9 +24,9 @@ public class BroadCastTask {
                 p.sendMessage(ChatColor.RED + "- - - " + ChatColor.GOLD + "WasteLand" + ChatColor.RED + " - - -");
                 p.sendMessage(ChatColor.LIGHT_PURPLE + messages[index]);
                 p.sendMessage(ChatColor.RED + "- - - - - - - - -");
-                index++;
             });
-            if (index >= messages.length - 1) index = 0;
+            index++;
+            if (index >= messages.length) index = 0;
         }, 20 * 30, 20 * 180);
     }
 }
