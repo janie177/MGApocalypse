@@ -23,9 +23,9 @@ public class ZombieUtil {
 		e.setArmorContents(new ItemStack[]{null, null, null, null, null, null});
 		if(z.isBaby())
 		{
-			z.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 12000, 1, false, false));
+			z.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 12000, 0, false, false));
 		}
-		else z.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 12000, 0, false, false));
+		else z.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 12000, 1, false, false));
 	}
 
 }
