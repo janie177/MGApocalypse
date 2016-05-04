@@ -98,7 +98,11 @@ public class PlayerListener implements Listener {
     public void onEvent(PlayerInteractEntityEvent e) {
         if (!WorldCheck.is(e.getPlayer().getWorld())) return;
 
-        Material hand = e.getPlayer().getInventory().getItemInMainHand().getType();
+        Material hand;
+
+        if(e.getHand() == EquipmentSlot.HAND) {
+            hand = e.getPlayer().getInventory().getItemInMainHand().getType();
+        } else hand = e.getPlayer().getInventory().getItemInOffHand().getType();
 
         //Check for bandaging
         if (e.getRightClicked() instanceof Player) {
