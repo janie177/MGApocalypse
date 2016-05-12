@@ -23,9 +23,11 @@ import org.bukkit.event.inventory.FurnaceExtractEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -75,7 +77,7 @@ public class PlayerListener implements Listener {
         }
 
         if (m == Material.POTION) {
-            if (e.getItem().getDurability() == 0) {
+            if (((PotionMeta)e.getItem().getItemMeta()).getBasePotionData().getType() != PotionType.WATER) {
                 p.setLevel(20 + mgp.getPerkLevel(Perk.HYDRATION));
                 p.sendMessage(ChatColor.GREEN + "You feel refreshed.");
                 e.setCancelled(true);
