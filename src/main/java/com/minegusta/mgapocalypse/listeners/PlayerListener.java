@@ -77,7 +77,7 @@ public class PlayerListener implements Listener {
         }
 
         if (m == Material.POTION) {
-            if (((PotionMeta)e.getItem().getItemMeta()).getBasePotionData().getType() != PotionType.WATER) {
+            if (((PotionMeta)e.getItem().getItemMeta()).getBasePotionData().getType() == PotionType.WATER) {
                 p.setLevel(20 + mgp.getPerkLevel(Perk.HYDRATION));
                 p.sendMessage(ChatColor.GREEN + "You feel refreshed.");
                 e.setCancelled(true);
