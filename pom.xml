@@ -171,7 +171,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <finalName>MGEssentials</finalName>
+                    <finalName>MGApocalypse</finalName>
                 </configuration>
             </plugin>
         </plugins>
