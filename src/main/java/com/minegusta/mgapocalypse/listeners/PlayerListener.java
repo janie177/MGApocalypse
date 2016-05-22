@@ -9,6 +9,7 @@ import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.lootblocks.Loot;
 import com.minegusta.mgapocalypse.perks.Perk;
 import com.minegusta.mgapocalypse.util.*;
+import com.minegusta.mgloot.Main;
 import com.minegusta.mgloot.loottables.LootItem;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -234,7 +235,9 @@ public class PlayerListener implements Listener {
 
         if (type == Material.SOUL_SAND && hand == Material.WOOD_SPADE) {
             BlockUtil.changeBlock(l, Material.STONE, 0);
-            l.getWorld().dropItemNaturally(l, Loot.getGrave().build());
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, ()-> {
+                l.getWorld().dropItemNaturally(l, Loot.getGrave().build());
+            }, 4);
             if (RandomNumber.get(3) == 1) l.getWorld().spawnEntity(l, EntityType.SKELETON);
             tool.setDurability((short) (tool.getDurability() + 15));
             if (tool.getDurability() >= hand.getMaxDurability())
