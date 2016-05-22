@@ -42,6 +42,7 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
         Bukkit.getPluginManager().registerEvents(new PerkListener(), this);
         Bukkit.getPluginManager().registerEvents(new TrapListener(), this);
+        Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
         Bukkit.getPluginManager().registerEvents(new GiantListener(), this);
         Bukkit.getPluginManager().registerEvents(new PigZombieListener(), this);
         Bukkit.getPluginManager().registerEvents(new ZombieHorseListener(), this);
