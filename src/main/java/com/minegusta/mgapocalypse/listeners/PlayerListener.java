@@ -236,7 +236,7 @@ public class PlayerListener implements Listener {
         if (type == Material.SOUL_SAND && hand == Material.WOOD_SPADE) {
             BlockUtil.changeBlock(l, Material.STONE, 0);
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.PLUGIN, ()-> {
-                l.getWorld().dropItemNaturally(l, Loot.getGrave().build());
+                l.getWorld().dropItemNaturally(l.clone().add(0.5, 0.5, 0.5), Loot.getGrave().build());
             }, 4);
             if (RandomNumber.get(3) == 1) l.getWorld().spawnEntity(l, EntityType.SKELETON);
             tool.setDurability((short) (tool.getDurability() + 15));
