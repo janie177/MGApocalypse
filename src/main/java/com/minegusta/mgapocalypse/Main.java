@@ -11,6 +11,7 @@ import com.minegusta.mgapocalypse.config.SavedLocationsManager;
 import com.minegusta.mgapocalypse.listeners.*;
 import com.minegusta.mgapocalypse.pvplog.PvpLogListener;
 import com.minegusta.mgapocalypse.util.ScoreboardUtil;
+import com.minegusta.mgapocalypse.util.SpawnLocationMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,6 +32,7 @@ public class Main extends JavaPlugin {
         SavedLocationsManager.createOrLoadLocationsFile(PLUGIN);
         DefaultConfig.loadConfig();
         LogoutManager.createFile(PLUGIN);
+        SpawnLocationMenu.init();
 
 
         //Listeners components
@@ -46,6 +48,7 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new GiantListener(), this);
         Bukkit.getPluginManager().registerEvents(new PigZombieListener(), this);
         Bukkit.getPluginManager().registerEvents(new ZombieHorseListener(), this);
+        Bukkit.getPluginManager().registerEvents(new SpawnMenuListener(), this);
 
 
 

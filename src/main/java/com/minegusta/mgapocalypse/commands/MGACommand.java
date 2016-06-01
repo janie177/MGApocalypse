@@ -4,6 +4,7 @@ import com.minegusta.mgapocalypse.MGApocalypse;
 import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.traps.Trap;
+import com.minegusta.mgapocalypse.util.SpawnLocationMenu;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -47,6 +48,7 @@ public class MGACommand implements CommandExecutor {
                 }
                 p.sendMessage(ChatColor.GREEN + "You added this position as a spawn!");
                 DefaultConfig.addSpawn(p.getLocation());
+                SpawnLocationMenu.init();
                 return true;
             } else if (args[0].equalsIgnoreCase("traps")) {
                 p.sendMessage(ChatColor.DARK_GREEN + "- - - Trap Help - - -");
@@ -112,6 +114,7 @@ public class MGACommand implements CommandExecutor {
                 } else {
                     p.sendMessage(ChatColor.GREEN + "You removed a spawn from the list!");
                     DefaultConfig.removeSpawn(index);
+                    SpawnLocationMenu.init();
                 }
                 return true;
             }

@@ -5,6 +5,7 @@ import com.minegusta.mgapocalypse.config.DefaultConfig;
 import com.minegusta.mgapocalypse.config.SavedLocationsManager;
 import com.minegusta.mgapocalypse.files.MGPlayer;
 import com.minegusta.mgapocalypse.util.SpawnKit;
+import com.minegusta.mgapocalypse.util.SpawnLocationMenu;
 import com.minegusta.mgapocalypse.util.WorldCheck;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -59,9 +60,14 @@ public class JoinListener implements Listener {
                 //Spawn the player
                 if (SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()) == null || !WorldCheck.is(SavedLocationsManager.getLocation(e.getPlayer().getUniqueId()).getWorld())) {
 
+
+                    /**
                     MGPlayer mgp = MGApocalypse.getMGPlayer(e.getPlayer());
 
                     mgp.cleanPlayerKeepPerks();
+
+
+                    //No longer pick a random spawn by default. Now open a fancy menu.
 
                     e.getPlayer().teleport(DefaultConfig.getRandomSpawn());
 
@@ -69,6 +75,10 @@ public class JoinListener implements Listener {
                     e.getPlayer().setGameMode(GameMode.SURVIVAL);
 
                     new SpawnKit(e.getPlayer());
+
+                    */
+
+                    SpawnLocationMenu.open(e.getPlayer());
 
                 } else {
 
