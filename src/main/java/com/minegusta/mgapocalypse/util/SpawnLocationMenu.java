@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class SpawnLocationMenu {
 
@@ -92,5 +94,7 @@ public class SpawnLocationMenu {
 		mgp.setPlaying(true);
 		p.setGameMode(GameMode.SURVIVAL);
 		new SpawnKit(p);
+		p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 1, false));
+		p.sendMessage(ChatColor.GRAY + "You wake up in an apocalyptic world...");
 	}
 }

@@ -90,9 +90,10 @@ public class JoinListener implements Listener {
                     SavedLocationsManager.resetLocation(e.getPlayer().getUniqueId());
                     mgp.setPlaying(true);
                     e.getPlayer().setGameMode(GameMode.SURVIVAL);
+
+                    e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 1, false));
+                    e.getPlayer().sendMessage(ChatColor.GRAY + "You wake up in an apocalyptic world...");
                 }
-                e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 1, false));
-                e.getPlayer().sendMessage(ChatColor.GRAY + "You wake up in an apocalyptic world...");
             }
         }
     }
