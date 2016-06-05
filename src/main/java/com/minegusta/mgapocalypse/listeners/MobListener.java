@@ -149,6 +149,17 @@ public class MobListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onVillagerTurnZombie(CreatureSpawnEvent e)
+    {
+        if(!WorldCheck.is(e.getEntity().getWorld())) return;
+
+        if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.INFECTION)
+        {
+            e.setCancelled(true);
+        }
+    }
+
 
     //Remove drops
     @EventHandler(priority = EventPriority.LOWEST)
