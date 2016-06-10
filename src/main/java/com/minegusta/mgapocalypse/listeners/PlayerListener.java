@@ -78,6 +78,14 @@ public class PlayerListener implements Listener {
         }
 
         if (m == Material.POTION) {
+
+            if(p.getInventory().getItemInOffHand() != null && p.getInventory().getItemInOffHand().getType() == m)
+            {
+                p.sendMessage(ChatColor.RED + "You cannot drink potions from your off hand.");
+                e.setCancelled(true);
+                return;
+            }
+
             if (((PotionMeta)e.getItem().getItemMeta()).getBasePotionData().getType() == PotionType.WATER) {
                 p.setLevel(20 + mgp.getPerkLevel(Perk.HYDRATION));
                 p.sendMessage(ChatColor.GREEN + "You feel refreshed.");
